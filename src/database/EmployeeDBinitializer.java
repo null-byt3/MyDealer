@@ -10,7 +10,11 @@ public static void main(String[] args) {
 	Serializer serializer = new Serializer();
 	
 	// Fetch whatever EmployeeDB currently saved
-	EmployeeDB employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB");
+	//EmployeeDB employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB");
+	
+	// Optional: create a new DB
+	EmployeeDB employeedb = new EmployeeDB();
+
 	
 	// Empty DB
 	employeedb.clear();	
