@@ -89,26 +89,4 @@ public class Employee implements Serializable {
 	public String getFullName() {
 		return this.firstName + "-" + this.lastName;
 	}
-
-	public MyDataBase db;
-
-	public void updateFirstName(String newFirstName) {
-		this.firstName = newFirstName;
-		db.firstNameUpdated(newFirstName);
-	}
-
-	interface MyDataBase {
-		void firstNameUpdated(String firstName);
-	}
-
-	public static class MyDataBaseMock implements MyDataBase {
-
-		public String updatedFirstName;
-
-		@Override
-		public void firstNameUpdated(String firstName) {
-			updatedFirstName = firstName;
-		}
-
-	}
 }
