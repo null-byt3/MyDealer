@@ -1,7 +1,6 @@
 package database;
 
-import database.Serializer;
-import Car.*;
+import Car.Car;
 
 public class InventoryDBinitializer {
 
@@ -11,7 +10,6 @@ public static void main(String[] args) {
 	
 	// Fetch whatever InventoryDB currently saved
 	
-	//InventoryDB inventoryDB = new InventoryDB();
 	
 	InventoryDB inventoryDB = (InventoryDB)serializer.deserialize("InventoryDB");
 	

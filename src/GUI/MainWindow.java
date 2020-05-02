@@ -11,15 +11,17 @@ public class MainWindow extends JFrame {
 
 	private Container mainContainer = getContentPane();
 	private BorderLayout bl = new BorderLayout(8,6);
-	private MainCardChanger workpanel = new MainCardChanger();
+	private MainCardChanger workpanel;
 	private Employee current_user;
+	private SidePanel sidepanel;
 	
 	
 	MainWindow(Employee employee){
 		super("MyDealer");		
 		
 		this.current_user = employee;
-		SidePanel sidepanel = new SidePanel(current_user, workpanel);
+		workpanel = new MainCardChanger(current_user);
+		sidepanel = new SidePanel(current_user, workpanel);
 		mainContainer.setLayout(bl);
 		mainContainer.setBackground(Color.YELLOW);
 		mainContainer.add(sidepanel, BorderLayout.WEST);
@@ -38,10 +40,5 @@ public class MainWindow extends JFrame {
 
 	public static void main(String[] args) {  
 	new MainWindow(new Employee());  
-	}
-	
-	public Employee getUser() {
-		
-		return current_user;
 	}
 }

@@ -13,21 +13,22 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import Employee.Employee;
+
 public class NewClientPanel extends JPanel {
 
-	JLabel something = new JLabel("~~~ NEW CLIENTS WILL BE HERE ~~~");
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
 	private Font labelFont;
-	
-	NewClientPanel() {
-		this.setBackground(Color.PINK);
-		this.setLayout(null);
-		something.setFont(new Font("Arial", Font.BOLD,40));
-		this.labelFont = new Font("Arial", Font.BOLD,20);
-		this.add(something);
+	private Employee current_user;
 
+	
+	NewClientPanel(Employee current_user) {
+		this.current_user = current_user;
+		this.setBackground(Color.WHITE);
+		this.setLayout(null);
+		this.labelFont = new Font("Arial", Font.BOLD,20);
 		
 		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y) 
 		textField = new JTextField();
