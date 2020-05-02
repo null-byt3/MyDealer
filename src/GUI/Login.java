@@ -53,6 +53,7 @@ public class Login extends JFrame {
 				EmployeeDB eList = (EmployeeDB) serializer.deserialize("EmployeeDB");
 
 				for (Employee employee : eList) {
+					System.out.println(employee);
 					if (username.equals(employee.getUserName())
 							&& String.valueOf(password).equals(employee.getPassword())) {
 						new MainWindow(employee);

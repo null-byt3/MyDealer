@@ -3,24 +3,29 @@ package GUI;
 
 import java.awt.CardLayout;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 
+import Employee.Employee;
 import GUIClients.ClientsMainCard;
 import GUIInventory.InventoryMainCard;
 import GUIOrders.OrdersMainCard;
 
 public class MainCardChanger extends JPanel implements PanelChanger {
 	
-	ClientsMainCard clientspanel = new ClientsMainCard();
-	OrdersMainCard orderspanel = new OrdersMainCard(); 
-	WelcomePanel welcomepanel = new WelcomePanel();
-	InventoryMainCard inventorypanel = new InventoryMainCard();
+	ClientsMainCard clientspanel;
+	OrdersMainCard orderspanel; 
+	WelcomePanel welcomepanel;
+	InventoryMainCard inventorypanel;
 	
 	CardLayout cl = new CardLayout();
 
 	
-	 public MainCardChanger() {
+	 public MainCardChanger(Employee current_user) {
 		this.setLayout(cl);
+		clientspanel = new ClientsMainCard(current_user);
+		orderspanel = new OrdersMainCard(); 
+		welcomepanel = new WelcomePanel();
+		inventorypanel = new InventoryMainCard();
 		this.add(welcomepanel, "WelcomePanel");
 		this.add(clientspanel, "ClientsPanel");
 		this.add(orderspanel, "OrdersPanel");	
