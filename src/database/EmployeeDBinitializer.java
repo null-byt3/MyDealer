@@ -1,6 +1,10 @@
 package database;
 
 import database.Serializer;
+
+import java.io.File;
+import java.io.IOException;
+
 import Employee.*;
 
 public class EmployeeDBinitializer {
@@ -8,12 +12,32 @@ public class EmployeeDBinitializer {
 public static void main(String[] args) {
 	
 	Serializer serializer = new Serializer();
+	EmployeeDB employeedb = null;
 	
-	// Fetch whatever EmployeeDB currently saved
-	EmployeeDB employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB");
 	
-	// Optional: create a new DB
-	//EmployeeDB employeedb = new EmployeeDB();
+	try {
+		// Fetch whatever EmployeeDB currently saved
+		employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB.db");
+	} 
+	catch (ClassNotFoundException e) {
+		System.out.println("EmployeeDB.db Not found. Creating...");
+		employeedb = new EmployeeDB();
+
+	} 
+	catch (Exception e) {
+		System.out.println("Could not open file EmployeeDB.db. Attempting to delete..");
+		File file = new File("../EmployeeDB.db");
+		if (file.delete()) {
+			System.out.println("File Deleted Successfully. Creating new EmployeeDB.db");
+			employeedb = new EmployeeDB();
+		} 
+		else {
+			System.out.println("Could not delete File. Please try manually");
+		}
+	}
+	
+	
+	
 
 	
 	// Empty DB
@@ -35,7 +59,7 @@ public static void main(String[] args) {
 	employeedb.add(john);
 	
 	// Serialize the file (aka save to DB)
-	serializer.serialize("EmployeeDB", employeedb);
+	serializer.serialize("EmployeeDB.db", employeedb);
 	
 }
 

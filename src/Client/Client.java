@@ -11,12 +11,13 @@ public class Client implements Serializable
 	protected String address;
 	protected String phoneNum;
 	protected int AgentId;
+	protected String email;
 	
 
-	protected static int idCounter = 0;
+	protected static int idCounter = 1000;
 
 
-public Client(int AgentId,String firstName, String lastName, String city, String address, String phoneNum)
+public Client(int AgentId,String firstName, String lastName, String city, String address, String phoneNum, String email)
 {
 	this.id = idCounter++;
 	this.AgentId= AgentId;
@@ -25,6 +26,7 @@ public Client(int AgentId,String firstName, String lastName, String city, String
 	this.city = city;
 	this.address = address;
 	this.phoneNum = phoneNum;
+	this.email = email;
 
 	}
 public Client() {
@@ -34,6 +36,7 @@ public Client() {
 	this.city = "Null";
 	this.address = "Null";
 	this.phoneNum= "Null";
+	this.email = "Null";
 }
 	public int getId() {
 		return id;
@@ -96,5 +99,11 @@ public Client() {
 	}
 	public void setAgentId(int agentId) {
 		AgentId = agentId;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }

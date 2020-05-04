@@ -25,11 +25,13 @@ public class Serializer {
 
 	}
 
-	public Object deserialize(String fileName) {
+	public Object deserialize(String fileName) throws Exception {
 		Object data = null;
+		FileInputStream fis = null;
+		ObjectInputStream ois = null;
 		try {
-			FileInputStream fis = new FileInputStream(fileName);
-			ObjectInputStream ois = new ObjectInputStream(fis);
+			fis = new FileInputStream(fileName);
+			ois = new ObjectInputStream(fis);
 
 			data = ois.readObject();
 
@@ -37,10 +39,12 @@ public class Serializer {
 			fis.close();
 			System.out.println(fileName + " opened successfully");
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
+			ois.close();
+			fis.close();
+			throw ioe;
 		} catch (ClassNotFoundException c) {
 			System.out.println("Class not found");
-			c.printStackTrace();
+			throw c;
 		}
 
 		return data;

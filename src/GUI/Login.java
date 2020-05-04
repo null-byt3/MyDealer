@@ -20,6 +20,7 @@ public class Login extends JFrame {
 	JPanel panel = new JPanel();
 	JTextField user_field = new JTextField(15);
 	JPasswordField pass_field = new JPasswordField(15);
+	EmployeeDB employeedb = null;
 	
 	Login() {
 		super("Login");
@@ -50,9 +51,13 @@ public class Login extends JFrame {
 				char[] password = pass_field.getPassword();
 
 				Serializer serializer = new Serializer();
-				EmployeeDB eList = (EmployeeDB) serializer.deserialize("EmployeeDB");
+				try {
+				employeedb = (EmployeeDB) serializer.deserialize("EmployeeDB.db");
+				} catch (Exception e) {
+					System.out.println("Login Panel Error -> Cannot deserialize EmployeeDB.db");
+				}
 
-				for (Employee employee : eList) {
+				for (Employee employee : employeedb) {
 					System.out.println(employee);
 					if (username.equals(employee.getUserName())
 							&& String.valueOf(password).equals(employee.getPassword())) {

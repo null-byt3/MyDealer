@@ -17,6 +17,7 @@ import database.Serializer;
 public class NewClientPanel extends JPanel {
 
 	private Employee current_user;
+	EmployeeDB employeedb = null;
 	JTextField firstName_field;
 	JTextField lastName_field;
 	JRadioButton male;
@@ -70,9 +71,13 @@ public class NewClientPanel extends JPanel {
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		Serializer serializer = new Serializer();
-		EmployeeDB employeeDB = (EmployeeDB) serializer.deserialize("EmployeeDB");
+		try {
+			employeedb = (EmployeeDB) serializer.deserialize("EmployeeDB.db");
+			} catch (Exception e) {
+				System.out.println("NewClientPanel Error -> Cannot deserialize EmployeeDB");
+			}
 		
-		for (Employee employee : employeeDB) {
+		for (Employee employee : employeedb) {
 			comboBox.addItem(employee.getFullName());
 		}
 		

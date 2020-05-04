@@ -6,4 +6,5 @@ import Client.Client;
 
 public class ClientDB extends ArrayList<Client> {
 
+
 }

@@ -12,7 +12,7 @@ public class Car implements Serializable {
 	private String location; //Ashdod port
 	private String status; //Sold, Free, etc.
 
-	private static int idCounter = 0;
+	private static int idCounter = 1000;
 
 	public Car() {
 		this.carId = idCounter++;

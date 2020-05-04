@@ -11,7 +11,7 @@ import Employee.Manager;
 public class MainWindow extends JFrame {
 
 	private Container mainContainer = getContentPane();
-	private BorderLayout bl = new BorderLayout(8,6);
+	private BorderLayout bl = new BorderLayout(2,2);
 	private MainCardChanger workpanel;
 	private Employee current_user;
 	private SidePanel sidepanel;
@@ -32,10 +32,10 @@ public class MainWindow extends JFrame {
 		//getRootPane().setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.GREEN))
 		
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		//setUndecorated(true); 
 		setVisible(true);
 		
 		// Complete full screen
-		//setUndecorated(true); 
 
 	}	
 

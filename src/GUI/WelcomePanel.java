@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 public class WelcomePanel extends JPanel {
 	
 	JLabel something = new JLabel("Welcome to MyDealer!");
-
 		
 		public WelcomePanel(){
 			this.setBackground(Color.GRAY);
@@ -19,4 +18,5 @@ public class WelcomePanel extends JPanel {
 			this.add(something);
 		
 		}
+		
 }
