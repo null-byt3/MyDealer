@@ -16,10 +16,10 @@ public class Client implements Serializable
 	protected static int idCounter = 0;
 
 
-public Client(int AgentId,int id,String firstName, String lastName, String city, String address, String phoneNum)
+public Client(int AgentId,String firstName, String lastName, String city, String address, String phoneNum)
 {
+	this.id = idCounter++;
 	this.AgentId= AgentId;
-	this.id= id;
 	this.firstName = firstName;
 	this.lastName = lastName;
 	this.city = city;
@@ -38,10 +38,6 @@ public Client() {
 	public int getId() {
 		return id;
 	}	
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getFirstName() {
 		return firstName;

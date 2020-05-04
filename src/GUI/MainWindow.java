@@ -6,6 +6,7 @@ import java.awt.Container;
 import javax.swing.JFrame;
 
 import Employee.Employee;
+import Employee.Manager;
 
 public class MainWindow extends JFrame {
 
@@ -39,6 +40,6 @@ public class MainWindow extends JFrame {
 	}	
 
 	public static void main(String[] args) {  
-	new MainWindow(new Employee());  
+	new MainWindow(new Manager());  
 	}
 }

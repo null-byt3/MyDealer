@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Employee implements Serializable {
 
-	private static int idCounter = 0;
+	private static int idCounter = 1000;
 
 	protected int id;
 	protected String firstName;
@@ -87,13 +87,8 @@ public class Employee implements Serializable {
 	}
 
 	public String getFullName() {
-		return this.firstName + "-" + this.lastName;
-<<<<<<< HEAD
+		return this.firstName + " " + this.lastName;
 
-	}
-}
-=======
 	}
 
 }
->>>>>>> ef4d012f028b721f1648529bf4788a4e1fd4f563

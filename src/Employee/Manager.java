@@ -9,6 +9,10 @@ public class Manager extends Employee {
 		this.password = password;
 		this.salary = salary;
 	}
+	
+	public Manager() {
+
+	}
 
 	
 	

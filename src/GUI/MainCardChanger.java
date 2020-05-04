@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 
 import Employee.Employee;
 import GUIClients.ClientsMainCard;
+import GUIEmployees.EmployeesMainCard;
 import GUIInventory.InventoryMainCard;
 import GUIOrders.OrdersMainCard;
 
@@ -16,6 +17,7 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 	OrdersMainCard orderspanel; 
 	WelcomePanel welcomepanel;
 	InventoryMainCard inventorypanel;
+	EmployeesMainCard employeespanel;
 	
 	CardLayout cl = new CardLayout();
 
@@ -26,10 +28,13 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 		orderspanel = new OrdersMainCard(); 
 		welcomepanel = new WelcomePanel();
 		inventorypanel = new InventoryMainCard();
+		employeespanel = new EmployeesMainCard(current_user);
+		
 		this.add(welcomepanel, "WelcomePanel");
 		this.add(clientspanel, "ClientsPanel");
 		this.add(orderspanel, "OrdersPanel");	
 		this.add(inventorypanel, "InventoryPanel");
+		this.add(employeespanel, "EmployeesPanel");
 		
 		cl.show(this, "WelcomePanel");
 	}

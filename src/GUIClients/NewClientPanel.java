@@ -4,124 +4,207 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
+import javax.swing.border.*;
+import javax.swing.*;
+
 
 import Employee.Employee;
+import database.EmployeeDB;
+import database.Serializer;
 
 public class NewClientPanel extends JPanel {
 
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private Font labelFont;
 	private Employee current_user;
-
+	JTextField firstName_field;
+	JTextField lastName_field;
+	JRadioButton male;
+	JRadioButton female;
+	JTextField city_field;
+	JTextField address_field;
+	JTextField phoneNum_field;
+	JTextField email_field;
 	
 	NewClientPanel(Employee current_user) {
 		this.current_user = current_user;
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
-		this.labelFont = new Font("Arial", Font.BOLD,20);
-		
+
 		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y) 
-		textField = new JTextField();
-		textField.setBounds(200, 25, 86, 25);
-		this.add(textField);
-		textField.setColumns(10);
 		
-		JLabel firstName = new JLabel("First Name");
-		firstName.setBounds(65, 31, 120, 14);
-		firstName.setFont(labelFont);
-		this.add(firstName);
+		// "Create New Client" -- Label
+		JLabel title = new JLabel("Create New Client");
+		Font title_font = new Font("Helvetica", Font.BOLD,60);
+		Map attributes = title_font.getAttributes();
+		//attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+		title.setFont(title_font.deriveFont(attributes));
+		title.setBounds(65, 31, 520, 50);
+		this.add(title);
 		
-		JLabel lblPhone = new JLabel("Phone #");
-		lblPhone.setBounds(65, 68, 46, 14);
-		this.add(lblPhone);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(128, 65, 86, 20);
-		this.add(textField_1);
-		textField_1.setColumns(10);
-		
-		JLabel lblEmailId = new JLabel("Email Id");
-		lblEmailId.setBounds(65, 115, 46, 14);
-		this.add(lblEmailId);
-		
-		textField_2 = new JTextField();
-		textField_2.setBounds(128, 112, 247, 17);
-		this.add(textField_2);
-		textField_2.setColumns(10);
-		
-		JLabel lblAddress = new JLabel("Address");
-		lblAddress.setBounds(65, 162, 46, 14);
-		this.add(lblAddress);
-				
-		JTextArea textArea_1 = new JTextArea();
-		textArea_1.setBounds(126, 157, 212, 40);
-		this.add(textArea_1);
+		/// Agent Details -- Panel
+		JPanel agentDetails = CreateAgentDetails(current_user);
+		this.add(agentDetails);
 		
 		
+		/// Client Details -- Panel
+		JPanel clientDetails = CreateClientDetails();
+		this.add(clientDetails);
 		
-		JButton btnClear = new JButton("Clear");
-		
-		btnClear.setBounds(312, 900, 120, 45);
-		this.add(btnClear);
-		
-		JLabel lblSex = new JLabel("Sex");
-		lblSex.setBounds(65, 228, 46, 14);
-		this.add(lblSex);
-		
-		JLabel lblMale = new JLabel("Male");
-		lblMale.setBounds(128, 228, 46, 14);
-		this.add(lblMale);
-		
-		JLabel lblFemale = new JLabel("Female");
-		lblFemale.setBounds(292, 228, 46, 14);
-		this.add(lblFemale);
-		
-		JRadioButton radioButton = new JRadioButton("ABCDEF");
-		radioButton.setBounds(337, 224, 109, 23);
-		this.add(radioButton);
-		
-		JRadioButton radioButton_1 = new JRadioButton("");
-		radioButton_1.setBounds(162, 224, 109, 23);
-		this.add(radioButton_1);
-		
-		JLabel lblOccupation = new JLabel("Occupation");
-		lblOccupation.setBounds(65, 288, 67, 14);
-		this.add(lblOccupation);
+		/// Submit & Clear Buttons -- Panel
+		JPanel buttons = CreateButtonsPanel();
+		this.add(buttons);
+
+	}
+	
+	public JPanel CreateAgentDetails(Employee current_user) {
+			
+		// Agent Details -- Panel
+		JPanel agentDetails = new JPanel();
+		agentDetails.setLayout(null);
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Agent Details");
+		agentDetails.setBorder(titledborder);
+		agentDetails.setBounds(65,120,400,100);
+		agentDetails.setBackground(Color.WHITE);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		comboBox.addItem("Select");
-		comboBox.addItem("Business");
-		comboBox.addItem("Engineer");
-		comboBox.addItem("Doctor");
-		comboBox.addItem("Student");
-		comboBox.addItem("Others");
+		Serializer serializer = new Serializer();
+		EmployeeDB employeeDB = (EmployeeDB) serializer.deserialize("EmployeeDB");
+		
+		for (Employee employee : employeeDB) {
+			comboBox.addItem(employee.getFullName());
+		}
+		
+		comboBox.setSelectedItem(current_user.getFullName());
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
-		comboBox.setBounds(180, 285, 91, 20);
-		this.add(comboBox);
+		
+		comboBox.setBounds(20, 50, 150, 30);
+		agentDetails.add(comboBox);
+		
+		// Agent name
+		JLabel agent_name = new JLabel("Name");
+		agent_name.setBounds(20, 10, 100, 50);
+		agentDetails.add(agent_name);		
+		return agentDetails;
+	}
+	
+	
+	public JPanel CreateClientDetails() {
+		
+		JPanel clientDetails = new JPanel();
+		clientDetails.setLayout(null);
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Client Details");
+		clientDetails.setBorder(titledborder);
+		clientDetails.setBounds(65,250,650,320);
+		clientDetails.setBackground(Color.WHITE);
 		
 		
-		JButton btnSubmit = new JButton("Save Client");
+		// FIRST NAME
+		JLabel first_name = new JLabel("First Name:");
+		firstName_field = new JTextField();
+		first_name.setBounds(20, 10, 100, 50);
+		firstName_field.setBounds(20, 50, 150, 30);
+		clientDetails.add(first_name);		
+		clientDetails.add(firstName_field);
 		
-		btnSubmit.setBackground(Color.BLUE);
-		btnSubmit.setForeground(Color.MAGENTA);
-		btnSubmit.setBounds(40, 900, 120, 45);
-		this.add(btnSubmit);
+		// LAST NAME
+		JLabel last_name = new JLabel("Last Name:");
+		lastName_field = new JTextField();
+		last_name.setBounds(220, 10, 100, 50);
+		lastName_field.setBounds(220, 50, 150, 30);
+		clientDetails.add(last_name);		
+		clientDetails.add(lastName_field);
+		
+		// GENDER
+		JLabel gender = new JLabel("Gender:");
+		male = new JRadioButton("Male");
+		female = new JRadioButton("Female");
+		gender.setBounds(420, 10, 100, 50);
+		male.setBounds(420, 50, 60, 30);
+		male.setBackground(Color.WHITE);
+		female.setBounds(480, 50, 90, 30);
+		female.setBackground(Color.WHITE);
+		male.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				female.setSelected(false);
+			}
+		});
+		female.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				male.setSelected(false);
+			}
+		});
+		clientDetails.add(gender);		
+		clientDetails.add(male);
+		clientDetails.add(female);
 		
 		
-		btnSubmit.addActionListener(new ActionListener() {
+		
+		// CITY
+		JLabel city = new JLabel("City:");
+		city_field = new JTextField();
+		city.setBounds(20, 80, 100, 50);
+		city_field.setBounds(20, 120, 150, 30);
+		clientDetails.add(city);		
+		clientDetails.add(city_field);
+		
+		// Address
+		JLabel address = new JLabel("Address:");
+		address_field = new JTextField();
+		address.setBounds(220, 80, 100, 50);
+		address_field.setBounds(220, 120, 300, 30);
+		clientDetails.add(address);		
+		clientDetails.add(address_field);
+		
+		// Phone Number
+		JLabel phoneNum = new JLabel("Phone Number:");
+		JLabel hyphen = new JLabel("-");
+		phoneNum_field = new JTextField();
+		String[] prefix_string = {"02","03","04","07","08","09","050","052","053","054","055","058"};
+		JComboBox phonePrefix = new JComboBox(prefix_string);	
+		phoneNum.setBounds(20, 150, 100, 50);
+		phonePrefix.setBounds(20, 190, 50, 30);
+		hyphen.setBounds(77, 195, 10, 10);
+		phoneNum_field.setBounds(90, 190, 230, 30);
+		clientDetails.add(phonePrefix);
+		clientDetails.add(phoneNum);	
+		clientDetails.add(hyphen);
+		clientDetails.add(phoneNum_field);
+		
+		
+		
+		
+		// EMAIL
+		JLabel email = new JLabel("E-Mail:");
+		email_field = new JTextField();
+		email.setBounds(20, 220, 100, 50);
+		email_field.setBounds(20, 260, 300, 30);
+		clientDetails.add(email);		
+		clientDetails.add(email_field);
+		
+		
+		return clientDetails;
+	}
+	
+	
+	public JPanel CreateButtonsPanel() {
+		
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(null);
+		buttonsPanel.setBounds(65,600,800,150);
+		buttonsPanel.setBackground(Color.WHITE);
+		
+		JButton saveButton = new JButton("Save Client");
+		saveButton.setBackground(Color.GREEN);
+		saveButton.setForeground(Color.BLACK);
+		saveButton.setBounds(0, 0, 120, 45);
+		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				//if(textField.getText().isEmpty()||(textField_1.getText().isEmpty())||(textField_2.getText().isEmpty())||(textArea_1.getText().isEmpty())||((radioButton_1.isSelected())&&(radioButton.isSelected()))||(comboBox.getSelectedItem().equals("Select")))
 					//JOptionPane.showMessageDialog(null, "Data Missing");
@@ -130,20 +213,31 @@ public class NewClientPanel extends JPanel {
 			}
 		});
 		
-		btnClear.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				textField_1.setText(null);
-				textField_2.setText(null);
-				textField.setText(null);
-				textArea_1.setText(null);
-				radioButton.setSelected(false);
-				radioButton_1.setSelected(false);
-				comboBox.setSelectedItem("Select");
-				
-				
+		
+		JButton clearButton = new JButton("Clear");
+		clearButton.setForeground(Color.BLACK);
+		clearButton.setBounds(530, 0, 120, 45);
+		clearButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				firstName_field.setText(null);
+				lastName_field.setText(null);
+				male.setSelected(false);
+				female.setSelected(false);
+				city_field.setText(null);
+				address_field.setText(null);
+				phoneNum_field.setText(null);
+				email_field.setText(null);
+				//comboBox.setSelectedItem("Select");
 			}
 		});
 		
+		
+		
+		
+		buttonsPanel.add(saveButton);	
+		buttonsPanel.add(clearButton);
+		return buttonsPanel;
 	}
+		
 }
 	

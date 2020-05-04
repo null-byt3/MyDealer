@@ -97,6 +97,7 @@ public class SidePanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				System.out.println("Open Employees sub-panel");
+				panelChanger.updateWorkPanel("EmployeesPanel");
 			}
 
 		});
