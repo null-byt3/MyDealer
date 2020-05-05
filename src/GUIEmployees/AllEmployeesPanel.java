@@ -43,7 +43,7 @@ public class AllEmployeesPanel extends JPanel {
 	
 	public JScrollPane CreateTable() {
 		
-		String[] columnNames = {"ID","First Name","Last Name","UserName","Password", "salary"};
+		String[] columnNames = {"ID","Role","First Name","Last Name","UserName", "salary"};
 		String[][] data = null;
 		EmployeeDB employeedb = null;
 		
@@ -60,10 +60,10 @@ public class AllEmployeesPanel extends JPanel {
 			data[i] = new String[7];
 			Employee employee = employeedb.get(i);
 			data[i][0] = String.valueOf(employee.getId());
-			data[i][1] = employee.getFirstName();
-			data[i][2] = employee.getLastName();
-			data[i][3] = employee.getUserName();
-			data[i][4] = employee.getPassword();
+			data[i][1] = String.valueOf(employee.getClass().getSimpleName());	
+			data[i][2] = employee.getFirstName();
+			data[i][3] = employee.getLastName();
+			data[i][4] = employee.getUserName();
 			data[i][5]= String.valueOf(employee.getSalary());
 		}
 		

@@ -25,7 +25,7 @@ public class NewEmployeePanel extends JPanel {
 	JTextField username_field;
 	JTextField password_field;
 	JTextField salary_field;
-	JTextField job_field;
+	JTextField role_field;
 	
 	
 	NewEmployeePanel(Employee current_user) {
@@ -66,13 +66,13 @@ public class NewEmployeePanel extends JPanel {
 		employeeDetails.setBounds(65,250,650,320);
 		employeeDetails.setBackground(Color.WHITE);
 		
-		// job -Manger,Secretary,Agent
-		JLabel job = new JLabel("Job:");
-		job_field = new JTextField();
-		job.setBounds(20, 160, 100, 50);
-		job_field.setBounds(20, 200, 150, 30);
-		employeeDetails.add(job);		
-		employeeDetails.add(job_field);
+		// Role -Manger,Secretary,Agent
+		JLabel role = new JLabel("Role:");
+		role_field = new JTextField();
+		role.setBounds(20, 160, 100, 50);
+		role_field.setBounds(20, 200, 150, 30);
+		employeeDetails.add(role);		
+		employeeDetails.add(role_field);
 		
 		
 		// FIRST NAME
