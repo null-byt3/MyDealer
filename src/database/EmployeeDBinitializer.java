@@ -19,7 +19,7 @@ public static void main(String[] args) {
 		// Fetch whatever EmployeeDB currently saved
 		employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB.db");
 	} 
-	catch (ClassNotFoundException e) {
+	catch (NullPointerException e) {
 		System.out.println("EmployeeDB.db Not found. Creating...");
 		employeedb = new EmployeeDB();
 

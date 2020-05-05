@@ -11,6 +11,7 @@ public class Car implements Serializable {
 	private String color; // Orange
 	private String location; //Ashdod port
 	private String status; //Sold, Free, etc.
+	private int price;
 
 	private static int idCounter = 1000;
 
@@ -22,9 +23,10 @@ public class Car implements Serializable {
 		this.color = "Null";
 		this.location = "Null";
 		this.status = "Null";
+		this.price = 0;
 	}
 
-	public Car(String make, String model, String trim, String color, String location, String status) {
+	public Car(String make, String model, String trim, String color, String location, String status, int price) {
 		this.carId = idCounter++;
 		this.make = make;
 		this.model = model;
@@ -32,6 +34,7 @@ public class Car implements Serializable {
 		this.color = color;
 		this.location = location;
 		this.status = status;
+		this.price = price;
 	}
 
 	public String toString() {

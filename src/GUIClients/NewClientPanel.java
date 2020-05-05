@@ -84,6 +84,7 @@ public class NewClientPanel extends JPanel {
 		comboBox.setSelectedItem(current_user.getFullName());
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+
 				
 			}
 		});

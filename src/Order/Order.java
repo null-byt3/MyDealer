@@ -2,8 +2,15 @@ package Order;
 
 public class Order {
 	
-	private int orderID;
-	private int supplyDay; // 15
-	private int supplyMonth; // 5
-	private int supplyYear; // 2020
+	private int orderId; // Change to static with counter like the rest
+	
+	private int orderDay;
+	private int orderMonth;
+	private int orderYear;
+	
+	private int clientId;
+	private int agentId;
+	private int carId;
+	
+
 }

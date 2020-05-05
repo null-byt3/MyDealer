@@ -42,12 +42,12 @@ public static void main(String[] args) {
 	inventorydb.clear();	
 	
 	// Create and add everything back
-	Car car1 = new Car("Honda","Civic","Black", "White", "Ashdod","Free");
-	Car car2 = new Car("Seat","Ibiza","Camel", "Orange", "Ashdod","Ordered");
-	Car car3 = new Car("MG", "ZS", "Grey", "Black", "Haifa", "Free");
-	Car car4 = new Car("Mazda","Miata","Black", "Red", "Eilat", "Saved");
-	Car car5 = new Car("Ferrari", "458", "Red", "Red", "Tel aviv", "Free");
-	Car car6 = new Car("Citroen","DS7","Grey","Bronze", "Haifa", "Ordered");
+	Car car1 = new Car("Mazda","2","Dynamic", "White", "Ashdod","Free", 100000);
+	Car car2 = new Car("Mazda","3","Activa", "Orange", "Ashdod","Ordered", 120000);
+	Car car3 = new Car("Mazda","CX-5", "Executive", "Black", "Haifa", "Free", 140000);
+	Car car4 = new Car("Mazda","Miata","Black", "Red", "Eilat", "Saved", 25000);
+	Car car5 = new Car("Mazda","6", "Luxury", "Red", "Tel aviv", "Free", 43400);
+	Car car6 = new Car("Mazda","CX-5","Signature","Bronze", "Haifa", "Ordered", 95000);
 	
 	inventorydb.add(car1);
 	inventorydb.add(car2);
