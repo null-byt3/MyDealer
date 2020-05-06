@@ -44,12 +44,12 @@ public static void main(String[] args) {
 	employeedb.clear();	
 	
 	// Create and add everything back
-	Employee sebas = new Agent("Sebastian","Altheim","sebas","12345",6500);
-	Employee eny = new Secretary("Eny","Kaplan","enykap","abcde",8000);
-	Employee pegi = new Secretary("Peggy", "Allson", "pegi", "pegipeg", 8002);
-	Employee etay = new Agent("Etay","Rabino","etay","e123", 12000);
-	Employee vitaly = new Agent("Vitali", "Bucevith", "vitaly", "pass", 12050);
-	Employee john = new Manager("John","Smith","jsmith","12345",9000);
+	Employee sebas = new Agent("Sebastian","Altheim","sebas","12345","M",6500);
+	Employee eny = new Secretary("Eny","Kaplan","enykap","abcde","F",8000);
+	Employee pegi = new Secretary("Peggy", "Allson", "pegi", "pegipeg","F", 8002);
+	Employee etay = new Agent("Etay","Rabino","etay","e123","M", 12000);
+	Employee vitaly = new Agent("Vitali", "Bucevith", "vitaly","M", "pass", 12050);
+	Employee john = new Manager("John","Smith","jsmith","12345","M",9000);
 	
 	employeedb.add(sebas);
 	employeedb.add(eny);

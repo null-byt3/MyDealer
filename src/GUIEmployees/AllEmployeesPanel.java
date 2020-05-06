@@ -26,7 +26,7 @@ public class AllEmployeesPanel extends JPanel {
 		Map attributes = title_font.getAttributes();
 		//attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 520, 50);
+		title.setBounds(65, 31, 520, 70);
 		this.add(title);
 		
 		this.setBackground(Color.WHITE);
@@ -43,7 +43,7 @@ public class AllEmployeesPanel extends JPanel {
 	
 	public JScrollPane CreateTable() {
 		
-		String[] columnNames = {"ID","Role","First Name","Last Name","UserName", "salary"};
+		String[] columnNames = {"ID","Gender","Role","First Name","Last Name","UserName", "salary"};
 		String[][] data = null;
 		EmployeeDB employeedb = null;
 		

@@ -41,7 +41,7 @@ public class NewEmployeePanel extends JPanel {
 		Map attributes = title_font.getAttributes();
 		//attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 520, 50);
+		title.setBounds(65, 31, 800, 70);
 		this.add(title);
 		
 		/// Employee Details -- Panel
@@ -65,16 +65,7 @@ public class NewEmployeePanel extends JPanel {
 		employeeDetails.setBorder(titledborder);
 		employeeDetails.setBounds(65,250,650,320);
 		employeeDetails.setBackground(Color.WHITE);
-		
-		// Role -Manger,Secretary,Agent
-		JLabel role = new JLabel("Role:");
-		role_field = new JTextField();
-		role.setBounds(20, 160, 100, 50);
-		role_field.setBounds(20, 200, 150, 30);
-		employeeDetails.add(role);		
-		employeeDetails.add(role_field);
-		
-		
+			
 		// FIRST NAME
 		JLabel first_name = new JLabel("First Name:");
 		firstName_field = new JTextField();
@@ -131,15 +122,23 @@ public class NewEmployeePanel extends JPanel {
 		password_field.setBounds(220, 120, 300, 30);
 		employeeDetails.add(address);		
 		employeeDetails.add(password_field);
+		
+		
+		// Role -Manger,Secretary,Agent
+		JLabel role = new JLabel("Role:");
+		role_field = new JTextField();
+		role.setBounds(20, 150, 100, 50);
+		role_field.setBounds(20, 190, 150, 30);
+		employeeDetails.add(role);		
+		employeeDetails.add(role_field);
 				
 	
-	
 		// Salary
-		JLabel email = new JLabel("Salary:");
+		JLabel salary = new JLabel("Salary:");
 		salary_field = new JTextField();
-		email.setBounds(20, 220, 100, 50);
+		salary.setBounds(20, 220, 100, 50);
 		salary_field.setBounds(20, 260, 300, 30);
-		employeeDetails.add(email);		
+		employeeDetails.add(salary);		
 		employeeDetails.add(salary_field);
 		
 		

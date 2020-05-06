@@ -12,6 +12,7 @@ public class Employee implements Serializable {
 	protected String userName;
 	protected String password;
 	protected int salary;
+	protected String gender;
 
 	public Employee() {
 		this.id = idCounter++;
@@ -19,9 +20,10 @@ public class Employee implements Serializable {
 		this.lastName = "Null";
 		this.userName = "Null";
 		this.password = "Null";
+		this.gender = "Null";
 	}
 
-	public Employee(String firstName, String lastName, String userName, String password, int salary) {
+	public Employee(String firstName, String lastName, String userName, String password, String gender, int salary) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -55,6 +57,14 @@ public class Employee implements Serializable {
 
 	public String getUserName() {
 		return userName;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
 	}
 
 	public int getSalary() {
