@@ -18,7 +18,8 @@ public static void main(String[] args) {
 	try {
 		// Fetch whatever EmployeeDB currently saved
 		employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB.db");
-	} 
+	}
+		
 	catch (NullPointerException e) {
 		System.out.println("EmployeeDB.db Not found. Creating...");
 		employeedb = new EmployeeDB();
@@ -48,7 +49,7 @@ public static void main(String[] args) {
 	Employee eny = new Secretary("Eny","Kaplan","enykap","abcde","F",8000);
 	Employee pegi = new Secretary("Peggy", "Allson", "pegi", "pegipeg","F", 8002);
 	Employee etay = new Agent("Etay","Rabino","etay","e123","M", 12000);
-	Employee vitaly = new Agent("Vitali", "Bucevith", "vitaly","M", "pass", 12050);
+	Employee vitaly = new Agent("Vitali", "Bucevith", "vitaly","pass", "M", 12050);
 	Employee john = new Manager("John","Smith","jsmith","12345","M",9000);
 	
 	employeedb.add(sebas);

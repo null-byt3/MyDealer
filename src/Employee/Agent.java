@@ -7,6 +7,7 @@ public class Agent extends Employee {
 		this.userName = userName;
 		this.password = password;
 		this.salary = salary;
+		this.gender = gender;
 	}
 
 	

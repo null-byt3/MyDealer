@@ -20,7 +20,6 @@ public class Employee implements Serializable {
 		this.lastName = "Null";
 		this.userName = "Null";
 		this.password = "Null";
-		this.gender = "Null";
 	}
 
 	public Employee(String firstName, String lastName, String userName, String password, String gender, int salary) {
@@ -29,6 +28,7 @@ public class Employee implements Serializable {
 		this.userName = userName;
 		this.password = password;
 		this.salary = salary;
+		this.gender =gender;
 	}
 
 	public int getId() {

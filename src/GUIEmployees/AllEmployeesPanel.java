@@ -57,14 +57,15 @@ public class AllEmployeesPanel extends JPanel {
 		int size = employeedb.size();
 		data = new String[size][];
 		for (int i = 0 ; i < size; i++ ) {
-			data[i] = new String[7];
+			data[i] = new String[8];
 			Employee employee = employeedb.get(i);
 			data[i][0] = String.valueOf(employee.getId());
-			data[i][1] = String.valueOf(employee.getClass().getSimpleName());	
-			data[i][2] = employee.getFirstName();
-			data[i][3] = employee.getLastName();
-			data[i][4] = employee.getUserName();
-			data[i][5]= String.valueOf(employee.getSalary());
+			data[i][1] = employee.getGender();
+			data[i][2] = String.valueOf(employee.getClass().getSimpleName());	
+			data[i][3] = employee.getFirstName();
+			data[i][4] = employee.getLastName();
+			data[i][5] = employee.getUserName();
+			data[i][6]= String.valueOf(employee.getSalary());
 		}
 		
 		Border blackline = BorderFactory.createLineBorder(Color.black);
