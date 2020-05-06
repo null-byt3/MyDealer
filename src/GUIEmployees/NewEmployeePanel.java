@@ -123,14 +123,30 @@ public class NewEmployeePanel extends JPanel {
 		employeeDetails.add(address);		
 		employeeDetails.add(password_field);
 		
+		//Role 
+		JComboBox<String> comboBox1 = new JComboBox<String>();
+		comboBox1.addItem("Agent");
+		comboBox1.addItem("Secretary");
+		comboBox1.addItem("Manger");
+
+		comboBox1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			
+			}
+		});
+		
+		comboBox1.setBounds(20, 190, 150, 30);
+		employeeDetails.add(comboBox1);
+		
+		
 		
 		// Role -Manger,Secretary,Agent
-		JLabel role = new JLabel("Role:");
-		role_field = new JTextField();
-		role.setBounds(20, 150, 100, 50);
-		role_field.setBounds(20, 190, 150, 30);
-		employeeDetails.add(role);		
-		employeeDetails.add(role_field);
+		//JLabel role = new JLabel("Role:");
+		//	role_field = new JTextField();
+		//	role.setBounds(20, 150, 100, 50);
+		//	role_field.setBounds(20, 190, 150, 30);
+		//	employeeDetails.add(role);		
+		//	employeeDetails.add(role_field);
 				
 	
 		// Salary
