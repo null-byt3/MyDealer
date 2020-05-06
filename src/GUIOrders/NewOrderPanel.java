@@ -26,9 +26,6 @@ public class NewOrderPanel extends JPanel {
 	EmployeeDB employeedb = null;
 	ClientDB clientdb = null;
 	InventoryDB inventorydb = null;
-	JTextField orderDay_field;
-	JTextField orderMonth_field;
-	JTextField orderYear_field;
 	JTextField price_field;
 
 	
@@ -152,7 +149,7 @@ public class NewOrderPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Car Details");
 		carDetails.setBorder(titledborder);
-		carDetails.setBounds(65,380,650,250);
+		carDetails.setBounds(65,380,400,250);
 		carDetails.setBackground(Color.WHITE);
 		
 		JComboBox<String> comboBox3 = new JComboBox<String>();
@@ -287,7 +284,7 @@ public class NewOrderPanel extends JPanel {
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(null);
-		buttonsPanel.setBounds(800,300,800,150);
+		buttonsPanel.setBounds(550,585,120,45);
 		buttonsPanel.setBackground(Color.WHITE);
 		
 		JButton saveButton = new JButton("Save Order");

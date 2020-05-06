@@ -92,7 +92,7 @@ public Client() {
 		this.phoneNum = phoneNum;
 	}
 	public String getFullName() {
-		return this.firstName + "-" + this.lastName;
+		return this.firstName + " " + this.lastName;
 	}
 	public int getAgentId() {
 		return AgentId;

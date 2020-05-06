@@ -41,12 +41,12 @@ public static void main(String[] args) {
 	orderdb.clear();	
 		
 	// Create and add everything back
-	Order order1 = new Order(02, 03, 2020, 1001, 1002, 1025);
-	Order order2 = new Order(01,01,2019, 1000,1003, 1019);
-	Order order3 = new Order(24, 02, 2020, 1004, 1005, 1000);
-	Order order4 = new Order(05, 05, 2020, 1001, 1010, 1005);
-	Order order5 = new Order(12, 11, 2019, 1010, 1008, 1007);
-	Order order6 = new Order(29, 03, 2020, 1002, 1003, 1004);
+	Order order1 = new Order("Etay Rabino", "Israel Cohen", 10006);
+	Order order2 = new Order("Sebi Alt", "Ronen Levi", 10003);
+	Order order3 = new Order("Vitali Botz", "Sara Israel", 10002);
+	Order order4 = new Order("Dani Shovevani", "Yakir Poni", 10005);
+	Order order5 = new Order("Enni Alt", "Doron ski", 10004);
+	Order order6 = new Order("Tal Levi", "Yaorn Shalom", 10001);
 	
 	orderdb.add(order1);
 	orderdb.add(order2);
