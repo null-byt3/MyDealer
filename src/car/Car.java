@@ -97,4 +97,12 @@ public class Car implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
 }

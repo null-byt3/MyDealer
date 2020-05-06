@@ -1,7 +1,6 @@
 package database;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 import Car.Car;
 
@@ -18,10 +17,10 @@ public static void main(String[] args) {
 	InventoryDB inventorydb = null;
 	
 	try {
-		// Fetch whatever EmployeeDB currently saved
+		// Fetch whatever OrderDB currently saved
 		inventorydb = (InventoryDB) serializer.deserialize("InventoryDB.db");
 	} 
-	catch (FileNotFoundException e) {
+	catch (NullPointerException  e) {
 		System.out.println("InventoryDB.db Not found. Creating...");
 		inventorydb = new InventoryDB();
 

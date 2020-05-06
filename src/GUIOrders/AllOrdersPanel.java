@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class AllOrdersPanel extends JPanel {
 
-	JLabel something = new JLabel("~~~ ALL CLIENTS WILL BE HERE ~~~");
+	JLabel something = new JLabel("~~~ ALL Orders WILL BE HERE ~~~");
 
 	AllOrdersPanel() {
 		this.setBackground(Color.RED);
