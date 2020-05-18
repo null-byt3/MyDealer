@@ -13,16 +13,11 @@ public class ClientController {
 
 	private ClientDB clientDB;
 	private Serializer serializer;
-	private JPanel current_panel;
+	private Client client = null;
 	
 	public ClientController() {
-		this.serializer = new Serializer();
-		try {
-			this.clientDB = (ClientDB)serializer.deserialize("ClientDB.db");
-			} catch (Exception e) {
-				System.out.println("ClientController -> Cannot desrialize ClientDB.db");
-			}
-		//this.current_panel = current_panel;
+		this.serializer = Serializer.getInstance();
+		clientDB = (ClientDB)serializer.load("ClientDB");
 				
 	}
 	
@@ -30,15 +25,44 @@ public class ClientController {
 		return clientDB;
 	}
 	
-	public Client getClient(int id) {
-		Client selected_client = new Client();
-		
-		for (Client client : clientDB) {
-			if (client.getId() == id) {
-				return client;
-			}
-		}
-		return selected_client;
+	public int getAgentId(int id) {
+		setClient(id);
+		return client.getAgentId();
+	}
+	
+	public String getFirstName(int id) {
+		setClient(id);
+		return client.getFirstName();
+	}
+	
+	public String getLastName(int id) {
+		setClient(id);
+		return client.getLastName();
+	}
+	
+	public String getGender(int id) {
+		setClient(id);
+		return client.getGender();
+	}
+	
+	public String getCity(int id) {
+		setClient(id);
+		return client.getCity();
+	}
+	
+	public String getAddress(int id) {
+		setClient(id);
+		return client.getAddress();
+	}
+	
+	public String getPhoneNum(int id) {
+		setClient(id);
+		return client.getPhoneNum();
+	}
+	
+	public String getEmail(int id) {
+		setClient(id);
+		return client.getEmail();
 	}
 	
 	public String[][] getClientMatrix() {
@@ -56,19 +80,28 @@ public class ClientController {
 			clientMatrix[i][5] = client.getPhoneNum();
 			clientMatrix[i][6] = client.getEmail();
 		}
+		
 		return clientMatrix;
 	}
 	
-	public void updateClient(int id, Client updated_client) {
+	public void updateClient(int id, String firstName, String lastName, String gender, String city, String address, String phoneNum, String email) {
 		for (Client client : clientDB) {
 			if (client.getId() == id) {
-				client = updated_client;
+				client.setFirstName(firstName);
+				client.setLastName(lastName);
+				client.setGender(gender);
+				client.setCity(city);
+				client.setAddress(address);
+				client.setPhoneNum(phoneNum);
+				client.setEmail(email);
 				System.out.println("Client ID " + client.getId() + " was updated successfully");
 				updateDB();
 				return;
 			}
 		}
+		System.out.println("updateClient -> client id not found");
 	}
+	
 	
 	public void createClient(int agentId, String firstName, String lastName, String gender, String city, String address, String phoneNum, String email) {
 		Client new_client = new Client(agentId,firstName,lastName, gender, city, address, phoneNum, email);
@@ -77,13 +110,27 @@ public class ClientController {
 	
 	private void createClient(Client new_client) {
 		clientDB.add(new_client);
-		System.out.println(new_client.getFullName() + " successfully added to DB");
 		updateDB();
+		System.out.println(new_client.getFullName() + " successfully added to DB");
 	}
 	
 	private void updateDB() {
-		serializer.serialize("ClientDB.db", clientDB);
+		serializer.save("ClientDB", clientDB);
 		System.out.println("ClientDB successfully updated");
+	}
+	
+	private void setClient(int id) {
+		
+		if (client != null && client.getId() == id) {
+			return;
+		}
+	
+		for (Client client : clientDB) {
+			if (client.getId() == id) {
+				this.client = client;
+				return;
+			}
+		}
 	}
 
 }

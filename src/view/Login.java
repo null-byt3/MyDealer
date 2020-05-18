@@ -23,7 +23,7 @@ public class Login extends JFrame {
 	JPasswordField pass_field = new JPasswordField(15);
 	EmployeeDB employeedb = null;
 	LoginController loginController = new LoginController();
-	
+
 	Login() {
 		super("Login");
 		setSize(300, 200);
@@ -52,8 +52,8 @@ public class Login extends JFrame {
 				char[] password = pass_field.getPassword();
 
 				boolean loginSuccessful = loginController.attemptLogin(username, password);
-				
-				if(loginSuccessful) {
+
+				if (loginSuccessful) {
 					new MainWindow();
 					dispose();
 					return;
@@ -66,7 +66,7 @@ public class Login extends JFrame {
 			}
 		});
 	}
-	
+
 	public static void main(String[] args) {
 		new Login();
 	}

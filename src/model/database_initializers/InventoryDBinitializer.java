@@ -1,14 +1,17 @@
-package model.database;
+package model.database_initializers;
 
 import java.io.File;
 
 import model.car.Car;
+import model.database.EmployeeDB;
+import model.database.InventoryDB;
+import model.database.Serializer;
 
 public class InventoryDBinitializer {
 
 public static void main(String[] args) {
 	
-	Serializer serializer = new Serializer();
+	Serializer serializer = Serializer.getInstance();
 	
 	// Fetch whatever InventoryDB currently saved
 	
@@ -16,29 +19,19 @@ public static void main(String[] args) {
 	
 	InventoryDB inventorydb = null;
 	
-	try {
-		// Fetch whatever OrderDB currently saved
-		inventorydb = (InventoryDB) serializer.deserialize("InventoryDB.db");
-	} 
-	catch (NullPointerException  e) {
+	inventorydb = (InventoryDB)serializer.load("InventoryDB");
+	
+	if (inventorydb == null) {
 		System.out.println("InventoryDB.db Not found. Creating...");
 		inventorydb = new InventoryDB();
-
+		
 	} 
-	catch (Exception e) {
-		System.out.println("Could not open file InventoryDB.db. Attempting to delete..");
-		File file = new File("InventoryDB.db");
-		if (file.delete()) {
-			System.out.println("File Deleted Successfully. Creating new InventoryDB.db file");
-			inventorydb = new InventoryDB();
-		} 
-		else {
-			System.out.println("Could not delete File. Please try manually");
-		}
+	
+	else {
+		System.out.println("InventoryDB found. Erasing contents..");
+		inventorydb.clear();
 	}
 	
-	// Empty DB
-	inventorydb.clear();	
 	
 	// Create and add everything back
 	Car car1 = new Car("Mazda","2","Dynamic", "White", "Ashdod","Free", 100000);
@@ -56,7 +49,7 @@ public static void main(String[] args) {
 	inventorydb.add(car6);
 	
 	// Serialize the file (aka save to DB)
-	serializer.serialize("InventoryDB.db", inventorydb);
+	serializer.save("InventoryDB", inventorydb);
 	
 }
 

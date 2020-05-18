@@ -7,25 +7,100 @@ import java.io.ObjectOutputStream;
 
 public class Serializer {
 	
-	public Serializer() {
+	private EmployeeDB employeedb = null;
+	private ClientDB clientdb = null;
+	private InventoryDB inventorydb = null;
+	private OrderDB orderdb = null;
+	private static Serializer serializer = null;
+	
+	private Serializer() {
 
 	}
 
-	public void serialize(String fileName, Object data) {
+	public static Serializer getInstance() {
+		if(serializer == null) {
+			serializer = new Serializer();
+		}
+		
+		return serializer;
+	}
+	
+	
+	public void save(String db, Object data) {
+		if (db.equals("EmployeeDB")) {
+			employeedb = (EmployeeDB)data;
+			serialize("EmployeeDB.db",employeedb);
+		}
+		
+		else if (db.equals("ClientDB")) {
+			clientdb = (ClientDB)data;
+			serialize("ClientDB.db",clientdb);
+		}
+		
+		else if (db.equals("InventoryDB")) {
+			inventorydb = (InventoryDB)data;
+			serialize("InventoryDB.db",inventorydb);
+		}
+		
+		else if (db.equals("OrderDB")) {
+			orderdb = (OrderDB)data;
+			serialize("OrderDB.db",orderdb);
+		}
+		
+		else {
+			System.out.println("Can't save. Invalid DB");
+			return;
+		}
+	}
+	
+	public Object load(String db) {
+		Object data = null;
+		if (db.equals("EmployeeDB")) {
+			if (employeedb == null) {
+				employeedb = (EmployeeDB)this.deserialize("EmployeeDB.db");
+			} 
+			data = employeedb;
+		}
+		else if (db.equals("ClientDB")) {
+			if (clientdb == null) {
+				clientdb = (ClientDB)this.deserialize("ClientDB.db");
+			} 
+			data = clientdb;
+		}
+		else if (db.equals("InventoryDB")) {
+			if (inventorydb == null) {
+				inventorydb = (InventoryDB)this.deserialize("InventoryDB.db");
+			} 
+			data = inventorydb;
+		}
+		else if (db.equals("OrderDB")) {
+			if (orderdb == null) {
+				orderdb = (OrderDB)this.deserialize("OrderDB.db");
+			}
+			data = orderdb;
+		}
+		
+		else {
+			System.out.println("Error. DB Not found");
+		}
+		return data;
+	}
+	
+	private void serialize(String fileName, Object data) {
 		try {
 			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(data);
 			oos.close();
 			fos.close();
-		    System.out.println(fileName + " saved successfully");
+		    System.out.println("Serializer | " + fileName + " saved successfully");
 		} catch (IOException ioe) {
 			ioe.printStackTrace();
 		}
 
 	}
 
-	public Object deserialize(String fileName) throws Exception {
+	private Object deserialize(String fileName)  {
 		Object data = null;
 		FileInputStream fis = null;
 		ObjectInputStream ois = null;
@@ -37,14 +112,15 @@ public class Serializer {
 
 			ois.close();
 			fis.close();
-			System.out.println(fileName + " opened successfully");
+			System.out.println("Serializer | " + fileName + " opened successfully");
 		} catch (IOException ioe) {
-			ois.close();
-			fis.close();
-			throw ioe;
+			ioe.printStackTrace();
 		} catch (ClassNotFoundException c) {
 			System.out.println("Class not found");
-			throw c;
+		} catch (Exception e) {
+			System.out.println("General Error");
+		} finally {
+			
 		}
 
 		return data;

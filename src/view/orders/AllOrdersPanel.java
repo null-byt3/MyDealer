@@ -2,7 +2,6 @@ package view.orders;
 
 import java.awt.Color;
 import java.awt.Font;
-
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -13,20 +12,17 @@ import javax.swing.JTable;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import model.car.Car;
-import model.client.Client;
-import model.database.ClientDB;
-import model.database.EmployeeDB;
+import controller.OrderController;
 import model.database.InventoryDB;
 import model.database.OrderDB;
 import model.database.Serializer;
-import model.employee.Employee;
 import model.order.Order;
 
 
 public class AllOrdersPanel extends JPanel {
 
 	JScrollPane tableScroll;
+	OrderController orderController = new OrderController();
 	
 	AllOrdersPanel() {
 		JLabel title = new JLabel("All Orders");
@@ -45,39 +41,8 @@ public class AllOrdersPanel extends JPanel {
 	
 	public JScrollPane CreateTable() {
 		
-		String[] columnNames = {"OrderID","Date Created", "Agent Name","Client Name","CarID", "More Details"};
-		String[][] data = null;
-		OrderDB orderdb = null;
-		InventoryDB inventorydb = null;
-		{
-		Serializer serializer = new Serializer();
-		try {
-			orderdb = (OrderDB)serializer.deserialize("OrderDB.db");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		}
-		{
-		Serializer serializer = new Serializer();
-		try {
-			inventorydb = (InventoryDB)serializer.deserialize("InventoryDB.db");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		}
-		int size = orderdb.size();
-		data = new String[size][];
-		for (int i = 0 ; i < size; i++ ) {
-			data[i] = new String[10];
-			Order order = orderdb.get(i);
-			data[i][0] = String.valueOf(order.getOrderId());
-			data[i][1] = order.getOrderDate();
-			data[i][2] = order.getAgentName();
-			data[i][3] = order.getClientName();
-			data[i][4] = String.valueOf(order.getCarId());
-			data[i][5] = null;
-		}
-		
+		String[] columnNames = {"Order ID","Client ID", "Agent ID","Car ID"};
+		String[][] data = orderController.getOrderMatrix();
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		
 		JTable ordersTable = new JTable(data, columnNames);
@@ -92,16 +57,12 @@ public class AllOrdersPanel extends JPanel {
 		ordersTable.getColumnModel().getColumn(1).setMaxWidth(80);
 		ordersTable.getColumnModel().getColumn(2).setMaxWidth(100);
 		ordersTable.getColumnModel().getColumn(3).setMaxWidth(100);
-		ordersTable.getColumnModel().getColumn(4).setMaxWidth(80);
-		ordersTable.getColumnModel().getColumn(5).setMaxWidth(80);
 
 
 		ordersTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
 		ordersTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
 		ordersTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer);
 		ordersTable.getColumnModel().getColumn(3).setCellRenderer(centerRenderer);
-		ordersTable.getColumnModel().getColumn(4).setCellRenderer(centerRenderer);
-		ordersTable.getColumnModel().getColumn(5).setCellRenderer(centerRenderer);
 
 
 		JScrollPane tblScrl = new JScrollPane(ordersTable);

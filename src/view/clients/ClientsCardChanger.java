@@ -33,7 +33,21 @@ public class ClientsCardChanger extends JPanel implements PanelChanger {
 	
 	@Override
 	public void updateWorkPanel(String panelName) {
+		
+		if (panelName.equals("NewClientPanel")) {
+			this.remove(newClientPanel);
+			newClientPanel = new NewClientPanel();
+			this.add(newClientPanel,"NewClientPanel");
+		}
+		
+		if (panelName.equals("AllClientsPanel")) {
+			this.remove(allClientsPanel);
+			allClientsPanel = new AllClientsPanel();
+			this.add(allClientsPanel,"AllClientsPanel");
+		}
+		
 		cl.show(this, panelName);
+		
 		System.out.println("ClientsCardChanger card changed to: "+ panelName);
 		
 	}

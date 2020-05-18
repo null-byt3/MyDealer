@@ -1,5 +1,7 @@
-package model.database;
+package model.database_initializers;
 
+import model.database.ClientDB;
+import model.database.EmployeeDB;
 import model.database.Serializer;
 import model.employee.Agent;
 import model.employee.Employee;
@@ -13,38 +15,22 @@ public class EmployeeDBinitializer {
 
 public static void main(String[] args) {
 	
-	Serializer serializer = new Serializer();
+	Serializer serializer = Serializer.getInstance();
 	EmployeeDB employeedb = null;
 	
-	
-	try {
-		// Fetch whatever EmployeeDB currently saved
-		employeedb = (EmployeeDB)serializer.deserialize("EmployeeDB.db");
-	}
-		
-	catch (NullPointerException e) {
+	employeedb = (EmployeeDB) serializer.load("EmployeeDB");
+
+	if (employeedb == null) {
 		System.out.println("EmployeeDB.db Not found. Creating...");
 		employeedb = new EmployeeDB();
-
+		
 	} 
-	catch (Exception e) {
-		System.out.println("Could not open file EmployeeDB.db. Attempting to delete..");
-		File file = new File("../EmployeeDB.db");
-		if (file.delete()) {
-			System.out.println("File Deleted Successfully. Creating new EmployeeDB.db");
-			employeedb = new EmployeeDB();
-		} 
-		else {
-			System.out.println("Could not delete File. Please try manually");
-		}
+	
+	else {
+		System.out.println("EmployeeDB found. Erasing contents..");
+		employeedb.clear();
 	}
 	
-	
-	
-
-	
-	// Empty DB
-	employeedb.clear();	
 	
 	// Create and add everything back
 	Employee sebas = new Agent("Sebastian","Altheim","sebas","12345","M",6500);
@@ -62,7 +48,7 @@ public static void main(String[] args) {
 	employeedb.add(john);
 	
 	// Serialize the file (aka save to DB)
-	serializer.serialize("EmployeeDB.db", employeedb);
+	serializer.save("EmployeeDB", employeedb);
 	
 }
 

@@ -18,6 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import controller.ClientController;
+import controller.EmployeeController;
 import controller.LoginController;
 import model.database.EmployeeDB;
 import model.database.Serializer;
@@ -25,13 +26,13 @@ import model.employee.Employee;
 
 public class NewClientPanel extends JPanel {
 
-	private Employee current_user;
 	private EmployeeDB employeedb = null;
 	private JRadioButton male, female;
 	private JTextField firstName_field, lastName_field, city_field, address_field, phoneNum_field, email_field;
 	private JLabel agent_name, first_name, last_name, gender, city, address, phoneNum, email;
 	private ClientController clientController = new ClientController();
 	private LoginController loginController = new LoginController();
+	private EmployeeController employeeController = new EmployeeController();
 
 	
 	NewClientPanel() {
@@ -76,15 +77,13 @@ public class NewClientPanel extends JPanel {
 		agentDetails.setBackground(Color.WHITE);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
-		Serializer serializer = new Serializer();
-		try {
-			employeedb = (EmployeeDB) serializer.deserialize("EmployeeDB.db");
-			} catch (Exception e) {
-				System.out.println("NewClientPanel Error -> Cannot deserialize EmployeeDB");
-			}
 		
-		for (Employee employee : employeedb) {
-			comboBox.addItem(employee.getFullName());
+		String employeeMatrix[][] = employeeController.getEmployeeMatrix();
+		
+		
+		for (String[] employee : employeeMatrix) {
+			comboBox.addItem(employee[2] + " " + employee[3]);
+			
 		}
 		
 		comboBox.setSelectedItem(loginController.getLoggedUserFullName());
@@ -222,7 +221,7 @@ public class NewClientPanel extends JPanel {
 					JOptionPane.showMessageDialog(null, "Error: Invalid fields");
 				}
 				else	{
-					int agentId = current_user.getId();
+					int agentId = loginController.getLoggedUserId();
 					String firstName = firstName_field.getText();
 					String lastName = lastName_field.getText();
 					String gender = (male.isSelected()) ? male.getText() : female.getText();

@@ -51,7 +51,6 @@ public class LoginController {
 		employeedb = (EmployeeDB) employeeController.getEmployeeList();
 		
 		for (Employee employee : employeedb) {
-			System.out.println(employee);
 			if (username.equals(employee.getUserName()) && String.valueOf(password).equals(employee.getPassword())) {
 				setLoggedUser(employee);
 				return true;

@@ -13,7 +13,7 @@ public class ClientsMainPage extends JPanel {
 	ClientsCardChanger clientscardchanger;
 	ClientsSidePanel clientssidepanel;
 	
-	public ClientsMainPage(Employee current_user) {
+	public ClientsMainPage() {
 		this.setLayout(bl);
 		
 		clientscardchanger = new ClientsCardChanger();

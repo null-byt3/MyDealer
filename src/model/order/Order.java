@@ -5,52 +5,49 @@ import java.time.LocalDate;
 
 public class Order implements Serializable {
 	
-	protected int orderId;
-	private String clientName;
-	private String agentName;
-	private int carId;
-	private String orderDate;
 	private static int idCounter = 1000;
-	LocalDate today = LocalDate.now();
+	protected int orderId;
+	private int clientId;
+	private int agentId;
+	private int carId;
 	
 	public Order() {
 		this.orderId=idCounter++;
-		this.orderDate=null;
-		this.clientName=null;
-		this.agentName=null;
+		this.clientId=0;
+		this.agentId=0;
 		this.carId=0;
 	}
 	
-	public Order(String clientName, String agentName, int carId) {
+	public Order(int clientId, int agentId, int carId) {
 		this.orderId=idCounter++;
-		this.orderDate=today.toString();
-		this.clientName=clientName;
-		this.agentName=agentName;
-		this.carId=carId;
+		this.clientId = clientId;
+		this.agentId = agentId;
+		this.carId = carId;
+		
 	}
 
-	public int getOrderId() {
+	public int getId() {
 		return orderId;
 	}
 
-	public void setOrderId(int orderId) {
+	public void setId(int orderId) {
 		this.orderId = orderId;
 	}
 
-	public String getClientName() {
-		return clientName;
+	public int getClientId() {
+		return clientId;
 	}
 
-	public void setClientName(String clientName) {
-		this.clientName = clientName;
+	public void setClientId(int clientId) {
+		this.clientId = clientId;
 	}
 
-	public String getAgentName() {
-		return agentName;
+	public int getAgentId() {
+		return agentId;
 	}
 
-	public void setAgentName(String agentName) {
-		this.agentName = agentName;
+	public void setAgentId(int agentId) {
+		this.agentId = agentId;
 	}
 
 	public int getCarId() {
@@ -61,26 +58,6 @@ public class Order implements Serializable {
 		this.carId = carId;
 	}
 
-	public String getOrderDate() {
-		return orderDate;
-	}
-
-	public void setOrderDate(String orderDate) {
-		this.orderDate = orderDate;
-	}
-
-	public LocalDate getToday() {
-		return today;
-	}
-
-	public void setToday(LocalDate today) {
-		this.today = today;
-	}
-	
-	/*public String toString() {
-		return "Car " + this.carId + ": Make= " + this.make + ", Model= " + this.model + ", Trim= "
-				+ this.trim + ", Color= " + this.color + ", Location= " + this.location + ", Status= " + this.status + "\n";
-	}*/
 	
 	
 

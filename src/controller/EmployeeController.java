@@ -16,13 +16,8 @@ public class EmployeeController {
 	
 	
 	public EmployeeController() {
-		this.serializer = new Serializer();
-		try {
-			this.employeeDB = (EmployeeDB)serializer.deserialize("EmployeeDB.db");
-			
-		} catch (Exception e) {
-			System.out.println("EmployeeController -> Cannot deserialize EmployeeDB");
-		}
+		this.serializer = Serializer.getInstance();
+		employeeDB = (EmployeeDB)serializer.load("EmployeeDB");
 	}
 	
 	public ArrayList<Employee> getEmployeeList() {
@@ -99,7 +94,8 @@ public class EmployeeController {
 	
 	
 	public void updateDB() {
-		serializer.serialize("EmployeeDB.db", employeeDB);
+		serializer.save("EmployeeDB", employeeDB);
+		System.out.println("EmplyeeDB saved successfully");
 	}
 	
 	

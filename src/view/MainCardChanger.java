@@ -24,7 +24,7 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 	
 	 public MainCardChanger(Employee current_user) {
 		this.setLayout(cl);
-		clientspanel = new ClientsMainPage(current_user);
+		clientspanel = new ClientsMainPage();
 		orderspanel = new OrdersMainCard(); 
 		welcomepanel = new WelcomePanel();
 		inventorypanel = new InventoryMainCard();
@@ -40,6 +40,7 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 	}
 	 
 		public void updateWorkPanel(String text) {
+		
 			cl.show(this, text);
 			System.out.println("WorkPanel card changed to: "+ text);
 		}
