@@ -28,15 +28,15 @@ public class NewClientPanel extends JPanel {
 
 	private EmployeeDB employeedb = null;
 	private JRadioButton male, female;
+	private JComboBox phonePrefix;
 	private JTextField firstName_field, lastName_field, city_field, address_field, phoneNum_field, email_field;
 	private JLabel agent_name, first_name, last_name, gender, city, address, phoneNum, email;
 	private ClientController clientController = new ClientController();
 	private LoginController loginController = new LoginController();
 	private EmployeeController employeeController = new EmployeeController();
-
 	
 	NewClientPanel() {
-		this.setBackground(Color.WHITE);
+		//this.setBackground(Color.WHITE);
 		this.setLayout(null);
 
 		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y) 
@@ -178,7 +178,7 @@ public class NewClientPanel extends JPanel {
 		JLabel hyphen = new JLabel("-");
 		phoneNum_field = new JTextField();
 		String[] prefix_string = {"02","03","04","07","08","09","050","052","053","054","055","058"};
-		JComboBox phonePrefix = new JComboBox(prefix_string);	
+		phonePrefix = new JComboBox(prefix_string);	
 		phoneNum.setBounds(20, 150, 100, 50);
 		phonePrefix.setBounds(20, 190, 50, 30);
 		hyphen.setBounds(77, 195, 10, 10);
@@ -227,9 +227,8 @@ public class NewClientPanel extends JPanel {
 					String gender = (male.isSelected()) ? male.getText() : female.getText();
 					String city = city_field.getText();
 					String address = address_field.getText();
-					String phoneNum = phoneNum_field.getText();
+					String phoneNum = phonePrefix.getSelectedItem() + phoneNum_field.getText();
 					String email = email_field.getText();
-					
 					clientController.createClient(agentId, firstName, lastName, gender, city, address, phoneNum, email);
 					JOptionPane.showMessageDialog(null, "Client Created");
 				}

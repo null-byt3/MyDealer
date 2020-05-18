@@ -1,12 +1,10 @@
 package controller;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-
-import javax.swing.JPanel;
 
 import model.client.Client;
 import model.database.ClientDB;
+import model.database.IdProvider;
 import model.database.Serializer;
 
 public class ClientController {
@@ -18,7 +16,6 @@ public class ClientController {
 	public ClientController() {
 		this.serializer = Serializer.getInstance();
 		clientDB = (ClientDB)serializer.load("ClientDB");
-				
 	}
 	
 	public ArrayList<Client> getClientsList() {
@@ -104,7 +101,8 @@ public class ClientController {
 	
 	
 	public void createClient(int agentId, String firstName, String lastName, String gender, String city, String address, String phoneNum, String email) {
-		Client new_client = new Client(agentId,firstName,lastName, gender, city, address, phoneNum, email);
+		int id = serializer.getNextId("clientId");
+		Client new_client = new Client(id,agentId,firstName,lastName, gender, city, address, phoneNum, email);
 		createClient(new_client);
 	}
 	
@@ -112,6 +110,12 @@ public class ClientController {
 		clientDB.add(new_client);
 		updateDB();
 		System.out.println(new_client.getFullName() + " successfully added to DB");
+	}
+	
+	public void eraseClient(int id) {
+		setClient(id);
+		clientDB.remove(client);
+		updateDB();
 	}
 	
 	private void updateDB() {

@@ -25,7 +25,7 @@ public class EditClientsWindow extends JDialog {
 	private JTextField firstName_field, lastName_field, city_field, address_field, phoneNum_field, email_field;
 	private JComboBox phonePrefix;
 	private JRadioButton male,female;
-	private JButton saveButton, cancelButton;
+	private JButton saveButton, deleteButton;
 	private int client_id;
 	ClientController clientController = new ClientController();
 	LoginController loginController = new LoginController();
@@ -175,7 +175,7 @@ public class EditClientsWindow extends JDialog {
 		saveButton.setBounds(0, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(!verifyFields()) {
+				if(!fieldValidator()) {
 					JOptionPane.showMessageDialog(null, "Error: Invalid fields");
 				}
 				else	{
@@ -195,22 +195,25 @@ public class EditClientsWindow extends JDialog {
 		});
 		
 		
-		cancelButton = new JButton("Cancel");
-		cancelButton.setForeground(Color.BLACK);
-		cancelButton.setBounds(170, 0, 120, 45);
-		cancelButton.addActionListener(new ActionListener() {
+		deleteButton = new JButton("Delete Client");
+		deleteButton.setForeground(Color.BLACK);
+		deleteButton.setBackground(Color.RED);
+		deleteButton.setBounds(170, 0, 120, 45);
+		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				clientController.eraseClient(client_id);
+				JOptionPane.showMessageDialog(null, "Client Deleted");
 				dispose();
 			}
 		});
 		
 		buttonsPanel.add(saveButton);	
-		buttonsPanel.add(cancelButton);
+		buttonsPanel.add(deleteButton);
 		return buttonsPanel;
 	}
 	
 	
-	public boolean verifyFields() {
+	public boolean fieldValidator() {
 		first_name.setForeground(Color.BLACK);
 		last_name.setForeground(Color.BLACK);
 		gender.setForeground(Color.BLACK);

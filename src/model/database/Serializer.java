@@ -11,6 +11,7 @@ public class Serializer {
 	private ClientDB clientdb = null;
 	private InventoryDB inventorydb = null;
 	private OrderDB orderdb = null;
+	private IdProvider idprovider = null;
 	private static Serializer serializer = null;
 	
 	private Serializer() {
@@ -46,6 +47,9 @@ public class Serializer {
 			orderdb = (OrderDB)data;
 			serialize("OrderDB.db",orderdb);
 		}
+		else if (db.equals("IdProvider")) {
+			serialize("IdProvider",data);
+		}
 		
 		else {
 			System.out.println("Can't save. Invalid DB");
@@ -78,13 +82,27 @@ public class Serializer {
 				orderdb = (OrderDB)this.deserialize("OrderDB.db");
 			}
 			data = orderdb;
-		}
+		}		
 		
 		else {
 			System.out.println("Error. DB Not found");
 		}
 		return data;
 	}
+	
+	public int getNextId(String type) {
+		int id = 0;
+		
+		if (idprovider == null) {
+			idprovider = (IdProvider)this.deserialize("IdProvider");
+		}
+		id = idprovider.generateId(type);
+		serialize("IdProvider", idprovider);
+		
+		return id;
+	}
+	
+	
 	
 	private void serialize(String fileName, Object data) {
 		try {
@@ -114,11 +132,13 @@ public class Serializer {
 			fis.close();
 			System.out.println("Serializer | " + fileName + " opened successfully");
 		} catch (IOException ioe) {
-			ioe.printStackTrace();
+			//ioe.printStackTrace();
+			data = null;
+			System.out.println("Serializer | File not found");
 		} catch (ClassNotFoundException c) {
-			System.out.println("Class not found");
+			System.out.println("Serializer | Class not found");
 		} catch (Exception e) {
-			System.out.println("General Error");
+			System.out.println("Serializer | General Error");
 		} finally {
 			
 		}

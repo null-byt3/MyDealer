@@ -15,12 +15,12 @@ public class Client implements Serializable
 	protected String email;
 	
 
-	protected static int idCounter = 1000;
+	//protected static int idCounter = 1000;
 
 
-public Client(int agentId,String firstName, String lastName, String gender, String city, String address, String phoneNum, String email)
+public Client(int id, int agentId,String firstName, String lastName, String gender, String city, String address, String phoneNum, String email)
 {
-	this.id = idCounter++;
+	this.id = id;
 	this.agentId = agentId;
 	this.firstName = firstName;
 	this.lastName = lastName;
@@ -32,7 +32,7 @@ public Client(int agentId,String firstName, String lastName, String gender, Stri
 
 	}
 public Client() {
-	this.id = idCounter++;
+	this.id = 0;
 	this.firstName = "Null";
 	this.lastName = "Null";
 	this.gender = "Null";
