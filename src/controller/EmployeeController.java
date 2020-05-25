@@ -70,15 +70,16 @@ public class EmployeeController {
 	public void createEmployee(String role, String firstName, String lastName, String gender, String userName, String password, int salary) {
 		
 		Employee new_employee;
+		int id = serializer.getNextId("employeeId");
 		
 		if(role.equals("Secretary")) {
-			new_employee = new Secretary(firstName,lastName,gender,userName,password,salary);
+			new_employee = new Secretary(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else if(role.equals("Agent")) {
-			new_employee = new Agent(firstName,lastName,gender,userName,password,salary);
+			new_employee = new Agent(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else if(role.equals("Manager")) {
-			new_employee = new Manager(firstName,lastName,gender,userName,password,salary);
+			new_employee = new Manager(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else {
 			return;

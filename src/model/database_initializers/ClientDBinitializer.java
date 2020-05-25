@@ -1,36 +1,16 @@
 package model.database_initializers;
 
-import controller.ClientController;
 import model.client.Client;
 import model.database.ClientDB;
-import model.database.IdProvider;
 import model.database.Serializer;
 
 public class ClientDBinitializer {
 
-	public static void main(String[] args) {
+	public static ClientDB getDB() {
 
 		Serializer serializer = Serializer.getInstance();
-		ClientController clientcontroller = new ClientController();
-		ClientDB clientdb = null;
-		IdProvider idprovider = new IdProvider();
-		serializer.save("IdProvider", idprovider);
-		clientdb = (ClientDB) serializer.load("ClientDB");
-
-		if (clientdb == null) {
-			System.out.println("ClientDB.db Not found. Creating...");
-			clientdb = new ClientDB();
-			
-		} 
+		ClientDB clientdb = new ClientDB();
 		
-		else {
-			System.out.println("ClientDB found. Erasing contents..");
-			clientdb.clear();
-		}
-		
-
-		
-		// Create and add everything back
 		Client client1 = new Client(serializer.getNextId("clientId"),1, "Michael", "Jordan", "Male", "New Jersy", "nevermind", "0508441414", "mjordan@nba.com");
 		Client client2 = new Client(serializer.getNextId("clientId"),1, "Donald", "Trump", "Male", "newyork", "whitehouse", "97441","therealdonaldtrump@whitehouse.com");
 		Client client3 = new Client(serializer.getNextId("clientId"),1, "Vladimir", "Putin", "Male", "Moscov", "kemrlin 1", "0508980797","vladimir@motherrussia.com");
@@ -45,9 +25,7 @@ public class ClientDBinitializer {
 		clientdb.add(client5);
 		clientdb.add(client6);
 
-		// Serialize the file (aka save to DB)
-		serializer.save("ClientDB", clientdb);
-
+		return clientdb;
 	}
 
 }

@@ -9,32 +9,11 @@ import model.order.Order;
 
 public class OrderDBinitializer {
 
-public static void main(String[] args) {
+public static OrderDB getDB() {
 	
 	Serializer serializer = Serializer.getInstance();
-	
-	// Fetch whatever OrderDB currently saved
-	
-	//OrderDB orderDB = new OrderDB();
-	
-	OrderDB orderdb = null;
-	
-	orderdb = (OrderDB)serializer.load("OrderDB");
 
-
-	if (orderdb == null) {
-		System.out.println("OrderDB.db Not found. Creating...");
-		orderdb = new OrderDB();
-		
-	} 
-	
-	else {
-		System.out.println("OrderDB.db found. Erasing contents..");
-		orderdb.clear();
-	}
-	
-	// Empty DB
-	orderdb.clear();	
+	OrderDB orderdb = new OrderDB();
 		
 	// Create and add everything back
 	Order order1 = new Order(1001, 1002, 1006);
@@ -51,8 +30,8 @@ public static void main(String[] args) {
 	orderdb.add(order5);
 	orderdb.add(order6);
 	
-	// Serialize the file (aka save to DB)
-	serializer.save("OrderDB", orderdb);
+	
+	return orderdb;
 	
 }
 

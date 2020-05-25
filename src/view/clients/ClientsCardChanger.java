@@ -30,9 +30,8 @@ public class ClientsCardChanger extends JPanel implements PanelChanger {
 	
 	
 	
-	
 	@Override
-	public void updateWorkPanel(String panelName) {
+	public void updateWorkPanel(String panelName) {		
 		
 		if (panelName.equals("NewClientPanel")) {
 			this.remove(newClientPanel);
@@ -45,6 +44,8 @@ public class ClientsCardChanger extends JPanel implements PanelChanger {
 			allClientsPanel = new AllClientsPanel();
 			this.add(allClientsPanel,"AllClientsPanel");
 		}
+		
+		
 		
 		cl.show(this, panelName);
 		

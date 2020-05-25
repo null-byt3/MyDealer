@@ -12,6 +12,7 @@ public class Serializer {
 	private InventoryDB inventorydb = null;
 	private OrderDB orderdb = null;
 	private IdProvider idprovider = null;
+	private CarPropertiesDB carpropertiesdb = null;
 	private static Serializer serializer = null;
 	
 	private Serializer() {
@@ -48,7 +49,11 @@ public class Serializer {
 			serialize("OrderDB.db",orderdb);
 		}
 		else if (db.equals("IdProvider")) {
-			serialize("IdProvider",data);
+			serialize("IdProvider",idprovider);
+		}
+		else if (db.equals("CarPropertiesDB")) {
+			carpropertiesdb = (CarPropertiesDB)data;
+			serialize("CarPropertiesDB.db",carpropertiesdb);
 		}
 		
 		else {
@@ -83,6 +88,18 @@ public class Serializer {
 			}
 			data = orderdb;
 		}		
+		else if (db.equals("IdProvider")) {
+			if (idprovider == null) {
+				idprovider = (IdProvider)this.deserialize("IdProvider");
+			}
+		}
+		else if (db.equals("CarPropertiesDB")) {
+			if (carpropertiesdb == null) {
+				carpropertiesdb = (CarPropertiesDB)this.deserialize("CarPropertiesDB.db");
+
+			}
+			data = carpropertiesdb;
+		}
 		
 		else {
 			System.out.println("Error. DB Not found");
@@ -100,6 +117,17 @@ public class Serializer {
 		serialize("IdProvider", idprovider);
 		
 		return id;
+	}
+	
+	public void resetId(String type) {
+		if (idprovider == null) {
+			idprovider = (IdProvider)this.deserialize("IdProvider");
+			if (idprovider == null) {
+				idprovider = new IdProvider();
+			}
+		}
+		idprovider.reset(type);
+		serialize("IdProvider", idprovider);
 	}
 	
 	
@@ -132,18 +160,16 @@ public class Serializer {
 			fis.close();
 			System.out.println("Serializer | " + fileName + " opened successfully");
 		} catch (IOException ioe) {
-			//ioe.printStackTrace();
+			ioe.printStackTrace();
 			data = null;
-			System.out.println("Serializer | File not found");
+			//System.out.println("Serializer | File not found");
 		} catch (ClassNotFoundException c) {
 			System.out.println("Serializer | Class not found");
 		} catch (Exception e) {
 			System.out.println("Serializer | General Error");
-		} finally {
-			
 		}
-
 		return data;
+
 	}
 	
 	

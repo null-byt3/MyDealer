@@ -9,37 +9,33 @@ public class Car implements Serializable {
 	private String model; // Ibiza
 	private String trim; // FR
 	private String color; // Orange
-	private String location; //Ashdod port
 	private String status; //Sold, Free, etc.
 	private int price;
 
-	private static int idCounter = 1000;
-
+	
 	public Car() {
-		this.carId = idCounter++;
+		this.carId = 0;
 		this.make = "Null";
 		this.model = "Null";
 		this.trim = "Null";
 		this.color = "Null";
-		this.location = "Null";
 		this.status = "Null";
 		this.price = 0;
 	}
 
-	public Car(String make, String model, String trim, String color, String location, String status, int price) {
-		this.carId = idCounter++;
+	public Car(String make, String model, String trim, String color, String status, int price) {
+		this.carId = 0;
 		this.make = make;
 		this.model = model;
 		this.trim = trim;
 		this.color = color;
-		this.location = location;
 		this.status = status;
 		this.price = price;
 	}
 
 	public String toString() {
 		return "Car " + this.carId + ": Make= " + this.make + ", Model= " + this.model + ", Trim= "
-				+ this.trim + ", Color= " + this.color + ", Location= " + this.location + ", Status= " + this.status + "\n";
+				+ this.trim + ", Color= " + this.color + ", Status= " + this.status + "\n";
 	}
 
 	public int getCarId() {
@@ -80,14 +76,6 @@ public class Car implements Serializable {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
 	}
 
 	public String getStatus() {

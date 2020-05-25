@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 
 public class IdProvider implements Serializable {
-	private HashMap<String, Integer> map;
+	private HashMap<String, Integer> map = new HashMap<String,Integer>();
 
 	public int generateId(String type) {
-		initializer();
+		
 		int id = 0;
 		
 		if (map.containsKey(type)) {
@@ -16,21 +16,27 @@ public class IdProvider implements Serializable {
 		}
 		return id;
 	}
-	
-	public void resetIds() {
-		map = new HashMap<>();
-		map.put("employeeId", 1000);
-		map.put("clientId", 2000);
-		map.put("orderId", 3000);
-		map.put("inventoryId", 4000);
-	}
 
-	private void initializer() {
-		if (map == null) {
-			resetIds();
+	public void reset(String type) {
+
+		if (type.equals("employeeId")) {
+			map.put("employeeId", 1000);
+
 		}
+		else if (type.equals("clientId")) {
+			map.put("clientId", 2000);
 
-		return;
+		}
+		else if (type.equals("orderId")) {
+			map.put("orderId", 3000);
+
+		}
+		else if (type.equals("inventoryId")) {
+			map.put("inventoryId", 4000);
+
+		}
+		else {
+			System.out.println("IdProvider | reset | DB Type not found");
+		}
 	}
-
 }

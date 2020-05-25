@@ -59,4 +59,8 @@ public class LoginController {
 		return false;
 	}
 	
+	public void logOut() {
+		current_user = null;
+	}
+	
 }

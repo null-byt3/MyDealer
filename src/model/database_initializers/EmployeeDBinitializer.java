@@ -1,6 +1,5 @@
 package model.database_initializers;
 
-import model.database.ClientDB;
 import model.database.EmployeeDB;
 import model.database.Serializer;
 import model.employee.Agent;
@@ -8,37 +7,21 @@ import model.employee.Employee;
 import model.employee.Manager;
 import model.employee.Secretary;
 
-import java.io.File;
-import java.io.IOException;
-
 public class EmployeeDBinitializer {
 
-public static void main(String[] args) {
+public static EmployeeDB getDB() {
 	
 	Serializer serializer = Serializer.getInstance();
-	EmployeeDB employeedb = null;
-	
-	employeedb = (EmployeeDB) serializer.load("EmployeeDB");
-
-	if (employeedb == null) {
-		System.out.println("EmployeeDB.db Not found. Creating...");
-		employeedb = new EmployeeDB();
-		
-	} 
-	
-	else {
-		System.out.println("EmployeeDB found. Erasing contents..");
-		employeedb.clear();
-	}
+	EmployeeDB employeedb = new EmployeeDB();
 	
 	
 	// Create and add everything back
-	Employee sebas = new Agent("Sebastian","Altheim","sebas","12345","M",6500);
-	Employee eny = new Secretary("Eny","Kaplan","enykap","abcde","F",8000);
-	Employee pegi = new Secretary("Peggy", "Allson", "pegi", "pegipeg","F", 8002);
-	Employee etay = new Agent("Etay","Rabino","etay","e123","M", 12000);
-	Employee vitaly = new Agent("Vitali", "Bucevith", "vitaly","pass", "M", 12050);
-	Employee john = new Manager("John","Smith","jsmith","12345","M",9000);
+	Employee sebas = new Agent(serializer.getNextId("employeeId"),"Sebastian","Altheim","sebas","12345","M",6500);
+	Employee eny = new Secretary(serializer.getNextId("employeeId"),"Eny","Kaplan","enykap","abcde","F",8000);
+	Employee pegi = new Secretary(serializer.getNextId("employeeId"),"Peggy", "Allson", "pegi", "pegipeg","F", 8002);
+	Employee etay = new Agent(serializer.getNextId("employeeId"),"Etay","Rabino","etay","e123","M", 12000);
+	Employee vitaly = new Agent(serializer.getNextId("employeeId"),"Vitali", "Bucevith", "vitaly","pass", "M", 12050);
+	Employee john = new Manager(serializer.getNextId("employeeId"),"John","Smith","jsmith","12345","M",9000);
 	
 	employeedb.add(sebas);
 	employeedb.add(eny);
@@ -47,9 +30,7 @@ public static void main(String[] args) {
 	employeedb.add(vitaly);
 	employeedb.add(john);
 	
-	// Serialize the file (aka save to DB)
-	serializer.save("EmployeeDB", employeedb);
-	
+	return employeedb;
 }
 
 }

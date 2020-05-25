@@ -2,8 +2,8 @@ package model.employee;
 
 public class Manager extends Employee {
 
-	public Manager(String firstName, String lastName, String userName, String password, String gender, int salary) {
-		this.id = idCounter++;
+	public Manager(int id, String firstName, String lastName, String userName, String password, String gender, int salary) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;
@@ -13,7 +13,7 @@ public class Manager extends Employee {
 	}
 	
 	public Manager() {
-		this.id = idCounter++;
+		this.id = 0;
 		this.firstName = "Null";
 		this.lastName = "Null";
 		this.userName = "Null";

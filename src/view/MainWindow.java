@@ -40,8 +40,4 @@ public class MainWindow extends JFrame {
 		// Complete full screen
 
 	}
-	
-	public static void main(String[] args) {  
-	new MainWindow();  
-	}
 }

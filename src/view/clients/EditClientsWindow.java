@@ -42,7 +42,7 @@ public class EditClientsWindow extends JDialog {
 		setLocation(500, 280);
 		this.main_panel = createPanel();
 		this.buttonsPanel = CreateButtonsPanel();
-		generateFields(id);
+		populateFields(id);
 		main_panel.setLayout(null);
 		buttonsPanel.setLayout(null);
 		main_panel.add(buttonsPanel);
@@ -55,7 +55,7 @@ public class EditClientsWindow extends JDialog {
 
 		// FIRST NAME
 		first_name = new JLabel("First Name:");
-		firstName_field = new JTextField("HELLO");
+		firstName_field = new JTextField();
 		first_name.setBounds(20, 10, 100, 50);
 		firstName_field.setBounds(20, 50, 130, 30);
 		panel.add(first_name);
@@ -134,7 +134,7 @@ public class EditClientsWindow extends JDialog {
 		return panel;
 	}
 	
-	private void generateFields(int id) {
+	private void populateFields(int id) {
 		firstName_field.setText(clientController.getFirstName(id)); 
 		lastName_field.setText(clientController.getLastName(id)); 
 		city_field.setText(clientController.getCity(id)); 

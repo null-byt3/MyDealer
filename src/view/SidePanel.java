@@ -154,6 +154,7 @@ public class SidePanel extends JPanel {
 				JComponent comp = (JComponent) e.getSource();
 				Window win = SwingUtilities.getWindowAncestor(comp);
 				win.dispose();
+				loginController.logOut();
 				new Login();
 			}
 

@@ -4,8 +4,6 @@ import java.io.Serializable;
 
 public abstract class Employee implements Serializable {
 
-	protected static int idCounter = 1000;
-
 	protected int id;
 	protected String firstName;
 	protected String lastName;
@@ -13,25 +11,6 @@ public abstract class Employee implements Serializable {
 	protected String gender;
 	protected String password;
 	protected int salary;
-
-	public Employee() {
-		this.id = idCounter++;
-		this.firstName = "Null";
-		this.lastName = "Null";
-		this.userName = "Null";
-		this.gender = "Null";
-		this.password = "Null";
-		this.salary = 0;
-	}
-
-	public Employee(String firstName, String lastName, String gender, String userName, String password, int salary) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.userName = userName;
-		this.password = password;
-		this.salary = salary;
-		this.gender = gender;
-	}
 	
 	//public abstract String getRole();
 

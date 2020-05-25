@@ -1,7 +1,9 @@
 package model.employee;
 
 public class Agent extends Employee {
-	public Agent(String firstName, String lastName, String userName, String password,String gender, int salary) {
+	
+	public Agent(int id, String firstName, String lastName, String userName, String password,String gender, int salary) {
+		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.userName = userName;

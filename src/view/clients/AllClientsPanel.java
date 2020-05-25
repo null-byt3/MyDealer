@@ -1,5 +1,6 @@
 package view.clients;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
@@ -14,23 +15,32 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.RowFilter;
 import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 import controller.ClientController;
 
 public class AllClientsPanel extends JPanel {
 
-	JScrollPane tableScroll;
-	ClientController clientController = new ClientController();
-	JPanel panel;
-	EditClientsWindow editclientswindow;
-	JTable clientsTable;
-	DefaultTableCellRenderer centerRenderer;
-	DefaultTableModel dtm;
-	String[][] data;
+	private JScrollPane tableScroll;
+	private ClientController clientController = new ClientController();
+	private JPanel panel, searchPanel;
+	private EditClientsWindow editclientswindow;
+	private JTable clientsTable;
+	private JTextField searchField;
+	private JLabel searchLabel;
+	private DefaultTableCellRenderer centerRenderer;
+	private DefaultTableModel dtm;
+	private String[][] data;
+	private TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 
 	AllClientsPanel() {
 		JLabel title = new JLabel("All Clients");
@@ -43,18 +53,66 @@ public class AllClientsPanel extends JPanel {
 		this.panel = this;
 		this.setBackground(Color.WHITE);
 		this.setLayout(null);
-
+		
+		searchPanel = searchPanel();
 		tableScroll = CreateTable();
 		this.add(tableScroll);
+		this.add(searchPanel);
 	}
 
+	public JPanel searchPanel() {
+		
+		searchPanel = new JPanel();
+		searchPanel.setLayout(new BorderLayout());
+		searchPanel.setBounds(50, 270, 400, 30);
+		JTextField searchField = new JTextField();
+		searchLabel = new JLabel("Search: ");
+		searchLabel.setBackground(Color.WHITE);
+		
+		
+		 searchField.getDocument().addDocumentListener(new DocumentListener(){
+
+	            @Override
+	            public void insertUpdate(DocumentEvent e) {
+	                String text = searchField.getText();
+	                if (text.trim().length() == 0) {
+	                    rowSorter.setRowFilter(null);
+	                } else {
+	                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+	                }
+	            }
+
+	            @Override
+	            public void removeUpdate(DocumentEvent e) {
+	                String text = searchField.getText();
+	                if (text.trim().length() == 0) {
+	                    rowSorter.setRowFilter(null);
+	                } else {
+	                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+	                }
+	            }
+
+	            @Override
+	            public void changedUpdate(DocumentEvent e) {
+	                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	            }
+
+	        });
+		
+		
+		searchPanel.add(searchLabel, BorderLayout.WEST);
+		searchPanel.add(searchField, BorderLayout.CENTER); 
+		
+		return searchPanel;
+	}
+	
+	
+	
 	public JScrollPane CreateTable() {
 
 		String[] columnNames = { "ID", "First Name", "Last Name", "City", "Address", "Phone Number", "E-Mail" };
-		data = clientController.getClientMatrix();
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 
-		clientsTable = new JTable();
 		dtm = new DefaultTableModel() {
 
 			@Override
@@ -62,12 +120,15 @@ public class AllClientsPanel extends JPanel {
 				return false;
 			}
 		};
-
-		clientsTable.setModel(dtm);
 		dtm.setColumnIdentifiers(columnNames);
 		
 		populateTable();
 		
+		clientsTable = new JTable(dtm);
+		rowSorter.setModel(dtm);
+		clientsTable.setRowSorter(rowSorter);
+		
+				
 		centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		clientsTable.setBorder(blackline);
