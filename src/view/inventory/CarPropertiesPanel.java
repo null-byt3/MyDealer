@@ -2,6 +2,7 @@ package view.inventory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -26,12 +27,10 @@ public class CarPropertiesPanel extends JPanel {
 	private JPanel panel;
 	private EditCarPropertiesWindow editcarprops;
 	private JButton newButton;
-	// private JPanel[][] slots;
 	private JPanel[] carTypePanel;
 	private CarPropertiesController carpropscontroller = new CarPropertiesController();
 	private int num_of_types;
 	private HashMap<String, JPanel[]> slots_hash = new HashMap<String, JPanel[]>();
-
 	CarPropertiesPanel() {
 
 		this.setLayout(null);
@@ -57,7 +56,6 @@ public class CarPropertiesPanel extends JPanel {
 	public JPanel CreateVehicleGrid(ArrayList<String> types) {
 
 		num_of_types = types.size();
-
 		JPanel vehicleGridPanel = new JPanel();
 		vehicleGridPanel.setLayout(new GridLayout(5, 1, 10, 10));
 		vehicleGridPanel.setBounds(20, 180, 1600, 1000);
@@ -91,7 +89,7 @@ public class CarPropertiesPanel extends JPanel {
 	public JPanel InnerGridPanel(String type) {
 		JPanel innerGridPanel = new JPanel();
 		innerGridPanel.setLayout(new GridLayout(1, 10, 10, 10));
-
+		
 		slots_hash.put(type, new JPanel[10]);
 		JPanel[] slots = slots_hash.get(type);
 
@@ -162,7 +160,6 @@ public class CarPropertiesPanel extends JPanel {
 				slot.add(model);
 				slot.add(available_trims);
 				slot.add(available_colors);
-
 				slot.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						if (e.getClickCount() == 2) {
@@ -170,9 +167,8 @@ public class CarPropertiesPanel extends JPanel {
 									model.getText());
 							editcarprops.addWindowListener(new WindowAdapter() {
 								public void windowClosed(WindowEvent e) {
-									SwingUtilities.getWindowAncestor(panel).repaint();
-									SwingUtilities.getWindowAncestor(panel).revalidate();
-									PopulateGrid();
+									RefreshPanel();
+									
 								}
 							});
 						}
@@ -202,5 +198,15 @@ public class CarPropertiesPanel extends JPanel {
 
 		return button;
 	}
+	
+	public void RefreshPanel() {
+		panel.removeAll();
+		this.remove(panel);
+		slots_hash = new HashMap<String, JPanel[]>();
+		panel = CreateVehicleGrid(carpropscontroller.getAllCarTypes());
+		this.add(panel);
+		PopulateGrid();
+	}
+	
 	
 }

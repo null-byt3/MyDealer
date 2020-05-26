@@ -127,6 +127,7 @@ public class AllClientsPanel extends JPanel {
 		clientsTable = new JTable(dtm);
 		rowSorter.setModel(dtm);
 		clientsTable.setRowSorter(rowSorter);
+		clientsTable.getTableHeader().setReorderingAllowed(false);
 		
 				
 		centerRenderer = new DefaultTableCellRenderer();

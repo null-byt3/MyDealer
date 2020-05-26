@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -44,7 +46,7 @@ public class EditCarPropertiesWindow extends JDialog {
 		this.main_panel = createPanel();
 		this.buttonsPanel = CreateButtonsPanel();
 
-		if (carModel != null) {
+		if (model != null) {
 			this.setTitle("Edit Car Property: " + carModel);
 			populateFields(carModel);
 			this.make_field.setEditable(false);
@@ -53,8 +55,9 @@ public class EditCarPropertiesWindow extends JDialog {
 			this.type_box.setEditable(false);
 		} else {
 			this.setTitle("Add Car Property");
+			this.deleteButton.setVisible(false);
 		}
-		
+
 		main_panel.setLayout(null);
 		buttonsPanel.setLayout(null);
 		main_panel.add(buttonsPanel);
@@ -64,7 +67,7 @@ public class EditCarPropertiesWindow extends JDialog {
 
 	private JPanel createPanel() {
 		JPanel panel = new JPanel();
-		
+
 		// MAKE
 		make_label = new JLabel("Make:");
 		make_field = new JTextField();
@@ -72,105 +75,102 @@ public class EditCarPropertiesWindow extends JDialog {
 		make_field.setBounds(20, 50, 130, 30);
 		panel.add(make_label);
 		panel.add(make_field);
-		
+
 		// MODEL
-		
+
 		model_label = new JLabel("Model:");
 		model_field = new JTextField();
 		model_label.setBounds(170, 10, 100, 50);
 		model_field.setBounds(170, 50, 130, 30);
 		panel.add(model_label);
 		panel.add(model_field);
-		
+
 		// TYPE
-		
+
 		type_label = new JLabel("Type:");
 		type_label.setBounds(20, 70, 100, 50);
 		type_box = new JComboBox<String>();
-		type_box.setBounds(20,110,120,30);
-		
+		type_box.setBounds(20, 110, 120, 30);
+
 		for (String type : carpropscontroller.getAllCarTypes()) {
 			type_box.addItem(type);
 		}
-		
+
 		panel.add(type_label);
 		panel.add(type_box);
-		
+
 		// TRIM LABEL
 		trim_label = new JLabel("Trim:");
 		trim_label.setBounds(20, 160, 100, 50);
 		panel.add(trim_label);
-		
+
 		// PRICE LABEL
 		price_label = new JLabel("Price:");
 		price_label.setBounds(170, 160, 100, 50);
 		panel.add(price_label);
-		
+
 		// TRIM + PRICE FIELDS
 		trim_fields = new JTextField[5];
 		price_fields = new JTextField[5];
 		int trim_spacing = 200;
-		
-		for (int i = 0; i < 5 ; i++) {
+
+		for (int i = 0; i < 5; i++) {
 			trim_fields[i] = new JTextField();
 			trim_fields[i].setBounds(20, trim_spacing, 130, 30);
-			
+
 			price_fields[i] = new JTextField();
-			price_fields[i].setBounds(170, trim_spacing, 130,30);
-			
+			price_fields[i].setBounds(170, trim_spacing, 130, 30);
+
 			trim_spacing += 40;
 			panel.add(trim_fields[i]);
 			panel.add(price_fields[i]);
 		}
-		
-		
+
 		// COLOR LABEL
 		colors_label = new JLabel("Colors:");
 		colors_label.setBounds(20, 400, 100, 50);
 		panel.add(colors_label);
-		
+
 		// COLOR FIELDS
 		color_fields = new JTextField[10];
-		
+
 		int color_spacing = 440;
-		
-		for (int i = 0; i < 10 ; i+=2) {
+
+		for (int i = 0; i < 10; i += 2) {
 			color_fields[i] = new JTextField();
 			color_fields[i].setBounds(20, color_spacing, 130, 30);
-			color_fields[i+1] = new JTextField();
-			color_fields[i+1].setBounds(170, color_spacing, 130, 30);
-			
+			color_fields[i + 1] = new JTextField();
+			color_fields[i + 1].setBounds(170, color_spacing, 130, 30);
+
 			color_spacing += 40;
-			
+
 			panel.add(color_fields[i]);
-			panel.add(color_fields[i+1]);
+			panel.add(color_fields[i + 1]);
 		}
-		
-		
+
 		return panel;
 	}
 
 	private void populateFields(String model) {
 		make_field.setText(carpropscontroller.getMake(model));
 		model_field.setText(model);
-		
-		Map<String,Integer> trim_map = carpropscontroller.getTrimsMap(model);
-		
+
+		Map<String, Integer> trim_map = carpropscontroller.getTrimsMap(model);
+
 		int i = 0;
 		for (Map.Entry<String, Integer> entry : trim_map.entrySet()) {
 			trim_fields[i].setText(entry.getKey());
 			price_fields[i].setText(Integer.toString(entry.getValue()));
 			i++;
 		}
-		
+
 		i = 0;
-		
+
 		for (String color : carpropscontroller.getColors(model)) {
 			color_fields[i].setText(color);
 			i++;
 		}
-		
-		
+
 	}
 
 	public JPanel CreateButtonsPanel() {
@@ -187,15 +187,12 @@ public class EditCarPropertiesWindow extends JDialog {
 				if (!fieldValidator()) {
 					JOptionPane.showMessageDialog(null, "Error: Invalid fields");
 				} else {
-					
-					//Map<String,Integer> trims = new HashMap<String,Integer>();
-					
-					//carpropscontroller.updateModel(model, trims, colors);
-					
-					
-//					clientController.updateClient(client_id, firstName, lastName, gender, city, address, phoneNum, email);
-//					JOptionPane.showMessageDialog(null, "Client Updated");
-//					dispose();
+						if (model != null) {
+							updateModel(model);
+						}
+						else {
+							createModel();
+						}
 				}
 			}
 		});
@@ -206,7 +203,8 @@ public class EditCarPropertiesWindow extends JDialog {
 		deleteButton.setBounds(160, 0, 130, 45);
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// clientController.eraseClient(client_id);
+				
+				carpropscontroller.deleteModel(model);
 				JOptionPane.showMessageDialog(null, "Properties Deleted");
 				dispose();
 			}
@@ -225,53 +223,98 @@ public class EditCarPropertiesWindow extends JDialog {
 		trim_label.setForeground(Color.BLACK);
 		colors_label.setForeground(Color.BLACK);
 
-		
 		// MAKE AND MODEL
 		if (make_field.getText().isEmpty()) {
 			make_label.setForeground(Color.RED);
 			valid = false;
 		}
-		
+
 		if (model_field.getText().isEmpty()) {
 			model_label.setForeground(Color.RED);
 			valid = false;
 		}
-		
-		
+
 		// TRIMS AND PRICES
 		int flag = 0;
-		for (int i = 0; i < 5 ; i++) {
-			
+		for (int i = 0; i < 5; i++) {
+
 			if (!trim_fields[i].getText().isEmpty() && !price_fields[i].getText().isEmpty()) {
 				flag++;
 			}
-			
-			if (!trim_fields[i].getText().isEmpty() && price_fields[i].getText().isEmpty() ||
-					trim_fields[i].getText().isEmpty() && !price_fields[i].getText().isEmpty()) {
-						valid = false;
-						trim_label.setForeground(Color.RED);
-					}
+
+			if (!trim_fields[i].getText().isEmpty() && price_fields[i].getText().isEmpty()
+					|| trim_fields[i].getText().isEmpty() && !price_fields[i].getText().isEmpty()) {
+				valid = false;
+				trim_label.setForeground(Color.RED);
+			}
 		}
-		
+
 		if (flag == 0) {
 			valid = false;
 			trim_label.setForeground(Color.RED);
 		}
-		
-		
+
 		// COLORS
 		flag = 0;
-		for (int i = 0; i< 10 ; i++) {
+		for (int i = 0; i < 10; i++) {
 			if (!color_fields[i].getText().isEmpty()) {
 				flag++;
 			}
-			
+
 		}
 		if (flag == 0) {
 			valid = false;
 			colors_label.setForeground(Color.RED);
 		}
-		
+
 		return valid;
+	}
+	
+	public void updateModel(String model) {
+		
+		Map<String,Integer> trims = new HashMap<String,Integer>();
+		List<String> colors = new ArrayList<String>();
+		for (int i = 0; i < 5 ; i++) {
+			if (!trim_fields[i].getText().isEmpty()) {
+				trims.put(trim_fields[i].getText(), Integer.valueOf(price_fields[i].getText()));
+			}
+		}
+		
+		for (int i = 0; i < 10 ; i++) {
+			if (!color_fields[i].getText().isEmpty()) {
+				colors.add(color_fields[i].getText());
+			}
+		}
+		
+		carpropscontroller.updateModel(model, trims, colors);
+		JOptionPane.showMessageDialog(null, "Model Updated");
+		dispose();
+	}
+	
+	public void createModel() {
+		
+		
+		String type = (String)type_box.getSelectedItem();
+		String make = make_field.getText();
+		String model = model_field.getText();
+		
+		Map<String,Integer> trims = new HashMap<String,Integer>();
+		List<String> colors = new ArrayList<String>();
+		for (int i = 0; i < 5 ; i++) {
+			if (!trim_fields[i].getText().isEmpty()) {
+				trims.put(trim_fields[i].getText(), Integer.valueOf(price_fields[i].getText()));
+			}
+		}
+		
+		for (int i = 0; i < 10 ; i++) {
+			if (!color_fields[i].getText().isEmpty()) {
+				colors.add(color_fields[i].getText());
+			}
+		}
+		
+		carpropscontroller.addModel(type, make, model, trims, colors);
+		
+		JOptionPane.showMessageDialog(null, "Model Created");
+		dispose();
 	}
 }
