@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
@@ -26,9 +27,8 @@ import model.employee.Employee;
 
 public class NewClientPanel extends JPanel {
 
-	private EmployeeDB employeedb = null;
 	private JRadioButton male, female;
-	private JComboBox phonePrefix;
+	private JComboBox<String> phonePrefix;
 	private JTextField firstName_field, lastName_field, city_field, address_field, phoneNum_field, email_field;
 	private JLabel agent_name, first_name, last_name, gender, city, address, phoneNum, email;
 	private ClientController clientController = new ClientController();
@@ -36,7 +36,6 @@ public class NewClientPanel extends JPanel {
 	private EmployeeController employeeController = new EmployeeController();
 	
 	NewClientPanel() {
-		//this.setBackground(Color.WHITE);
 		this.setLayout(null);
 
 		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y) 
@@ -44,7 +43,7 @@ public class NewClientPanel extends JPanel {
 		// "Create New Client" -- Label
 		JLabel title = new JLabel("Create New Client");
 		Font title_font = new Font("Helvetica", Font.BOLD,60);
-		Map attributes = title_font.getAttributes();
+		Map<TextAttribute, ?> attributes = title_font.getAttributes();
 		//attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		title.setFont(title_font.deriveFont(attributes));
 		title.setBounds(65, 31, 520, 50);
@@ -74,7 +73,7 @@ public class NewClientPanel extends JPanel {
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Agent Details");
 		agentDetails.setBorder(titledborder);
 		agentDetails.setBounds(65,120,400,100);
-		agentDetails.setBackground(Color.WHITE);
+		//agentDetails.setBackground(Color.WHITE);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
 		
@@ -113,7 +112,6 @@ public class NewClientPanel extends JPanel {
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Client Details");
 		clientDetails.setBorder(titledborder);
 		clientDetails.setBounds(65,250,650,320);
-		clientDetails.setBackground(Color.WHITE);
 		
 		
 		// FIRST NAME
@@ -138,9 +136,7 @@ public class NewClientPanel extends JPanel {
 		female = new JRadioButton("Female");
 		gender.setBounds(420, 10, 100, 50);
 		male.setBounds(420, 50, 60, 30);
-		male.setBackground(Color.WHITE);
 		female.setBounds(480, 50, 90, 30);
-		female.setBackground(Color.WHITE);
 		male.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				female.setSelected(false);
@@ -178,7 +174,7 @@ public class NewClientPanel extends JPanel {
 		JLabel hyphen = new JLabel("-");
 		phoneNum_field = new JTextField();
 		String[] prefix_string = {"02","03","04","07","08","09","050","052","053","054","055","058"};
-		phonePrefix = new JComboBox(prefix_string);	
+		phonePrefix = new JComboBox<String>(prefix_string);	
 		phoneNum.setBounds(20, 150, 100, 50);
 		phonePrefix.setBounds(20, 190, 50, 30);
 		hyphen.setBounds(77, 195, 10, 10);
@@ -209,7 +205,6 @@ public class NewClientPanel extends JPanel {
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(null);
 		buttonsPanel.setBounds(65,600,800,150);
-		buttonsPanel.setBackground(Color.WHITE);
 		
 		JButton saveButton = new JButton("Save Client");
 		saveButton.setBackground(Color.GREEN);
@@ -257,7 +252,6 @@ public class NewClientPanel extends JPanel {
 				address_field.setText(null);
 				phoneNum_field.setText(null);
 				email_field.setText(null);
-				//comboBox.setSelectedItem("Select");
 			}
 		});
 		

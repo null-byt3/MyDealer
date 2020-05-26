@@ -15,6 +15,7 @@ public class InventorySidePanel extends JPanel {
 	JButton bAll = new JButton("All"); 
 	JButton bAvailable = new JButton("Available for sale"); 
 	JButton bCarProps = new JButton("Car Properties");
+	JButton bAddInventory = new JButton("Add Inventory");
 	
 	private final PanelChanger panelchanger;
 
@@ -27,16 +28,17 @@ public class InventorySidePanel extends JPanel {
 		bAvailable.setPreferredSize(new Dimension(150,100));
 		bAvailable.setBackground(Color.GRAY);
 		bAvailable.setForeground(Color.WHITE);
+		bAddInventory.setPreferredSize(new Dimension(150,100));
+		bAddInventory.setBackground(Color.GRAY);
+		bAddInventory.setForeground(Color.WHITE);
 		bCarProps.setPreferredSize(new Dimension(150,100));
 		bCarProps.setBackground(Color.GRAY);
 		bCarProps.setForeground(Color.WHITE);
 		
 		
-		
 		bAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("Open All Inventory Panel");
 				panelchanger.updateWorkPanel("AllInventoryPanel");
 		
 			}
@@ -46,7 +48,6 @@ public class InventorySidePanel extends JPanel {
 		bAvailable.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("Open Available Inventory Panel");
 				panelchanger.updateWorkPanel("AvailableInventoryPanel");
 				
 			}
@@ -56,8 +57,15 @@ public class InventorySidePanel extends JPanel {
 		bCarProps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				System.out.println("Open Car Properties Panel");
 				panelchanger.updateWorkPanel("CarPropertiesPanel");
+				
+			}
+
+		});
+		
+		bAddInventory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				panelchanger.updateWorkPanel("AddInventoryPanel");
 				
 			}
 
@@ -68,6 +76,7 @@ public class InventorySidePanel extends JPanel {
 		this.setBackground(Color.BLACK);
 		this.add(bAll);
 		this.add(bAvailable);
+		this.add(bAddInventory);
 		this.add(bCarProps);
 }
 }

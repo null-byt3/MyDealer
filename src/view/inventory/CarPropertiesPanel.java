@@ -105,7 +105,7 @@ public class CarPropertiesPanel extends JPanel {
 	public JPanel carSlot() {
 
 		JPanel slot = new JPanel();
-		slot.setLayout(new FlowLayout());
+		slot.setLayout(new BorderLayout());
 		slot.setSize(80, 80);
 		slot.setBackground(Color.LIGHT_GRAY);
 		slot.setVisible(false);
@@ -156,10 +156,21 @@ public class CarPropertiesPanel extends JPanel {
 				available_colors.setHorizontalAlignment(JLabel.CENTER);
 				available_colors.setFont(small_font.deriveFont(small_attributes));
 
-				slot.add(make);
-				slot.add(model);
-				slot.add(available_trims);
-				slot.add(available_colors);
+				JPanel north_panel = new JPanel();
+				north_panel.setLayout(new BorderLayout());
+				north_panel.setBackground(Color.LIGHT_GRAY);
+				north_panel.add(make, BorderLayout.NORTH);
+				north_panel.add(model,BorderLayout.SOUTH);
+				
+				JPanel south_panel = new JPanel();
+				south_panel.setLayout(new BorderLayout());
+				south_panel.add(available_trims,BorderLayout.NORTH);
+				south_panel.add(available_colors,BorderLayout.SOUTH);
+				south_panel.setBackground(Color.LIGHT_GRAY);
+
+				slot.add(north_panel,BorderLayout.NORTH);
+				slot.add(south_panel,BorderLayout.SOUTH);
+
 				slot.addMouseListener(new MouseAdapter() {
 					public void mouseClicked(MouseEvent e) {
 						if (e.getClickCount() == 2) {

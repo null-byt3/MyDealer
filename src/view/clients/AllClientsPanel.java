@@ -65,7 +65,7 @@ public class AllClientsPanel extends JPanel {
 		searchPanel = new JPanel();
 		searchPanel.setLayout(new BorderLayout());
 		searchPanel.setBounds(50, 270, 400, 30);
-		JTextField searchField = new JTextField();
+		searchField = new JTextField();
 		searchLabel = new JLabel("Search: ");
 		searchLabel.setBackground(Color.WHITE);
 		

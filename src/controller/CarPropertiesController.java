@@ -70,12 +70,38 @@ public class CarPropertiesController {
 
 		return model_names;
 	}
+	
+	public ArrayList<String> getAllMakeNames() {
+		ArrayList<String> make_names = new ArrayList<String>();
+		
+		for (CarProperties carProp : carpropsDB) {
+			String make = carProp.getMake();
+			if (!make_names.contains(make)) {
+				make_names.add(make);
+			}
+		}
+		
+		return make_names;
+	}
 
-	public ArrayList<String> getAllModelNames(String type) {
+	
+	public ArrayList<String> getModelsByType(String type) {
 		ArrayList<String> model_names = new ArrayList<String>();
 
 		for (CarProperties carProp : carpropsDB) {
 			if (carProp.getType().equals(type)) {
+				model_names.add(carProp.getModel());
+			}
+		}
+
+		return model_names;
+	}
+	
+	public ArrayList<String> getModelsByMaker(String make) {
+		ArrayList<String> model_names = new ArrayList<String>();
+
+		for (CarProperties carProp : carpropsDB) {
+			if (carProp.getMake().equals(make)) {
 				model_names.add(carProp.getModel());
 			}
 		}

@@ -52,7 +52,7 @@ public class EditCarPropertiesWindow extends JDialog {
 			this.make_field.setEditable(false);
 			this.model_field.setEditable(false);
 			this.type_box.setSelectedItem(carpropscontroller.getType(model));
-			this.type_box.setEditable(false);
+			this.type_box.setEnabled(false);
 		} else {
 			this.setTitle("Add Car Property");
 			this.deleteButton.setVisible(false);
