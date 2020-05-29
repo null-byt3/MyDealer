@@ -28,7 +28,6 @@ public class Initializer {
 	private ClientDB clientdb = null;
 	private InventoryDB inventorydb = null;
 	private OrderDB orderdb = null;
-	private IdProvider idprovider = null;
 	private CarPropertiesDB carpropertiesdb = null;
 
 	JPanel panel;

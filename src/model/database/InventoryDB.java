@@ -1,9 +1,10 @@
 package model.database;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.car.Car;
 
-public class InventoryDB extends ArrayList<Car> {
+public class InventoryDB extends HashMap<Car, Integer> {
 
+	
 }

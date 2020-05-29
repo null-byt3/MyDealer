@@ -18,13 +18,13 @@ public class CarPropertiesController {
 		this.serializer = Serializer.getInstance();
 		carpropsDB = (CarPropertiesDB) serializer.load("CarPropertiesDB");
 	}
-	
+
 	public String getMake(String model) {
 		setModel(model);
 		String make = carprop.getMake();
 		return make;
 	}
-	
+
 	public String getType(String model) {
 		setModel(model);
 		String type = carprop.getType();
@@ -36,13 +36,28 @@ public class CarPropertiesController {
 		int num = carprop.getTrims().size();
 		return num;
 	}
-	
-	public Map<String,Integer> getTrimsMap(String model) {
+
+	public Map<String, Integer> getTrimsMap(String model) {
 		setModel(model);
-		Map<String,Integer> trims = carprop.getTrims();
+		Map<String, Integer> trims = carprop.getTrims();
 		return trims;
 	}
-	
+
+	public int getPrice(String model, String trim) {
+
+		int price = 0;
+		Map<String, Integer> trims = getTrimsMap(model);
+
+		for (Map.Entry<String, Integer> entry : trims.entrySet()) {
+			if (entry.getKey().equals(trim)) {
+				price = entry.getValue();
+				break;
+			}
+		}
+
+		return price;
+	}
+
 	public List<String> getColors(String model) {
 		setModel(model);
 		List<String> colors = carprop.getColors();
@@ -70,21 +85,20 @@ public class CarPropertiesController {
 
 		return model_names;
 	}
-	
+
 	public ArrayList<String> getAllMakeNames() {
 		ArrayList<String> make_names = new ArrayList<String>();
-		
+
 		for (CarProperties carProp : carpropsDB) {
 			String make = carProp.getMake();
 			if (!make_names.contains(make)) {
 				make_names.add(make);
 			}
 		}
-		
+
 		return make_names;
 	}
 
-	
 	public ArrayList<String> getModelsByType(String type) {
 		ArrayList<String> model_names = new ArrayList<String>();
 
@@ -96,7 +110,7 @@ public class CarPropertiesController {
 
 		return model_names;
 	}
-	
+
 	public ArrayList<String> getModelsByMaker(String make) {
 		ArrayList<String> model_names = new ArrayList<String>();
 
@@ -123,8 +137,8 @@ public class CarPropertiesController {
 
 		return car_types;
 	}
-	
-	public void updateModel(String model, Map<String,Integer> trims, List<String> colors) {
+
+	public void updateModel(String model, Map<String, Integer> trims, List<String> colors) {
 		for (CarProperties carprop : carpropsDB) {
 			if (carprop.getModel().equals(model)) {
 				carprop.setTrims(trims);
@@ -133,28 +147,27 @@ public class CarPropertiesController {
 			}
 		}
 	}
-	
-	public void addModel(String type, String make, String model, Map<String,Integer> trims, List<String> colors) {
-		CarProperties new_carprop = new CarProperties(type,make,model,trims,colors);
+
+	public void addModel(String type, String make, String model, Map<String, Integer> trims, List<String> colors) {
+		CarProperties new_carprop = new CarProperties(type, make, model, trims, colors);
 		addModel(new_carprop);
 	}
-	
+
 	private void addModel(CarProperties carproperty) {
 		carpropsDB.add(carproperty);
 		updateDB();
 	}
-	
+
 	public void deleteModel(String model) {
 		setModel(model);
 		carpropsDB.remove(carprop);
 		updateDB();
 	}
-	
 
 	private ArrayList<CarProperties> getCarPropsList() {
 		return carpropsDB;
 	}
-	
+
 	private void updateDB() {
 		serializer.save("CarPropertiesDB", carpropsDB);
 		System.out.println("Controller | CarPropertiesDB Successfully updated");

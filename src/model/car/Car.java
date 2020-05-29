@@ -4,48 +4,93 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
 	
-	protected int carId; //20056
+	private String type;
 	private String make; // Honda, Mitsubishi
 	private String model; // Ibiza
 	private String trim; // FR
 	private String color; // Orange
-	private String status; //Sold, Free, etc.
-	private int price;
 
 	
 	public Car() {
-		this.carId = 0;
+		this.type = "Null";
 		this.make = "Null";
 		this.model = "Null";
 		this.trim = "Null";
 		this.color = "Null";
-		this.status = "Null";
-		this.price = 0;
 	}
 
-	public Car(String make, String model, String trim, String color, String status, int price) {
-		this.carId = 0;
+	public Car(String type, String make, String model, String trim, String color) {
+		this.type = type;
 		this.make = make;
 		this.model = model;
 		this.trim = trim;
 		this.color = color;
-		this.status = status;
-		this.price = price;
 	}
 
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((make == null) ? 0 : make.hashCode());
+		result = prime * result + ((model == null) ? 0 : model.hashCode());
+		result = prime * result + ((trim == null) ? 0 : trim.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Car other = (Car) obj;
+		if (color == null) {
+			if (other.color != null)
+				return false;
+		} else if (!color.equals(other.color))
+			return false;
+		if (make == null) {
+			if (other.make != null)
+				return false;
+		} else if (!make.equals(other.make))
+			return false;
+		if (model == null) {
+			if (other.model != null)
+				return false;
+		} else if (!model.equals(other.model))
+			return false;
+		if (trim == null) {
+			if (other.trim != null)
+				return false;
+		} else if (!trim.equals(other.trim))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
-		return "Car " + this.carId + ": Make= " + this.make + ", Model= " + this.model + ", Trim= "
-				+ this.trim + ", Color= " + this.color + ", Status= " + this.status + "\n";
+		return "Car [make=" + make + ", model=" + model + ", trim=" + trim + ", color=" + color
+				+ "]";
 	}
 
-	public int getCarId() {
-		return carId;
+	public String getType() {
+		return type;
 	}
-
-	public void setCarId(int carId) {
-		this.carId = carId;
+	
+	public void setType(String type) {
+		this.type = type;
 	}
-
+	
 	public String getMake() {
 		return make;
 	}
@@ -76,21 +121,5 @@ public class Car implements Serializable {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
 	}
 }

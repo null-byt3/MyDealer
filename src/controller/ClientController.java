@@ -11,7 +11,7 @@ public class ClientController {
 
 	private ClientDB clientDB;
 	private Serializer serializer;
-	private Client client = null;
+	private Client curr_client = null;
 	
 	public ClientController() {
 		this.serializer = Serializer.getInstance();
@@ -23,43 +23,43 @@ public class ClientController {
 	}
 	
 	public int getAgentId(int id) {
-		setClient(id);
-		return client.getAgentId();
+		cacheClient(id);
+		return curr_client.getAgentId();
 	}
 	
 	public String getFirstName(int id) {
-		setClient(id);
-		return client.getFirstName();
+		cacheClient(id);
+		return curr_client.getFirstName();
 	}
 	
 	public String getLastName(int id) {
-		setClient(id);
-		return client.getLastName();
+		cacheClient(id);
+		return curr_client.getLastName();
 	}
 	
 	public String getGender(int id) {
-		setClient(id);
-		return client.getGender();
+		cacheClient(id);
+		return curr_client.getGender();
 	}
 	
 	public String getCity(int id) {
-		setClient(id);
-		return client.getCity();
+		cacheClient(id);
+		return curr_client.getCity();
 	}
 	
 	public String getAddress(int id) {
-		setClient(id);
-		return client.getAddress();
+		cacheClient(id);
+		return curr_client.getAddress();
 	}
 	
 	public String getPhoneNum(int id) {
-		setClient(id);
-		return client.getPhoneNum();
+		cacheClient(id);
+		return curr_client.getPhoneNum();
 	}
 	
 	public String getEmail(int id) {
-		setClient(id);
-		return client.getEmail();
+		cacheClient(id);
+		return curr_client.getEmail();
 	}
 	
 	public String[][] getClientMatrix() {
@@ -113,8 +113,8 @@ public class ClientController {
 	}
 	
 	public void eraseClient(int id) {
-		setClient(id);
-		clientDB.remove(client);
+		cacheClient(id);
+		clientDB.remove(curr_client);
 		updateDB();
 	}
 	
@@ -123,15 +123,15 @@ public class ClientController {
 		System.out.println("ClientDB successfully updated");
 	}
 	
-	private void setClient(int id) {
+	private void cacheClient(int id) {
 		
-		if (client != null && client.getId() == id) {
+		if (curr_client != null && curr_client.getId() == id) {
 			return;
 		}
 	
 		for (Client client : clientDB) {
 			if (client.getId() == id) {
-				this.client = client;
+				this.curr_client = client;
 				return;
 			}
 		}

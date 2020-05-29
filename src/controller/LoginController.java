@@ -8,42 +8,38 @@ import model.loggedUser.LoggedUser;
 
 public class LoginController {
 
-	private Employee current_user;
 	private EmployeeDB employeedb;
-	private Serializer serializer;
 	private EmployeeController employeeController;
 	
 	
 	public LoginController() {
-		this.current_user = LoggedUser.getCurrentUser();
 		this.employeeController = new EmployeeController();
 	}
 	
 	
 	private void setLoggedUser(Employee user) {
-		LoggedUser.getInstance(user);
-		current_user = LoggedUser.getCurrentUser();
+		LoggedUser.setCurrentUser(user);
 	}
 	
 	
 	public Employee getLoggedUser() {
-		return current_user;
+		return LoggedUser.getCurrentUser();
 	}
 	
 	public int getLoggedUserId() {
-		return current_user.getId();
+		return getLoggedUser().getId();
 	}
 	
 	public String getLoggedUserFirstName() {
-		return current_user.getFirstName();
+		return getLoggedUser().getFirstName();
 	}
 	
 	public String getLoggedUserFullName() {
-		return current_user.getFullName();
+		return getLoggedUser().getFullName();
 	}
 	
 	public String getLoggedUserRole() {
-		String role = current_user.getClass().getSimpleName(); 
+		String role = getLoggedUser().getClass().getSimpleName(); 
 		return role;
 	}
 	
@@ -60,7 +56,7 @@ public class LoginController {
 	}
 	
 	public void logOut() {
-		current_user = null;
+		LoggedUser.logOut();
 	}
 	
 }

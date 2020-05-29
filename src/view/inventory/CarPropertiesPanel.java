@@ -204,6 +204,7 @@ public class CarPropertiesPanel extends JPanel {
 			public void mousePressed(MouseEvent me) {
 				System.out.println("New Car");
 				editcarprops = new EditCarPropertiesWindow((JFrame) SwingUtilities.getWindowAncestor(panel), null);
+				RefreshPanel();
 			}
 		});
 

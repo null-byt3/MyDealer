@@ -23,6 +23,7 @@ public class Login extends JFrame {
 	JPasswordField pass_field = new JPasswordField(15);
 	EmployeeDB employeedb = null;
 	LoginController loginController = new LoginController();
+	JFrame mainwindow;
 
 	Login() {
 		super("Login");
@@ -54,7 +55,7 @@ public class Login extends JFrame {
 				boolean loginSuccessful = loginController.attemptLogin(username, password);
 
 				if (loginSuccessful) {
-					new MainWindow();
+					mainwindow = new MainWindow();
 					dispose();
 					return;
 				}

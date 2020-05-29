@@ -1,5 +1,6 @@
 package view.inventory;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,32 +12,38 @@ import java.util.Map;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 
 import controller.CarPropertiesController;
+import controller.InventoryController;
 
 public class AddInventoryPanel extends JPanel {
 
-	private JPanel panel;
+	private JPanel panel, buttons_panel;
 	private JComboBox<String>[] make_boxes, model_boxes, trim_boxes, color_boxes;
 	private JComboBox<Integer>[] quantity_boxes;
 	private JLabel make_label, model_label, trim_label, color_label, quantity_label;
 	private CarPropertiesController carpropscontroller;
+	private InventoryController inventorycontroller;
 	int size;
-	// private InventoryController inventorycontroller;
+	ArrayList<Integer> selected_lines;
 
 	AddInventoryPanel() {
 
 		this.setLayout(null);
 		setTitle("Add Inventory");
 		carpropscontroller = new CarPropertiesController();
+		inventorycontroller = new InventoryController();
 
 		// Amount of rows
 		size = 15;
 
 		panel = BoxesPanel(size);
+		buttons_panel = CreateButtonsPanel();
 		this.add(panel);
+		this.add(buttons_panel);
 
 		PopulateMakerBoxes();
 
@@ -76,7 +83,7 @@ public class AddInventoryPanel extends JPanel {
 
 		JPanel boxesPanel = new JPanel();
 		boxesPanel.setLayout(null);
-		boxesPanel.setBounds(20, 150, 1500, 800);
+		boxesPanel.setBounds(20, 150, 1000, 700);
 		// boxesPanel.setBackground(Color.RED);
 
 		int spacing = 60;
@@ -114,7 +121,7 @@ public class AddInventoryPanel extends JPanel {
 			color_boxes[i] = new JComboBox<String>();
 			quantity_boxes[i] = new JComboBox<Integer>();
 
-			for (int j = 0; j < 10; j++) {
+			for (int j = 1; j <= 10; j++) {
 				quantity_boxes[i].addItem(j);
 			}
 
@@ -127,16 +134,14 @@ public class AddInventoryPanel extends JPanel {
 				}
 			});
 
-			
-			
 			model_boxes[i].addActionListener(new ActionListener() {
 
 				public void actionPerformed(ActionEvent e) {
-					
+
 					PopulateTrimsAndColors(num);
 				}
 			});
-						
+
 			make_boxes[i].setBounds(init_placement, spacing, field_size, 30);
 			model_boxes[i].setBounds(init_placement + (field_size + 20) * 1, spacing, field_size, 30);
 			trim_boxes[i].setBounds(init_placement + (field_size + 20) * 2, spacing, field_size, 30);
@@ -181,7 +186,6 @@ public class AddInventoryPanel extends JPanel {
 
 		if (!make_boxes[index].getSelectedItem().equals("Select..")) {
 			model_boxes[index].setEnabled(true);
-			model_boxes[index].addItem("Select..");
 			for (String model : model_names) {
 				model_boxes[index].addItem(model);
 			}
@@ -194,39 +198,106 @@ public class AddInventoryPanel extends JPanel {
 			trim_boxes[index].setEnabled(false);
 			color_boxes[index].removeAllItems();
 			color_boxes[index].setEnabled(false);
+			quantity_boxes[index].setSelectedItem(1);
+			quantity_boxes[index].setEnabled(false);
 		}
 
 	}
 
 	public void PopulateTrimsAndColors(int index) {
 
-		String model = (String) model_boxes[index].getSelectedItem();
-		
-		if (!model.equals("Select..")) {
+		// NEED TO FIX
+		if (model_boxes[index].isEnabled()) {
+
+			trim_boxes[index].removeAllItems();
+			color_boxes[index].removeAllItems();
+
+			String model = (String) model_boxes[index].getSelectedItem();
+
 			Map<String, Integer> trims = carpropscontroller.getTrimsMap(model);
 			List<String> colors = carpropscontroller.getColors(model);
-			
+
 			color_boxes[index].setEnabled(true);
 			trim_boxes[index].setEnabled(true);
 			quantity_boxes[index].setEnabled(true);
-			
+
 			for (Map.Entry<String, Integer> entry : trims.entrySet()) {
 				trim_boxes[index].addItem(entry.getKey());
 			}
-			
-			for (String color : colors) {
-			color_boxes[index].addItem(color);
-			}
-			
-			
-		} else {
 
-			trim_boxes[index].removeAllItems();
-			trim_boxes[index].setEnabled(false);
-			color_boxes[index].removeAllItems();
-			color_boxes[index].setEnabled(false);
+			for (String color : colors) {
+				color_boxes[index].addItem(color);
+			}
+
 		}
 
+	}
+
+	public JPanel CreateButtonsPanel() {
+
+		JPanel buttonsPanel = new JPanel();
+		buttonsPanel.setLayout(null);
+		buttonsPanel.setBounds(20, 850, 1000, 100);
+		// buttonsPanel.setBackground(Color.ORANGE);
+
+		JButton saveButton = new JButton("Add Inventory");
+		saveButton.setBackground(Color.GREEN);
+		saveButton.setForeground(Color.BLACK);
+		saveButton.setBounds(20, 0, 120, 45);
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				addToInventory();
+				JOptionPane.showMessageDialog(null, "Added to inventory");
+
+				
+				for (int i = 0; i < size; i++) {
+					make_boxes[i].setSelectedIndex(0);
+				}
+			}
+		});
+
+		JButton clearButton = new JButton("Clear");
+		clearButton.setForeground(Color.BLACK);
+		clearButton.setBounds(770, 0, 120, 45);
+		clearButton.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent arg0) {
+
+				for (int i = 0; i < size; i++) {
+					make_boxes[i].setSelectedIndex(0);
+				}
+			}
+		});
+
+		buttonsPanel.add(saveButton);
+		buttonsPanel.add(clearButton);
+		return buttonsPanel;
+	}
+
+	public void addToInventory() {
+		for (int i = 0; i < size; i++) {
+
+			if (verifyFields(i)) {
+				String make = (String) make_boxes[i].getSelectedItem();
+				String model = (String) model_boxes[i].getSelectedItem();
+				String type = carpropscontroller.getType(model);
+				String trim = (String) trim_boxes[i].getSelectedItem();
+				String color = (String) color_boxes[i].getSelectedItem();
+				int quantity = (Integer) quantity_boxes[i].getSelectedItem();
+
+				inventorycontroller.add(type, make, model, trim, color, quantity);
+			}
+		}
+
+	}
+
+	public boolean verifyFields(int index) {
+
+		if (make_boxes[index].getSelectedItem().equals("Select..")) {
+			return false;
+		}
+
+		return true;
 	}
 
 }
