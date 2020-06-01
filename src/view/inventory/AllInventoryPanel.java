@@ -45,7 +45,7 @@ public class AllInventoryPanel extends JPanel {
 		Map attributes = title_font.getAttributes();
 		// attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 520, 50);
+		title.setBounds(65, 31, 520, 90);
 		this.add(title);
 		this.panel = this;
 		this.setBackground(Color.WHITE);
@@ -148,14 +148,6 @@ public class AllInventoryPanel extends JPanel {
 					int row = target.getSelectedRow();
 					int id = Integer.parseInt(target.getValueAt(row, 0).toString());
 					System.out.println(id);
-					
-					//editclientswindow = new EditClientsWindow((JFrame) SwingUtilities.getWindowAncestor(panel), id);
-					//editclientswindow.addWindowListener(new WindowAdapter() {
-						//public void windowClosed(WindowEvent e) {
-							
-							//populateTable();
-						//}
-					//});
 
 				}
 			}

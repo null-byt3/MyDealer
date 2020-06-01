@@ -26,7 +26,7 @@ public class MainWindow extends JFrame {
 		workpanel = new MainCardChanger(current_user);
 		sidepanel = new SidePanel(current_user, workpanel);
 		mainContainer.setLayout(bl);
-		mainContainer.setBackground(Color.YELLOW);
+		mainContainer.setBackground(Color.ORANGE);
 		mainContainer.add(sidepanel, BorderLayout.WEST);
 		mainContainer.add(workpanel, BorderLayout.CENTER);
 		
@@ -34,7 +34,7 @@ public class MainWindow extends JFrame {
 		//getRootPane().setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.GREEN))
 		
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		//setUndecorated(true); 
+		setUndecorated(true); 
 		setVisible(true);
 		
 		// Complete full screen

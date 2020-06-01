@@ -206,7 +206,6 @@ public class AddInventoryPanel extends JPanel {
 
 	public void PopulateTrimsAndColors(int index) {
 
-		// NEED TO FIX
 		if (model_boxes[index].isEnabled()) {
 
 			trim_boxes[index].removeAllItems();

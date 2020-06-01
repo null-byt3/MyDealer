@@ -15,9 +15,6 @@ public class Client implements Serializable
 	protected String email;
 	
 
-	//protected static int idCounter = 1000;
-
-
 public Client(int id, int agentId,String firstName, String lastName, String gender, String city, String address, String phoneNum, String email)
 {
 	this.id = id;

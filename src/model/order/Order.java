@@ -1,29 +1,48 @@
 package model.order;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import model.car.Car;
 
 public class Order implements Serializable {
 	
-	private static int idCounter = 1000;
 	protected int orderId;
 	private int clientId;
 	private int agentId;
-	private int carId;
+	private Car car;
+	private LocalDateTime dateTime;
+	int basePrice;
+	int finalPrice;
+	int discount;
+	
+	// OPTIONS
+	private boolean isExtendedWarranty;
+	int warrantyPrice;
+	private boolean isMobileEyeIncluded;
+	int mobileEyePrice;
+	private boolean isReverseSensors;
+	int reverseSensorsPrice;
 	
 	public Order() {
-		this.orderId=idCounter++;
+		this.orderId=0;
 		this.clientId=0;
 		this.agentId=0;
-		this.carId=0;
+		this.car = null;
+		this.dateTime = null;
 	}
 	
-	public Order(int clientId, int agentId, int carId) {
-		this.orderId=idCounter++;
+	public Order(int orderId, int clientId, int agentId, Car car, int basePrice, int warrantyPrice, int mobileEyePrice) {
+		this.orderId=orderId;
 		this.clientId = clientId;
 		this.agentId = agentId;
-		this.carId = carId;
-		
+		this.car = car;
+		this.dateTime = LocalDateTime.now();
+		this.basePrice = basePrice;
+		this.warrantyPrice = warrantyPrice;
+		this.isExtendedWarranty = warrantyPrice != 0 ? true : false;
+		this.mobileEyePrice = mobileEyePrice;
+		this.isMobileEyeIncluded = mobileEyePrice != 0 ? true : false;
 	}
 
 	public int getId() {
@@ -50,16 +69,17 @@ public class Order implements Serializable {
 		this.agentId = agentId;
 	}
 
-	public int getCarId() {
-		return carId;
+	public Car getCar() {
+		return car;
 	}
 
-	public void setCarId(int carId) {
-		this.carId = carId;
+	public void setCar(Car car) {
+		this.car = car;
 	}
-
 	
-	
+	public LocalDateTime getDateTime() {
+		return this.dateTime;
+	}
 
 
 }

@@ -15,6 +15,7 @@ public class InventoryController {
 	public InventoryController() {
 		this.serializer = Serializer.getInstance();
 		inventoryDB = (InventoryDB) serializer.load("InventoryDB");
+		carpropscontroller = new CarPropertiesController();
 	}
 
 	public void add(String type, String make, String model, String trim, String color, int quantity) {
@@ -100,5 +101,23 @@ public class InventoryController {
 		serializer.save("InventoryDB", inventoryDB);
 		System.out.println("InventoryDB successfully");
 	}
+	
+	public int getQuantity (String make, String model, String trim, String color) {
+		
+		Car car = new Car(carpropscontroller.getType(model), make, model, trim, color);
+		int num = getQuantity(car);
+		return num;
+	}
+	
+	private int getQuantity(Car car) {
+		int num = 0;
+		
+		if (inventoryDB.containsKey(car)) {
+			num = inventoryDB.get(car);
+		}
+		
+		return num;
+	}
+	
 
 }

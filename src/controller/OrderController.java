@@ -46,7 +46,7 @@ public class OrderController {
 			orderMatrix[i][0] = String.valueOf(order.getId());
 			orderMatrix[i][1] = String.valueOf(order.getClientId());
 			orderMatrix[i][2] = String.valueOf(order.getAgentId());
-			orderMatrix[i][3] = String.valueOf(order.getCarId());
+			//orderMatrix[i][3] = String.valueOf(order.getCarId());
 		}
 		return orderMatrix;
 	}
