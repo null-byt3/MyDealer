@@ -68,7 +68,14 @@ public class SidePanel extends JPanel {
 		bHome.setBorderPainted(false);
 		bHome.setFocusPainted(false);
 		
-		
+		bHome.addMouseListener(new MouseAdapter() {
+
+			public void mouseClicked(MouseEvent e) {
+				resetIcons();
+				panelChanger.updateWorkPanel("WelcomePanel");
+			}
+		});
+				
 		bClients = ButtonFactory("Clients", "/clients.png");
 		bOrders = ButtonFactory("Orders", "/orders.png");
 		bInventory = ButtonFactory("Inventory", "/inventory.png");

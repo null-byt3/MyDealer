@@ -36,8 +36,5 @@ public class MainWindow extends JFrame {
 		setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		setUndecorated(true); 
 		setVisible(true);
-		
-		// Complete full screen
-
 	}
 }

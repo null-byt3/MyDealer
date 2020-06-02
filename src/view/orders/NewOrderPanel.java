@@ -2,6 +2,7 @@ package view.orders;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.NumberFormat;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,6 +40,7 @@ public class NewOrderPanel extends JPanel {
 	// DATA
 	int basePrice, finalPrice;
 	String make, model, trim, color;
+	int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice = 2500;
 
 	// GUI ITEMS
 	JTextField price_field;
@@ -49,6 +52,8 @@ public class NewOrderPanel extends JPanel {
 	JComboBox<String> make_box, model_box, trim_box, color_box;
 	Font labelFont = new Font("Helvetica", Font.PLAIN, 15);
 	Font clientFont = new Font("Helvetica", Font.BOLD, 15);
+	JCheckBox isExtendedWarranty, isMobileEyeIncluded, isReverseSensors, isWindowLifters;
+	
 
 	NewOrderPanel() {
 		this.setLayout(null);
@@ -336,11 +341,31 @@ public class NewOrderPanel extends JPanel {
 	public JPanel CreateExtrasPanel() {
 		JPanel extrasPanel = new JPanel();
 
-		extrasPanel.setLayout(null);
+		extrasPanel.setLayout(new GridLayout(4,1,5,5));
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Extras");
 		extrasPanel.setBorder(titledborder);
 
+		// 	int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice = 2500;
+		isExtendedWarranty = new JCheckBox("3-Year warranty (+" + NumberFormat.getIntegerInstance().format(exWarPrice) + "₪)");
+		isMobileEyeIncluded = new JCheckBox("MobileEye (+" + NumberFormat.getIntegerInstance().format(mobEyePrice) + "₪)");
+		isReverseSensors = new JCheckBox("Reverse Parking Sensors (+" + NumberFormat.getIntegerInstance().format(revSenPrice) + "₪)");
+		isWindowLifters = new JCheckBox("Window Lifters (+" + NumberFormat.getIntegerInstance().format(winLiftPrice) + "₪)");
+		
+		isExtendedWarranty.setFont(labelFont);
+		isMobileEyeIncluded.setFont(labelFont);
+		isReverseSensors.setFont(labelFont);
+		isWindowLifters.setFont(labelFont);
+		
+		//isExtendedWarranty.setb
+		
+		
+		extrasPanel.add(isExtendedWarranty);
+		extrasPanel.add(isMobileEyeIncluded);
+		extrasPanel.add(isReverseSensors);
+		extrasPanel.add(isWindowLifters);
+		
+		
 		return extrasPanel;
 	}
 
@@ -462,16 +487,13 @@ public class NewOrderPanel extends JPanel {
 		
 		curr_inventory.setVisible(true);
 
-		if (quantity > 2) {
-			curr_inventory.setForeground(Color.GREEN);
-		}
 		
 		if (quantity == 1 || quantity == 2) {
-			curr_inventory.setForeground(Color.YELLOW);
+			curr_inventory_label.setForeground(Color.ORANGE);
 		}
 		
 		if (quantity == 0) {
-			curr_inventory.setForeground(Color.RED);
+			curr_inventory_label.setForeground(Color.RED);
 		}
 		
 		curr_inventory.setText(Integer.toString(quantity));
