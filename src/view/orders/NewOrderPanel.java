@@ -1,6 +1,9 @@
 package view.orders;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -11,12 +14,16 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
@@ -38,63 +45,87 @@ public class NewOrderPanel extends JPanel {
 	CarPropertiesController carpropscontroller = new CarPropertiesController();
 
 	// DATA
-	int basePrice, finalPrice;
-	String make, model, trim, color;
+	int basePrice = 0, colorPrice = 0, totalPrice = 0, discount = 0, finalPrice = 0;
+	String make, model, trim, color, discountType = "Cash";
 	int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice = 2500;
 
 	// GUI ITEMS
-	JTextField price_field;
+	JTextField price_field, discount_field;
 	JComboBox<String> agent_box, client_box;
 	JLabel firstName_label, lastName_label, gender_label, city_label, address_label, phoneNum_label, email_label;
 	JLabel firstName, lastName, gender, city, address, phoneNum, email;
 	JLabel make_label, model_label, trim_label, color_label, curr_inventory_label, curr_inventory;
-	JButton check_inventory;
+	JLabel discount_sign;
+	JButton check_inventory, applyDiscount;
 	JComboBox<String> make_box, model_box, trim_box, color_box;
 	Font labelFont = new Font("Helvetica", Font.PLAIN, 15);
 	Font clientFont = new Font("Helvetica", Font.BOLD, 15);
 	JCheckBox isExtendedWarranty, isMobileEyeIncluded, isReverseSensors, isWindowLifters;
-	
+	JPanel MainOrderPanel, pricePanel, titlePanel;
+	JRadioButton percent_rdiobtn, cash_rdiobtn;
+
+	JLabel basePrice_label, colorPrice_label, exWar_label, mobEye_label, revSen_label, winLift_label, totalPrice_label,
+			finalPrice_label, discount_label;
+	JLabel prices_basePrice, prices_colorPrice, prices_exWar, prices_mobEye, prices_revSen, prices_winLift,
+			prices_totalPrice, prices_discount, prices_finalPrice;
 
 	NewOrderPanel() {
-		this.setLayout(null);
+		this.setLayout(new BorderLayout());
 
-		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y)
+		JPanel orderContainerPanel = new JPanel();
+		orderContainerPanel.setLayout(new BorderLayout());
 
-		// "Create New Order" -- Label
-		JLabel title = new JLabel("Create New Order");
-		Font title_font = new Font("Helvetica", Font.BOLD, 60);
-		title.setFont(title_font);
-		title.setBounds(65, 31, 520, 50);
-		this.add(title);
+		MainOrderPanel = new JPanel();
+		MainOrderPanel.setLayout(new GridLayout(3, 2, 10, 10));
+
+		pricePanel = CreatePricesPanel();
+		titlePanel = CreateTitlePanel();
 
 		/// Agent Details -- Panel
 		JPanel agentDetails = CreateAgentDetails();
-		agentDetails.setBounds(65, 170, 400, 100);
-		this.add(agentDetails);
+		MainOrderPanel.add(agentDetails);
 
 		/// Client Details -- Panel
 		JPanel clientDetails = CreateClientDetails();
-		clientDetails.setBounds(65, 300, 400, 300);
-		this.add(clientDetails);
+		MainOrderPanel.add(clientDetails);
+
+		MainOrderPanel.add(new JPanel()); // Empty space filler
 
 		/// Car Details -- Panel
 		JPanel carDetails = CreateCarDetails();
-		carDetails.setBounds(65, 630, 400, 300);
-		this.add(carDetails);
+		MainOrderPanel.add(carDetails);
 
 		/// Extras -- Panel
 		JPanel extras = CreateExtrasPanel();
-		extras.setBounds(500, 300, 400, 250);
-		this.add(extras);
+		MainOrderPanel.add(extras);
 
-		/// Prices -- Panel
-		// JPanel pricesPanel = CreatePricesPanel();
-		// this.add(pricesPanel);
+		MainOrderPanel.add(new JPanel()); // Empty space filler
 
-		/// Submit Button -- Panel
-		// JPanel buttons = CreateButtonsPanel();
-		// this.add(buttons);
+		/// Discount -- Panel
+		JPanel discountPanel = CreateDiscountPanel();
+		MainOrderPanel.add(discountPanel);
 
+		MainOrderPanel.add(new JPanel()); // Empty space filler
+		MainOrderPanel.add(new JPanel()); // Empty space filler
+
+		orderContainerPanel.add(MainOrderPanel, BorderLayout.CENTER);
+
+		this.add(titlePanel, BorderLayout.NORTH);
+		this.add(orderContainerPanel, BorderLayout.CENTER);
+		this.add(pricePanel, BorderLayout.EAST);
+	}
+
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  Create New Order");
+		Font title_font = new Font("Helvetica", Font.BOLD, 60);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
+
+		return panel;
 	}
 
 	public JPanel CreateAgentDetails() {
@@ -288,6 +319,9 @@ public class NewOrderPanel extends JPanel {
 				if (trim_box.getItemCount() > 0) {
 					trim = (String) trim_box.getSelectedItem();
 					trim = trim.substring(0, trim.indexOf("(") - 1);
+					basePrice = carpropscontroller.getPrice(model, trim);
+					prices_basePrice.setText(priceFormatter(basePrice));
+					updatePrices();
 				}
 			}
 		});
@@ -296,10 +330,16 @@ public class NewOrderPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (color_box.getItemCount() > 0) {
 					color = (String) color_box.getSelectedItem();
-					
+
 					if (color.contains("(")) {
-						color = color.substring(0, color.indexOf("(")-1);	
-					}					
+						color = color.substring(0, color.indexOf("(") - 1);
+						colorPrice = carpropscontroller.getColorPrice(model);
+					} else {
+						colorPrice = 0;
+
+					}
+					prices_colorPrice.setText(priceFormatter(colorPrice));
+					updatePrices();
 				}
 			}
 		});
@@ -341,42 +381,273 @@ public class NewOrderPanel extends JPanel {
 	public JPanel CreateExtrasPanel() {
 		JPanel extrasPanel = new JPanel();
 
-		extrasPanel.setLayout(new GridLayout(4,1,5,5));
+		extrasPanel.setLayout(new GridLayout(5, 1, 5, 5));
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Extras");
 		extrasPanel.setBorder(titledborder);
 
-		// 	int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice = 2500;
-		isExtendedWarranty = new JCheckBox("3-Year warranty (+" + NumberFormat.getIntegerInstance().format(exWarPrice) + "₪)");
-		isMobileEyeIncluded = new JCheckBox("MobileEye (+" + NumberFormat.getIntegerInstance().format(mobEyePrice) + "₪)");
-		isReverseSensors = new JCheckBox("Reverse Parking Sensors (+" + NumberFormat.getIntegerInstance().format(revSenPrice) + "₪)");
-		isWindowLifters = new JCheckBox("Window Lifters (+" + NumberFormat.getIntegerInstance().format(winLiftPrice) + "₪)");
-		
+		// int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice =
+		// 2500;
+		isExtendedWarranty = new JCheckBox(
+				"3-Year Warranty (+" + NumberFormat.getIntegerInstance().format(exWarPrice) + "₪)");
+		isMobileEyeIncluded = new JCheckBox(
+				"MobileEye (+" + NumberFormat.getIntegerInstance().format(mobEyePrice) + "₪)");
+		isReverseSensors = new JCheckBox(
+				"Reverse Parking Sensors (+" + NumberFormat.getIntegerInstance().format(revSenPrice) + "₪)");
+		isWindowLifters = new JCheckBox(
+				"Window Lifters (+" + NumberFormat.getIntegerInstance().format(winLiftPrice) + "₪)");
+
 		isExtendedWarranty.setFont(labelFont);
 		isMobileEyeIncluded.setFont(labelFont);
 		isReverseSensors.setFont(labelFont);
 		isWindowLifters.setFont(labelFont);
-		
-		//isExtendedWarranty.setb
-		
-		
+
+		isExtendedWarranty.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updatePrices();
+
+			}
+		});
+
+		isMobileEyeIncluded.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updatePrices();
+
+			}
+		});
+
+		isReverseSensors.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updatePrices();
+
+			}
+		});
+
+		isWindowLifters.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				updatePrices();
+			}
+		});
+
 		extrasPanel.add(isExtendedWarranty);
 		extrasPanel.add(isMobileEyeIncluded);
 		extrasPanel.add(isReverseSensors);
 		extrasPanel.add(isWindowLifters);
-		
-		
+
 		return extrasPanel;
+	}
+
+	public JPanel CreateDiscountPanel() {
+		JPanel discountPanel = new JPanel();
+		Border blackline = BorderFactory.createLineBorder(Color.black);
+		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Discount");
+		discountPanel.setBorder(titledborder);
+		discountPanel.setLayout(null);
+
+		JLabel chooseDiscount = new JLabel("Discount Type: ");
+		chooseDiscount.setFont(labelFont);
+		chooseDiscount.setBounds(20, 20, 200, 50);
+
+		ButtonGroup bg = new ButtonGroup();
+		cash_rdiobtn = new JRadioButton("Cash", true);
+		percent_rdiobtn = new JRadioButton("Percent");
+		bg.add(percent_rdiobtn);
+		bg.add(cash_rdiobtn);
+
+		cash_rdiobtn.setBounds(20, 60, 100, 50);
+		cash_rdiobtn.setFont(clientFont);
+
+		cash_rdiobtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				discount_sign.setText("₪");
+				discountType = "Cash";
+			}
+		});
+
+		percent_rdiobtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				discount_sign.setText("%");
+				discountType = "Percent";
+			}
+		});
+
+		percent_rdiobtn.setBounds(120, 60, 100, 50);
+		percent_rdiobtn.setFont(clientFont);
+
+		discount_field = new JTextField("0");
+		discount_field.setBounds(20, 120, 50, 30);
+
+		applyDiscount = new JButton("Apply");
+		applyDiscount.setBounds(20, 180, 100, 30);
+
+		applyDiscount.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+
+				int current_value = Integer.parseInt(discount_field.getText());
+
+				if (discountType.equals("Percent")) {
+					if (current_value > 100) {
+						discount_field.setText("100");
+					}
+
+					if (current_value < 0) {
+						discount_field.setText("0");
+					}
+					discount = totalPrice * Integer.parseInt(discount_field.getText()) / 100;
+
+				}
+
+				if (discountType.equals("Cash")) {
+					if (current_value > totalPrice) {
+						discount_field.setText(String.valueOf(totalPrice));
+					}
+
+					if (current_value < 0) {
+						discount_field.setText("0");
+					}
+					discount = Integer.parseInt(discount_field.getText());
+				}
+				
+				updatePrices();
+
+			}
+		});
+
+		discount_sign = new JLabel("₪");
+		discount_sign.setBounds(80, 120, 20, 30);
+
+		discountPanel.add(percent_rdiobtn);
+		discountPanel.add(cash_rdiobtn);
+		discountPanel.add(chooseDiscount);
+		discountPanel.add(discount_field);
+		discountPanel.add(discount_sign);
+		discountPanel.add(applyDiscount);
+
+		return discountPanel;
 	}
 
 	public JPanel CreatePricesPanel() {
 		JPanel pricesPanel = new JPanel();
+		pricesPanel.setLayout(new BorderLayout());
+		pricesPanel.setBackground(Color.LIGHT_GRAY);
+		pricesPanel.setPreferredSize(new Dimension(500, Integer.MAX_VALUE));
 
-		pricesPanel.setLayout(null);
-		Border blackline = BorderFactory.createLineBorder(Color.black);
-		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Car Details");
-		pricesPanel.setBorder(titledborder);
-		pricesPanel.setBounds(65, 530, 400, 250);
+		JPanel innerPricesPanel = new JPanel();
+		innerPricesPanel.setLayout(null);
+		innerPricesPanel.setBackground(Color.LIGHT_GRAY);
+
+		// JLabel basePrice_label, colorPrice_label, exWar_label, mobEye_label,
+		// revSen_label, winLift_label;
+		// JLabel basePrice_num, colorPrice, exWar, mobEye, revSen, winLift;
+
+		basePrice_label = new JLabel("Base Price:");
+		colorPrice_label = new JLabel("Extra Color:");
+		JLabel extras_label = new JLabel("Extras:");
+		exWar_label = new JLabel("Extended Warranty:");
+		mobEye_label = new JLabel("Mobile Eye:");
+		revSen_label = new JLabel("Revrse Parking Sensors:");
+		winLift_label = new JLabel("Window Lifters:");
+
+		prices_basePrice = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_colorPrice = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_exWar = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_mobEye = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_revSen = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_winLift = new JLabel("0₪", SwingConstants.RIGHT);
+
+		basePrice_label.setFont(new Font("Helvetica", Font.BOLD, 30));
+		colorPrice_label.setFont(new Font("Helvetica", Font.BOLD, 15));
+		extras_label.setFont(new Font("Helvetica", Font.BOLD, 30));
+		exWar_label.setFont(new Font("Helvetica", Font.BOLD, 15));
+		mobEye_label.setFont(new Font("Helvetica", Font.BOLD, 15));
+		revSen_label.setFont(new Font("Helvetica", Font.BOLD, 15));
+		winLift_label.setFont(new Font("Helvetica", Font.BOLD, 15));
+
+		prices_basePrice.setFont(new Font("Helvetica", Font.BOLD, 30));
+		prices_colorPrice.setFont(new Font("Helvetica", Font.BOLD, 15));
+		prices_exWar.setFont(new Font("Helvetica", Font.BOLD, 15));
+		prices_mobEye.setFont(new Font("Helvetica", Font.BOLD, 15));
+		prices_revSen.setFont(new Font("Helvetica", Font.BOLD, 15));
+		prices_winLift.setFont(new Font("Helvetica", Font.BOLD, 15));
+
+		int height = 0;
+		int price_xDist = 220;
+
+		basePrice_label.setBounds(10, height += 50, 250, 50);
+		prices_basePrice.setBounds(price_xDist, height, 250, 50);
+		colorPrice_label.setBounds(10, height += 50, 250, 50);
+		prices_colorPrice.setBounds(price_xDist, height, 250, 50);
+		extras_label.setBounds(10, height += 100, 250, 50);
+		exWar_label.setBounds(10, height += 50, 250, 50);
+		prices_exWar.setBounds(price_xDist, height, 250, 50);
+		mobEye_label.setBounds(10, height += 50, 250, 50);
+		prices_mobEye.setBounds(price_xDist, height, 250, 50);
+		revSen_label.setBounds(10, height += 50, 250, 50);
+		prices_revSen.setBounds(price_xDist, height, 250, 50);
+		winLift_label.setBounds(10, height += 50, 250, 50);
+		prices_winLift.setBounds(price_xDist, height, 250, 50);
+
+		innerPricesPanel.add(basePrice_label);
+		innerPricesPanel.add(colorPrice_label);
+		innerPricesPanel.add(extras_label);
+		innerPricesPanel.add(exWar_label);
+		innerPricesPanel.add(mobEye_label);
+		innerPricesPanel.add(revSen_label);
+		innerPricesPanel.add(winLift_label);
+
+		innerPricesPanel.add(prices_basePrice);
+		innerPricesPanel.add(prices_colorPrice);
+		innerPricesPanel.add(prices_exWar);
+		innerPricesPanel.add(prices_mobEye);
+		innerPricesPanel.add(prices_revSen);
+		innerPricesPanel.add(prices_winLift);
+
+		JPanel separator = new JPanel();
+		separator.setBackground(Color.DARK_GRAY);
+		separator.setBounds(10, height += 100, 470, 2);
+		innerPricesPanel.add(separator);
+
+		totalPrice_label = new JLabel("Total:");
+		totalPrice_label.setFont(new Font("Helvetica", Font.BOLD, 30));
+		totalPrice_label.setBounds(10, height += 30, 250, 50);
+
+		prices_totalPrice = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_totalPrice.setFont(new Font("Helvetica", Font.BOLD, 30));
+		prices_totalPrice.setBounds(price_xDist, height, 250, 50);
+
+		innerPricesPanel.add(totalPrice_label);
+		innerPricesPanel.add(prices_totalPrice);
+
+		discount_label = new JLabel("Discount:");
+		discount_label.setFont(new Font("Helvetica", Font.BOLD, 20));
+		discount_label.setBounds(10, height += 60, 250, 50);
+
+		prices_discount = new JLabel("0", SwingConstants.RIGHT);
+		prices_discount.setFont(new Font("Helvetica", Font.BOLD, 20));
+		prices_discount.setBounds(price_xDist, height, 250, 50);
+
+		innerPricesPanel.add(discount_label);
+		innerPricesPanel.add(prices_discount);
+
+		JPanel separator2 = new JPanel();
+		separator2.setBackground(Color.DARK_GRAY);
+		separator2.setBounds(10, height += 80, 470, 2);
+		innerPricesPanel.add(separator2);
+
+		finalPrice_label = new JLabel("Final:");
+		finalPrice_label.setFont(new Font("Helvetica", Font.BOLD, 40));
+		finalPrice_label.setBounds(10, height += 60, 250, 50);
+
+		prices_finalPrice = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_finalPrice.setFont(new Font("Helvetica", Font.BOLD, 40));
+		prices_finalPrice.setBounds(price_xDist, height, 250, 50);
+
+		innerPricesPanel.add(finalPrice_label);
+		innerPricesPanel.add(prices_finalPrice);
+
+		pricesPanel.add(innerPricesPanel, BorderLayout.CENTER);
+		JPanel ButtonsPanel = CreateButtonsPanel();
+		pricesPanel.add(ButtonsPanel, BorderLayout.SOUTH);
 
 		return pricesPanel;
 	}
@@ -384,8 +655,7 @@ public class NewOrderPanel extends JPanel {
 	public JPanel CreateButtonsPanel() {
 
 		JPanel buttonsPanel = new JPanel();
-		buttonsPanel.setLayout(null);
-		buttonsPanel.setBounds(65, 1000, 1000, 70);
+		buttonsPanel.setBackground(Color.DARK_GRAY);
 
 		JButton saveButton = new JButton("Save Order");
 		saveButton.setBackground(Color.GREEN);
@@ -409,6 +679,8 @@ public class NewOrderPanel extends JPanel {
 		buttonsPanel.add(clearButton);
 		return buttonsPanel;
 	}
+
+///////////////////////// HELP METHODS ////////////////////
 
 	public void PopulateMakerBox() {
 
@@ -484,19 +756,78 @@ public class NewOrderPanel extends JPanel {
 
 	public void CheckInventory() {
 		int quantity = inventorycontroller.getQuantity(make, model, trim, color);
-		
+
 		curr_inventory.setVisible(true);
 
-		
 		if (quantity == 1 || quantity == 2) {
 			curr_inventory_label.setForeground(Color.ORANGE);
 		}
-		
+
 		if (quantity == 0) {
 			curr_inventory_label.setForeground(Color.RED);
 		}
-		
+
 		curr_inventory.setText(Integer.toString(quantity));
 	}
 
+	public void updatePrices() {
+
+		totalPrice = 0;
+		finalPrice = 0;
+
+		prices_basePrice.setText(priceFormatter(basePrice));
+		prices_colorPrice.setText(priceFormatter(colorPrice));
+
+		totalPrice += basePrice;
+		totalPrice += colorPrice;
+
+		if (isExtendedWarranty.isSelected()) {
+			prices_exWar.setText(priceFormatter(exWarPrice));
+
+			totalPrice += exWarPrice;
+		} else {
+			prices_exWar.setText("0₪");
+		}
+
+		if (isMobileEyeIncluded.isSelected()) {
+			prices_mobEye.setText(priceFormatter(mobEyePrice));
+
+			totalPrice += mobEyePrice;
+		} else {
+			prices_mobEye.setText("0₪");
+		}
+
+		if (isReverseSensors.isSelected()) {
+			prices_revSen.setText(priceFormatter(revSenPrice));
+			totalPrice += revSenPrice;
+		} else {
+			prices_revSen.setText("0₪");
+		}
+
+		if (isWindowLifters.isSelected()) {
+			prices_winLift.setText(priceFormatter(winLiftPrice));
+			totalPrice += winLiftPrice;
+		} else {
+			prices_winLift.setText("0₪");
+		}
+
+		prices_discount.setText(priceFormatter(discount));
+		
+		prices_totalPrice.setText(priceFormatter(totalPrice));
+		
+		
+		finalPrice = totalPrice - discount;
+		
+		prices_finalPrice.setText(priceFormatter(finalPrice));
+
+	}
+
+	
+	public String priceFormatter(int num) {
+		
+		//String int_to_string = String.valueOf(num);
+		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "₪";
+		return formatted_string;
+	}
+	
 }

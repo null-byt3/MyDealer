@@ -15,7 +15,7 @@ public class OrdersMainCard extends JPanel {
 		this.setLayout(bl);
 		this.add(orderssidepanel,BorderLayout.WEST);
 		this.add(orderscardchanger, BorderLayout.CENTER);
-		this.setBackground(Color.GREEN);
+		this.setBackground(Color.ORANGE);
 		this.setName("OrdersPanel");
 	
 	}

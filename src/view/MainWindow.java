@@ -2,12 +2,13 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
 import controller.LoginController;
 import model.employee.Employee;
-import model.employee.Manager;
 
 public class MainWindow extends JFrame {
 
@@ -29,12 +30,12 @@ public class MainWindow extends JFrame {
 		mainContainer.setBackground(Color.ORANGE);
 		mainContainer.add(sidepanel, BorderLayout.WEST);
 		mainContainer.add(workpanel, BorderLayout.CENTER);
-		
-		// Border ?
-		//getRootPane().setBorder(BorderFactory.createMatteBorder(4,4,4,4, Color.GREEN))
-		
-		setExtendedState(JFrame.MAXIMIZED_BOTH); 
+	
 		setUndecorated(true); 
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		pack();
+		setSize(screenSize.width,screenSize.height);
 		setVisible(true);
+		//setExtendedState(JFrame.MAXIMIZED_BOTH); 
 	}
 }
