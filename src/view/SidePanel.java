@@ -31,12 +31,12 @@ public class SidePanel extends JPanel {
 	ImageIcon clients_orange, orders_orange, inventory_orange, reports_orange, employees_orange;
 	ImageIcon home;
 
-	public SidePanel(Employee employee, PanelChanger panelChanger) {
+	public SidePanel(PanelChanger panelChanger) {
 		this.loginController = new LoginController();
 		this.panelChanger = panelChanger;
 		this.setLayout(new BorderLayout(4, 4));
 		this.setBackground(Color.DARK_GRAY);
-		this.add(TopButtonsCluster(employee), BorderLayout.NORTH);
+		this.add(TopButtonsCluster(), BorderLayout.NORTH);
 		this.add(BottomButtonsCluster(), BorderLayout.SOUTH);
 	}
 
@@ -44,7 +44,7 @@ public class SidePanel extends JPanel {
 //////////// TOP   BUTTONS  CLUSTER ///////////
 ///////////////////////////////////////////////
 
-	public JPanel TopButtonsCluster(Employee employee) {
+	public JPanel TopButtonsCluster() {
 
 		// CREATE BUTTONS //
 

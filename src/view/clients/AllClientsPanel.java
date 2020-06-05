@@ -2,6 +2,7 @@ package view.clients;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,7 +33,7 @@ public class AllClientsPanel extends JPanel {
 
 	private JScrollPane tableScroll;
 	private ClientController clientController = new ClientController();
-	private JPanel panel, searchPanel;
+	private JPanel MainClientsPanel, searchPanel, titlePanel, thisPanel;
 	private EditClientsWindow editclientswindow;
 	private JTable clientsTable;
 	private JTextField searchField;
@@ -43,32 +44,40 @@ public class AllClientsPanel extends JPanel {
 	private TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 
 	AllClientsPanel() {
-		JLabel title = new JLabel("All Clients");
-		Font title_font = new Font("Helvetica", Font.BOLD, 60);
-		Map attributes = title_font.getAttributes();
-		// attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 520, 50);
-		this.add(title);
-		this.panel = this;
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-		
+		this.setLayout(new BorderLayout());
+		titlePanel = CreateTitlePanel();
+		MainClientsPanel = new JPanel(null);
 		searchPanel = searchPanel();
 		tableScroll = CreateTable();
-		this.add(tableScroll);
-		this.add(searchPanel);
+		MainClientsPanel.add(tableScroll);
+		MainClientsPanel.add(searchPanel);
+		thisPanel = this;
+		this.add(MainClientsPanel, BorderLayout.CENTER);
+		this.add(titlePanel, BorderLayout.NORTH);
 	}
 
+	
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  All Clients");
+		Font title_font = new Font("Helvetica", Font.BOLD, 60);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
+
+		return panel;
+	}
+	
 	public JPanel searchPanel() {
 		
 		searchPanel = new JPanel();
 		searchPanel.setLayout(new BorderLayout());
-		searchPanel.setBounds(50, 270, 400, 30);
+		searchPanel.setBounds(50, 50, 400, 30);
 		searchField = new JTextField();
 		searchLabel = new JLabel("Search: ");
 		searchLabel.setBackground(Color.WHITE);
-		
 		
 		 searchField.getDocument().addDocumentListener(new DocumentListener(){
 
@@ -142,7 +151,7 @@ public class AllClientsPanel extends JPanel {
 
 		// Makes the table scrollable
 		JScrollPane tblScrl = new JScrollPane(clientsTable);
-		tblScrl.setBounds(50, 300, 1600, 550);
+		tblScrl.setBounds(50, 100, 1550, 850);
 
 		clientsTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -151,7 +160,7 @@ public class AllClientsPanel extends JPanel {
 					int row = target.getSelectedRow();
 					int id = Integer.parseInt(target.getValueAt(row, 0).toString());
 					System.out.println(id);
-					editclientswindow = new EditClientsWindow((JFrame) SwingUtilities.getWindowAncestor(panel), id);
+					editclientswindow = new EditClientsWindow((JFrame) SwingUtilities.getWindowAncestor(thisPanel), id);
 					editclientswindow.addWindowListener(new WindowAdapter() {
 						public void windowClosed(WindowEvent e) {
 							

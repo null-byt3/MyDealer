@@ -2,6 +2,7 @@ package view.inventory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -30,7 +31,7 @@ public class AllInventoryPanel extends JPanel {
 
 	private JScrollPane tableScroll;
 	private InventoryController inventorycontroller = new InventoryController();
-	private JPanel panel, searchPanel;
+	private JPanel panel, searchPanel, mainPanel, titlePanel;
 	private JTable inventoryTable;
 	private JTextField searchField;
 	private JLabel searchLabel;
@@ -40,28 +41,42 @@ public class AllInventoryPanel extends JPanel {
 	private TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 
 	AllInventoryPanel() {
-		JLabel title = new JLabel("All Inventory");
-		Font title_font = new Font("Helvetica", Font.BOLD, 60);
-		Map attributes = title_font.getAttributes();
-		// attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 520, 90);
-		this.add(title);
+
+		this.setLayout(new BorderLayout());
+
+		titlePanel = CreateTitlePanel();
+		mainPanel = new JPanel(null);
 		this.panel = this;
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
 		
 		searchPanel = searchPanel();
 		tableScroll = CreateTable();
-		this.add(tableScroll);
-		this.add(searchPanel);
+		mainPanel.add(tableScroll);
+		mainPanel.add(searchPanel);
+		
+		
+		this.add(titlePanel, BorderLayout.NORTH);
+		this.add(mainPanel, BorderLayout.CENTER);
 	}
 
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  Create New Client");
+		Font title_font = new Font("Helvetica", Font.BOLD, 60);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
+
+		return panel;
+	}
+	
+	
 	public JPanel searchPanel() {
 		
 		searchPanel = new JPanel();
 		searchPanel.setLayout(new BorderLayout());
-		searchPanel.setBounds(50, 270, 400, 30);
+		searchPanel.setBounds(50, 50, 400, 30);
 		searchField = new JTextField();
 		searchLabel = new JLabel("Search: ");
 		searchLabel.setBackground(Color.WHITE);
@@ -139,7 +154,7 @@ public class AllInventoryPanel extends JPanel {
 
 		// Makes the table scrollable
 		JScrollPane tblScrl = new JScrollPane(inventoryTable);
-		tblScrl.setBounds(50, 300, 1600, 550);
+		tblScrl.setBounds(50, 100, 1550, 850);
 
 		inventoryTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

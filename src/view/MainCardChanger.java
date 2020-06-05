@@ -22,13 +22,13 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 	CardLayout cl = new CardLayout();
 
 	
-	 public MainCardChanger(Employee current_user) {
+	 public MainCardChanger() {
 		this.setLayout(cl);
 		clientspanel = new ClientsMainPage();
 		orderspanel = new OrdersMainCard(); 
 		welcomepanel = new WelcomePanel();
 		inventorypanel = new InventoryMainCard();
-		employeespanel = new EmployeesMainCard(current_user);
+		employeespanel = new EmployeesMainCard();
 		
 		this.add(welcomepanel, "WelcomePanel");
 		this.add(clientspanel, "ClientsPanel");

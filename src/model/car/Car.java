@@ -79,8 +79,7 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Car [make=" + make + ", model=" + model + ", trim=" + trim + ", color=" + color
-				+ "]";
+		return make + " " + model + ", " + trim + ", " + color;
 	}
 
 	public String getType() {

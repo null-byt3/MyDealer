@@ -1,6 +1,8 @@
 package view.inventory;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +23,7 @@ import controller.InventoryController;
 
 public class AddInventoryPanel extends JPanel {
 
-	private JPanel panel, buttons_panel;
+	private JPanel panel, buttons_panel, mainPanel, titlePanel;
 	private JComboBox<String>[] make_boxes, model_boxes, trim_boxes, color_boxes;
 	private JComboBox<Integer>[] quantity_boxes;
 	private JLabel make_label, model_label, trim_label, color_label, quantity_label;
@@ -31,9 +33,10 @@ public class AddInventoryPanel extends JPanel {
 	ArrayList<Integer> selected_lines;
 
 	AddInventoryPanel() {
-
-		this.setLayout(null);
-		setTitle("Add Inventory");
+		this.setLayout(new BorderLayout());
+		titlePanel = CreateTitlePanel();
+		mainPanel = new JPanel(null);
+		
 		carpropscontroller = new CarPropertiesController();
 		inventorycontroller = new InventoryController();
 
@@ -42,21 +45,28 @@ public class AddInventoryPanel extends JPanel {
 
 		panel = BoxesPanel(size);
 		buttons_panel = CreateButtonsPanel();
-		this.add(panel);
-		this.add(buttons_panel);
+		mainPanel.add(panel);
+		mainPanel.add(buttons_panel);
 
+		this.add(titlePanel, BorderLayout.NORTH);
+		this.add(mainPanel, BorderLayout.CENTER);
+		
+		
 		PopulateMakerBoxes();
 
 	}
 
-	public void setTitle(String text) {
-		JLabel title = new JLabel(text);
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  Add Inventory");
 		Font title_font = new Font("Helvetica", Font.BOLD, 60);
-		Map<TextAttribute, ?> attributes = title_font.getAttributes();
-		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(20, 31, 520, 80);
-		this.add(title);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
 
+		return panel;
 	}
 
 	public JPanel BoxesPanel(int size) {
@@ -83,7 +93,7 @@ public class AddInventoryPanel extends JPanel {
 
 		JPanel boxesPanel = new JPanel();
 		boxesPanel.setLayout(null);
-		boxesPanel.setBounds(20, 150, 1000, 700);
+		boxesPanel.setBounds(20, 50, 1000, 700);
 		// boxesPanel.setBackground(Color.RED);
 
 		int spacing = 60;
@@ -236,11 +246,11 @@ public class AddInventoryPanel extends JPanel {
 
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(null);
-		buttonsPanel.setBounds(20, 850, 1000, 100);
+		buttonsPanel.setBounds(20, 750, 1000, 100);
 		// buttonsPanel.setBackground(Color.ORANGE);
 
 		JButton saveButton = new JButton("Add Inventory");
-		saveButton.setBackground(Color.GREEN);
+		saveButton.setBackground(Color.ORANGE);
 		saveButton.setForeground(Color.BLACK);
 		saveButton.setBounds(20, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {
@@ -256,7 +266,8 @@ public class AddInventoryPanel extends JPanel {
 		});
 
 		JButton clearButton = new JButton("Clear");
-		clearButton.setForeground(Color.BLACK);
+		clearButton.setForeground(Color.ORANGE);
+		clearButton.setBackground(Color.DARK_GRAY);
 		clearButton.setBounds(770, 0, 120, 45);
 		clearButton.addActionListener(new ActionListener() {
 

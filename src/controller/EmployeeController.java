@@ -11,8 +11,7 @@ public class EmployeeController {
 
 	private EmployeeDB employeeDB;
 	private Serializer serializer;
-	private JPanel current_panel;
-	
+	private Employee curr_employee = null;
 	
 	
 	public EmployeeController() {
@@ -24,17 +23,16 @@ public class EmployeeController {
 		return employeeDB;
 	}
 	
-	public Employee getEmployee(int id) {
-		Employee selected_employee = null;
-		
-		for (Employee employee : employeeDB) {
-			if (employee.getId() == id) {
-				return employee;
-			}
-		}
-		
-		return selected_employee;
+	public String getFirstName(int id) {
+		cacheEmployee(id);
+		return curr_employee.getFirstName();
 	}
+	
+	public String getLastName(int id) {
+		cacheEmployee(id);
+		return curr_employee.getLastName();
+	}
+	
 	
 	public String[][] getEmployeeMatrix() {
 		String[][] employeeMatrix;
@@ -94,10 +92,25 @@ public class EmployeeController {
 	}
 	
 	
-	public void updateDB() {
+	private void updateDB() {
 		serializer.save("EmployeeDB", employeeDB);
 		System.out.println("EmplyeeDB saved successfully");
 	}
 	
+	private void cacheEmployee(int id) {
+		
+		if (curr_employee != null && curr_employee.getId() == id) {
+			return;
+		}
+		
+		for (Employee employee : employeeDB) {
+			if (employee.getId() == id) {
+				this.curr_employee = employee;
+				return;
+			}
+		}
+		
+		
+	}
 	
 }

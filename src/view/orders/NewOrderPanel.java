@@ -33,6 +33,7 @@ import controller.EmployeeController;
 import controller.InventoryController;
 import controller.LoginController;
 import controller.OrderController;
+import model.car.Car;
 
 public class NewOrderPanel extends JPanel {
 
@@ -48,6 +49,7 @@ public class NewOrderPanel extends JPanel {
 	int basePrice = 0, colorPrice = 0, totalPrice = 0, discount = 0, finalPrice = 0;
 	String make, model, trim, color, discountType = "Cash";
 	int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice = 2500;
+	int client_id;
 
 	// GUI ITEMS
 	JTextField price_field, discount_field;
@@ -113,6 +115,7 @@ public class NewOrderPanel extends JPanel {
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(orderContainerPanel, BorderLayout.CENTER);
 		this.add(pricePanel, BorderLayout.EAST);
+
 	}
 
 	public JPanel CreateTitlePanel() {
@@ -179,14 +182,14 @@ public class NewOrderPanel extends JPanel {
 
 				client_box.removeItem("Select..");
 
-				int id = Integer.valueOf(clientMatrix[client_box.getSelectedIndex()][0]);
-				firstName.setText(clientcontroller.getFirstName(id));
-				lastName.setText(clientcontroller.getLastName(id));
-				gender.setText(clientcontroller.getGender(id));
-				city.setText(clientcontroller.getCity(id));
-				address.setText(clientcontroller.getAddress(id));
-				phoneNum.setText(clientcontroller.getPhoneNum(id));
-				email.setText(clientcontroller.getEmail(id));
+				client_id = Integer.valueOf(clientMatrix[client_box.getSelectedIndex()][0]);
+				firstName.setText(clientcontroller.getFirstName(client_id));
+				lastName.setText(clientcontroller.getLastName(client_id));
+				gender.setText(clientcontroller.getGender(client_id));
+				city.setText(clientcontroller.getCity(client_id));
+				address.setText(clientcontroller.getAddress(client_id));
+				phoneNum.setText(clientcontroller.getPhoneNum(client_id));
+				email.setText(clientcontroller.getEmail(client_id));
 			}
 		});
 
@@ -388,46 +391,26 @@ public class NewOrderPanel extends JPanel {
 
 		// int exWarPrice = 3500, mobEyePrice = 3000, revSenPrice = 3000, winLiftPrice =
 		// 2500;
-		isExtendedWarranty = new JCheckBox(
-				"3-Year Warranty (+" + NumberFormat.getIntegerInstance().format(exWarPrice) + "₪)");
-		isMobileEyeIncluded = new JCheckBox(
-				"MobileEye (+" + NumberFormat.getIntegerInstance().format(mobEyePrice) + "₪)");
-		isReverseSensors = new JCheckBox(
-				"Reverse Parking Sensors (+" + NumberFormat.getIntegerInstance().format(revSenPrice) + "₪)");
-		isWindowLifters = new JCheckBox(
-				"Window Lifters (+" + NumberFormat.getIntegerInstance().format(winLiftPrice) + "₪)");
+		isExtendedWarranty = new JCheckBox("3-Year Warranty (+" + priceFormatter(exWarPrice) + ")");
+		isMobileEyeIncluded = new JCheckBox("MobileEye (+" + priceFormatter(mobEyePrice) + ")");
+		isReverseSensors = new JCheckBox("Reverse Parking Sensors (+" + priceFormatter(revSenPrice) + ")");
+		isWindowLifters = new JCheckBox("Window Lifters (+" + priceFormatter(winLiftPrice) + ")");
 
 		isExtendedWarranty.setFont(labelFont);
 		isMobileEyeIncluded.setFont(labelFont);
 		isReverseSensors.setFont(labelFont);
 		isWindowLifters.setFont(labelFont);
 
-		isExtendedWarranty.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				updatePrices();
-
-			}
-		});
-
-		isMobileEyeIncluded.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				updatePrices();
-
-			}
-		});
-
-		isReverseSensors.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				updatePrices();
-
-			}
-		});
-
-		isWindowLifters.addActionListener(new ActionListener() {
+		ActionListener updatePrices = new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				updatePrices();
 			}
-		});
+		};
+
+		isExtendedWarranty.addActionListener(updatePrices);
+		isMobileEyeIncluded.addActionListener(updatePrices);
+		isReverseSensors.addActionListener(updatePrices);
+		isWindowLifters.addActionListener(updatePrices);
 
 		extrasPanel.add(isExtendedWarranty);
 		extrasPanel.add(isMobileEyeIncluded);
@@ -507,7 +490,7 @@ public class NewOrderPanel extends JPanel {
 					}
 					discount = Integer.parseInt(discount_field.getText());
 				}
-				
+
 				updatePrices();
 
 			}
@@ -658,12 +641,15 @@ public class NewOrderPanel extends JPanel {
 		buttonsPanel.setBackground(Color.DARK_GRAY);
 
 		JButton saveButton = new JButton("Save Order");
-		saveButton.setBackground(Color.GREEN);
+		saveButton.setBackground(Color.ORANGE);
 		saveButton.setForeground(Color.BLACK);
 		saveButton.setBounds(0, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
+				if (Validator()) {
+					PlaceOrder();
+				}
 			}
 		});
 
@@ -733,8 +719,7 @@ public class NewOrderPanel extends JPanel {
 			trim_box.setEnabled(true);
 
 			for (Map.Entry<String, Integer> entry : trims.entrySet()) {
-				String price = NumberFormat.getIntegerInstance().format(entry.getValue()) + "₪";
-				trim_box.addItem(entry.getKey() + " (" + price + ")");
+				trim_box.addItem(entry.getKey() + " (" + priceFormatter(entry.getValue()) + ")");
 			}
 
 			int colorPrice = carpropscontroller.getColorPrice(model);
@@ -755,6 +740,11 @@ public class NewOrderPanel extends JPanel {
 	}
 
 	public void CheckInventory() {
+
+		if (make == null || model == null) {
+			return;
+		}
+
 		int quantity = inventorycontroller.getQuantity(make, model, trim, color);
 
 		curr_inventory.setVisible(true);
@@ -767,6 +757,7 @@ public class NewOrderPanel extends JPanel {
 			curr_inventory_label.setForeground(Color.RED);
 		}
 
+		curr_inventory.setForeground(Color.YELLOW);
 		curr_inventory.setText(Integer.toString(quantity));
 	}
 
@@ -812,22 +803,42 @@ public class NewOrderPanel extends JPanel {
 		}
 
 		prices_discount.setText(priceFormatter(discount));
-		
 		prices_totalPrice.setText(priceFormatter(totalPrice));
-		
-		
 		finalPrice = totalPrice - discount;
-		
 		prices_finalPrice.setText(priceFormatter(finalPrice));
 
 	}
 
-	
 	public String priceFormatter(int num) {
-		
-		//String int_to_string = String.valueOf(num);
+
 		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "₪";
 		return formatted_string;
 	}
+
+	public void PlaceOrder() {
+
+		int agentId = logincontroller.getLoggedUserId();
+		int warrantyPrice = isExtendedWarranty.isSelected() ? exWarPrice : 0;
+		int mobileEyePrice = isMobileEyeIncluded.isSelected() ? mobEyePrice : 0;
+		int reverseSensorsPrice = isReverseSensors.isSelected() ? revSenPrice : 0;
+		int windowLiftersPrice = isWindowLifters.isSelected() ? winLiftPrice : 0;
+
+		ordercontroller.createOrder(client_id, agentId, make, model, trim, color, basePrice, totalPrice, discount, finalPrice,
+				warrantyPrice, mobileEyePrice, reverseSensorsPrice, windowLiftersPrice);
+
+	}
 	
+	public boolean Validator() {
+		
+		if (client_box.getSelectedItem().equals("Select..")) {
+			return false;
+		}
+		
+		if (make_box.getSelectedItem().equals("Select..")) {
+			return false;
+		}
+		
+		return true;
+	}
+
 }

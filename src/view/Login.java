@@ -38,7 +38,7 @@ public class Login extends JFrame {
 		panel.add(blogin);
 		panel.add(user_field);
 		panel.add(pass_field);
-
+		
 		getContentPane().add(panel);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getRootPane().setDefaultButton(blogin);

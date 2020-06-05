@@ -1,11 +1,11 @@
 package view.clients;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.TextAttribute;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -21,9 +21,6 @@ import javax.swing.border.TitledBorder;
 import controller.ClientController;
 import controller.EmployeeController;
 import controller.LoginController;
-import model.database.EmployeeDB;
-import model.database.Serializer;
-import model.employee.Employee;
 
 public class NewClientPanel extends JPanel {
 
@@ -34,35 +31,46 @@ public class NewClientPanel extends JPanel {
 	private ClientController clientController = new ClientController();
 	private LoginController loginController = new LoginController();
 	private EmployeeController employeeController = new EmployeeController();
+	private JPanel mainPanel, titlePanel;
 	
 	NewClientPanel() {
-		this.setLayout(null);
+		this.setLayout(new BorderLayout());
 
-		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y) 
-		
-		// "Create New Client" -- Label
-		JLabel title = new JLabel("Create New Client");
-		Font title_font = new Font("Helvetica", Font.BOLD,60);
-		Map<TextAttribute, ?> attributes = title_font.getAttributes();
-		//attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 520, 50);
-		this.add(title);
+		titlePanel = CreateTitlePanel();
+		mainPanel = new JPanel(null);
+
 		
 		/// Agent Details -- Panel
 		JPanel agentDetails = CreateAgentDetails();
-		this.add(agentDetails);
+		mainPanel.add(agentDetails);
 		
 		
 		/// Client Details -- Panel
 		JPanel clientDetails = CreateClientDetails();
-		this.add(clientDetails);
+		mainPanel.add(clientDetails);
 		
 		/// Submit & Clear Buttons -- Panel
 		JPanel buttons = CreateButtonsPanel();
-		this.add(buttons);
+		mainPanel.add(buttons);
+		
+		this.add(titlePanel, BorderLayout.NORTH);
+		this.add(mainPanel, BorderLayout.CENTER);
 
 	}
+	
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  Create New Client");
+		Font title_font = new Font("Helvetica", Font.BOLD, 60);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
+
+		return panel;
+	}
+	
 	
 	public JPanel CreateAgentDetails() {
 			
@@ -72,7 +80,7 @@ public class NewClientPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Agent Details");
 		agentDetails.setBorder(titledborder);
-		agentDetails.setBounds(65,120,400,100);
+		agentDetails.setBounds(65,50,400,100);
 		//agentDetails.setBackground(Color.WHITE);
 		
 		JComboBox<String> comboBox = new JComboBox<String>();
@@ -111,7 +119,7 @@ public class NewClientPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Client Details");
 		clientDetails.setBorder(titledborder);
-		clientDetails.setBounds(65,250,650,320);
+		clientDetails.setBounds(65,180,650,320);
 		
 		
 		// FIRST NAME
@@ -204,10 +212,10 @@ public class NewClientPanel extends JPanel {
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(null);
-		buttonsPanel.setBounds(65,600,800,150);
+		buttonsPanel.setBounds(65,520,800,150);
 		
 		JButton saveButton = new JButton("Save Client");
-		saveButton.setBackground(Color.GREEN);
+		saveButton.setBackground(Color.ORANGE);
 		saveButton.setForeground(Color.BLACK);
 		saveButton.setBounds(0, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {

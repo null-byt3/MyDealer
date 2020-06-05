@@ -36,8 +36,10 @@ public class InventoryController {
 		System.out.println(quantity + "x " + car + " added to inventory");
 	}
 
-	public void remove(String type, String make, String model, String trim, String color, int quantity) {
-
+	public void remove(String make, String model, String trim, String color, int quantity) {
+		
+		String type = carpropscontroller.getType(model);
+		
 		Car new_car = new Car(type, make, model, trim, color);
 		remove(new_car, quantity);
 	}
@@ -97,10 +99,6 @@ public class InventoryController {
 		updateDB();
 	}
 
-	private void updateDB() {
-		serializer.save("InventoryDB", inventoryDB);
-		System.out.println("InventoryDB successfully");
-	}
 	
 	public int getQuantity (String make, String model, String trim, String color) {
 		
@@ -117,6 +115,11 @@ public class InventoryController {
 		}
 		
 		return num;
+	}
+	
+	private void updateDB() {
+		serializer.save("InventoryDB", inventoryDB);
+		System.out.println("InventoryDB successfully");
 	}
 	
 

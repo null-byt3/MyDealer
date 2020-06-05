@@ -1,21 +1,27 @@
 package view.employees;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
-import javax.swing.border.*;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import model.database.EmployeeDB;
-import model.database.Serializer;
-import model.employee.Employee;
 
 public class NewEmployeePanel extends JPanel {
 
-	private Employee current_user;
 	EmployeeDB employeedb = null;
 	JTextField firstName_field;
 	JTextField lastName_field;
@@ -25,35 +31,42 @@ public class NewEmployeePanel extends JPanel {
 	JTextField password_field;
 	JTextField salary_field;
 	JTextField role_field;
+	JPanel mainPanel, titlePanel;
 	
 	
-	NewEmployeePanel(Employee current_user) {
-		this.current_user = current_user;
-		this.setBackground(Color.WHITE);
-		this.setLayout(null);
-
-		// setBounds arguments - (Position_X, Position_Y, Size_X, Size_Y) 
+	NewEmployeePanel() {
 		
-		// "Create New Client" -- Label
-		JLabel title = new JLabel("Create New Employee");
-		Font title_font = new Font("Helvetica", Font.BOLD,60);
-		Map attributes = title_font.getAttributes();
-		//attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(65, 31, 800, 70);
-		this.add(title);
+		this.setLayout(new BorderLayout());
+
+		titlePanel = CreateTitlePanel();
+		mainPanel = new JPanel(null);
 		
 		/// Employee Details -- Panel
 		JPanel employeeDetails = CreateEmployeeDetails();
-		this.add(employeeDetails);
 		
 		/// Submit & Clear Buttons -- Panel
 		JPanel buttons = CreateButtonsPanel();
-		this.add(buttons);
+		
+		mainPanel.add(employeeDetails);
+		mainPanel.add(buttons);
+		
+		this.add(mainPanel, BorderLayout.CENTER);
+		this.add(titlePanel, BorderLayout.NORTH);
 
 	}
 	
-	
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  Create New Employee");
+		Font title_font = new Font("Helvetica", Font.BOLD, 60);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
+
+		return panel;
+	}
 	
 	public JPanel CreateEmployeeDetails() {
 		
@@ -62,8 +75,7 @@ public class NewEmployeePanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		TitledBorder titledborder = BorderFactory.createTitledBorder(blackline, "Employee Details");
 		employeeDetails.setBorder(titledborder);
-		employeeDetails.setBounds(65,250,650,320);
-		employeeDetails.setBackground(Color.WHITE);
+		employeeDetails.setBounds(65,50,650,320);
 			
 		// FIRST NAME
 		JLabel first_name = new JLabel("First Name:");
@@ -87,9 +99,7 @@ public class NewEmployeePanel extends JPanel {
 		female = new JRadioButton("Female");
 		gender.setBounds(420, 10, 100, 50);
 		male.setBounds(420, 50, 60, 30);
-		male.setBackground(Color.WHITE);
 		female.setBounds(480, 50, 90, 30);
-		female.setBackground(Color.WHITE);
 		male.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				female.setSelected(false);
@@ -107,7 +117,7 @@ public class NewEmployeePanel extends JPanel {
 		
 		
 		// UserName
-		JLabel city = new JLabel("UserName:");
+		JLabel city = new JLabel("User Name:");
 		username_field = new JTextField();
 		city.setBounds(20, 80, 100, 50);
 		username_field.setBounds(20, 120, 150, 30);
@@ -123,6 +133,8 @@ public class NewEmployeePanel extends JPanel {
 		employeeDetails.add(password_field);
 		
 		//Role 
+		JLabel role = new JLabel("Role:");
+		role.setBounds(20, 150, 100, 50);
 		JComboBox<String> comboBox1 = new JComboBox<String>();
 		comboBox1.addItem("Agent");
 		comboBox1.addItem("Secretary");
@@ -135,6 +147,7 @@ public class NewEmployeePanel extends JPanel {
 		});
 		
 		comboBox1.setBounds(20, 190, 150, 30);
+		employeeDetails.add(role);
 		employeeDetails.add(comboBox1);
 		
 		
@@ -165,11 +178,10 @@ public class NewEmployeePanel extends JPanel {
 		
 		JPanel buttonsPanel = new JPanel();
 		buttonsPanel.setLayout(null);
-		buttonsPanel.setBounds(65,600,800,150);
-		buttonsPanel.setBackground(Color.WHITE);
+		buttonsPanel.setBounds(65,400,800,150);
 		
 		JButton saveButton = new JButton("Save Employee");
-		saveButton.setBackground(Color.GREEN);
+		saveButton.setBackground(Color.ORANGE);
 		saveButton.setForeground(Color.BLACK);
 		saveButton.setBounds(0, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {

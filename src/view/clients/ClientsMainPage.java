@@ -21,7 +21,7 @@ public class ClientsMainPage extends JPanel {
 		
 		this.add(clientssidepanel,BorderLayout.WEST);
 		this.add(clientscardchanger, BorderLayout.CENTER);
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.ORANGE);
 	}
 
 }

@@ -24,7 +24,7 @@ import controller.CarPropertiesController;
 
 public class CarPropertiesPanel extends JPanel {
 
-	private JPanel panel;
+	private JPanel panel, mainPanel, titlePanel;
 	private EditCarPropertiesWindow editcarprops;
 	private JButton newButton;
 	private JPanel[] carTypePanel;
@@ -33,24 +33,38 @@ public class CarPropertiesPanel extends JPanel {
 	private HashMap<String, JPanel[]> slots_hash = new HashMap<String, JPanel[]>();
 	CarPropertiesPanel() {
 
-		this.setLayout(null);
+		this.setLayout(new BorderLayout());
 
-		JLabel title = new JLabel("Car Properties");
-		Font title_font = new Font("Helvetica", Font.BOLD, 60);
-		Map attributes = title_font.getAttributes();
-		title.setFont(title_font.deriveFont(attributes));
-		title.setBounds(20, 31, 520, 80);
+		
+		titlePanel = CreateTitlePanel();
+		mainPanel = new JPanel(null);
+		
 
 		newButton = AddCarButton();
-
 		panel = CreateVehicleGrid(carpropscontroller.getAllCarTypes());
 
-		this.add(title);
-		this.add(newButton);
-		this.add(panel);
+		mainPanel.add(newButton);
+		mainPanel.add(panel);
 
+		this.add(mainPanel, BorderLayout.CENTER);
+		this.add(titlePanel, BorderLayout.NORTH);
+		
 		PopulateGrid();
 
+	}
+	
+	
+	public JPanel CreateTitlePanel() {
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panel.setBackground(Color.DARK_GRAY);
+		JLabel title = new JLabel("  Car Properties");
+		Font title_font = new Font("Helvetica", Font.BOLD, 60);
+		title.setForeground(Color.orange);
+		title.setFont(title_font);
+		panel.add(title);
+
+		return panel;
 	}
 
 	public JPanel CreateVehicleGrid(ArrayList<String> types) {
@@ -58,7 +72,7 @@ public class CarPropertiesPanel extends JPanel {
 		num_of_types = types.size();
 		JPanel vehicleGridPanel = new JPanel();
 		vehicleGridPanel.setLayout(new GridLayout(5, 1, 10, 10));
-		vehicleGridPanel.setBounds(20, 180, 1600, 1000);
+		vehicleGridPanel.setBounds(20, 80, 1600, 1000);
 
 		carTypePanel = new JPanel[num_of_types];
 
@@ -107,7 +121,7 @@ public class CarPropertiesPanel extends JPanel {
 		JPanel slot = new JPanel();
 		slot.setLayout(new BorderLayout());
 		slot.setSize(80, 80);
-		slot.setBackground(Color.LIGHT_GRAY);
+		slot.setBackground(Color.DARK_GRAY);
 		slot.setVisible(false);
 
 		return slot;
@@ -134,31 +148,31 @@ public class CarPropertiesPanel extends JPanel {
 
 				JLabel make = new JLabel();
 				make.setText(carpropscontroller.getMake(model_name));
-				make.setForeground(Color.BLUE);
+				make.setForeground(Color.ORANGE);
 				make.setHorizontalAlignment(JLabel.CENTER);
 				make.setFont(big_font.deriveFont(big_attributes));
 
 				JLabel model = new JLabel();
 				model.setText(model_name);
-				model.setForeground(Color.BLUE);
+				model.setForeground(Color.ORANGE);
 				model.setHorizontalAlignment(JLabel.CENTER);
 				model.setFont(big_font.deriveFont(big_attributes));
 
 				JLabel available_trims = new JLabel();
 				available_trims.setText("Available Trims: " + carpropscontroller.getNumOfTrims(model_name));
-				available_trims.setForeground(Color.RED);
+				available_trims.setForeground(Color.LIGHT_GRAY);
 				available_trims.setHorizontalAlignment(JLabel.CENTER);
 				available_trims.setFont(small_font.deriveFont(small_attributes));
 
 				JLabel available_colors = new JLabel();
 				available_colors.setText("Available Colors: " + carpropscontroller.getNumOfColors(model_name));
-				available_colors.setForeground(Color.MAGENTA);
+				available_colors.setForeground(Color.WHITE);
 				available_colors.setHorizontalAlignment(JLabel.CENTER);
 				available_colors.setFont(small_font.deriveFont(small_attributes));
 
 				JPanel north_panel = new JPanel();
 				north_panel.setLayout(new BorderLayout());
-				north_panel.setBackground(Color.LIGHT_GRAY);
+				north_panel.setBackground(Color.DARK_GRAY);
 				north_panel.add(make, BorderLayout.NORTH);
 				north_panel.add(model,BorderLayout.SOUTH);
 				
@@ -166,7 +180,7 @@ public class CarPropertiesPanel extends JPanel {
 				south_panel.setLayout(new BorderLayout());
 				south_panel.add(available_trims,BorderLayout.NORTH);
 				south_panel.add(available_colors,BorderLayout.SOUTH);
-				south_panel.setBackground(Color.LIGHT_GRAY);
+				south_panel.setBackground(Color.DARK_GRAY);
 
 				slot.add(north_panel,BorderLayout.NORTH);
 				slot.add(south_panel,BorderLayout.SOUTH);
@@ -196,9 +210,9 @@ public class CarPropertiesPanel extends JPanel {
 
 		JButton button = new JButton("New Car Property");
 
-		button.setBackground(Color.GREEN);
+		button.setBackground(Color.ORANGE);
 		button.setForeground(Color.BLACK);
-		button.setBounds(20, 130, 150, 30);
+		button.setBounds(20, 30, 150, 30);
 
 		button.addMouseListener(new MouseAdapter() {
 			public void mousePressed(MouseEvent me) {

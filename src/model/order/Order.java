@@ -2,6 +2,10 @@ package model.order;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 import model.car.Car;
 
@@ -13,16 +17,19 @@ public class Order implements Serializable {
 	private Car car;
 	private LocalDateTime dateTime;
 	int basePrice;
+	int totalPrice;
 	int finalPrice;
 	int discount;
-	
+
 	// OPTIONS
 	private boolean isExtendedWarranty;
-	int warrantyPrice;
+	private int ExWarrantyPrice;
 	private boolean isMobileEyeIncluded;
-	int mobileEyePrice;
+	private int mobileEyePrice;
 	private boolean isReverseSensors;
-	int reverseSensorsPrice;
+	private int reverseSensorsPrice;
+	private boolean isWindowLifters;
+	private int windowLiftersPrice;
 	
 	public Order() {
 		this.orderId=0;
@@ -32,25 +39,25 @@ public class Order implements Serializable {
 		this.dateTime = null;
 	}
 	
-	public Order(int orderId, int clientId, int agentId, Car car, int basePrice, int warrantyPrice, int mobileEyePrice) {
+	public Order(int orderId, int clientId, int agentId, Car car, int basePrice, int totalPrice, int discount, int finalPrice, int warrantyPrice, int mobileEyePrice, int reverseSensorsPrice, int windowLiftersPrice) {
 		this.orderId=orderId;
 		this.clientId = clientId;
 		this.agentId = agentId;
 		this.car = car;
 		this.dateTime = LocalDateTime.now();
 		this.basePrice = basePrice;
-		this.warrantyPrice = warrantyPrice;
+		this.totalPrice = totalPrice;
+		this.discount = discount;
+		this.finalPrice = finalPrice;
+		this.ExWarrantyPrice = warrantyPrice;
 		this.isExtendedWarranty = warrantyPrice != 0 ? true : false;
 		this.mobileEyePrice = mobileEyePrice;
 		this.isMobileEyeIncluded = mobileEyePrice != 0 ? true : false;
-	}
-
-	public int getId() {
-		return orderId;
-	}
-
-	public void setId(int orderId) {
-		this.orderId = orderId;
+		this.reverseSensorsPrice = reverseSensorsPrice;
+		this.isReverseSensors = reverseSensorsPrice != 0 ? true : false;
+		this.windowLiftersPrice = windowLiftersPrice;
+		this.isWindowLifters = windowLiftersPrice != 0 ? true : false;
+		
 	}
 
 	public int getClientId() {
@@ -77,8 +84,118 @@ public class Order implements Serializable {
 		this.car = car;
 	}
 	
-	public LocalDateTime getDateTime() {
-		return this.dateTime;
+	public String getDateTime() {
+			
+	int day = this.dateTime.getDayOfMonth();
+	int month = this.dateTime.getMonthValue();
+	int year = this.dateTime.getYear();
+	
+	int hour = this.dateTime.getHour();
+	int minute = this.dateTime.getMinute();
+		
+	String fullDateTime = day + "/" + month + "/" + year + " | " + hour + ":" + minute;
+		
+		return fullDateTime;
+	}
+	
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+
+	public int getBasePrice() {
+		return basePrice;
+	}
+
+	public void setBasePrice(int basePrice) {
+		this.basePrice = basePrice;
+	}
+
+	public int getFinalPrice() {
+		return finalPrice;
+	}
+
+	public void setFinalPrice(int finalPrice) {
+		this.finalPrice = finalPrice;
+	}
+
+	public int getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(int discount) {
+		this.discount = discount;
+	}
+
+	public boolean isExtendedWarranty() {
+		return isExtendedWarranty;
+	}
+
+	public void setExtendedWarranty(boolean isExtendedWarranty) {
+		this.isExtendedWarranty = isExtendedWarranty;
+	}
+
+	public int getExWarrantyPrice() {
+		return ExWarrantyPrice;
+	}
+
+	public void setExWarrantyPrice(int exWarrantyPrice) {
+		ExWarrantyPrice = exWarrantyPrice;
+	}
+
+	public boolean isMobileEyeIncluded() {
+		return isMobileEyeIncluded;
+	}
+
+	public void setMobileEyeIncluded(boolean isMobileEyeIncluded) {
+		this.isMobileEyeIncluded = isMobileEyeIncluded;
+	}
+
+	public int getMobileEyePrice() {
+		return mobileEyePrice;
+	}
+
+	public void setMobileEyePrice(int mobileEyePrice) {
+		this.mobileEyePrice = mobileEyePrice;
+	}
+
+	public boolean isReverseSensors() {
+		return isReverseSensors;
+	}
+
+	public void setReverseSensors(boolean isReverseSensors) {
+		this.isReverseSensors = isReverseSensors;
+	}
+
+	public int getReverseSensorsPrice() {
+		return reverseSensorsPrice;
+	}
+
+	public void setReverseSensorsPrice(int reverseSensorsPrice) {
+		this.reverseSensorsPrice = reverseSensorsPrice;
+	}
+
+	public boolean isWindowLifters() {
+		return isWindowLifters;
+	}
+
+	public void setWindowLifters(boolean isWindowLifters) {
+		this.isWindowLifters = isWindowLifters;
+	}
+
+	public int getWindowLiftersPrice() {
+		return windowLiftersPrice;
+	}
+
+	public void setWindowLiftersPrice(int windowLiftersPrice) {
+		this.windowLiftersPrice = windowLiftersPrice;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 
 

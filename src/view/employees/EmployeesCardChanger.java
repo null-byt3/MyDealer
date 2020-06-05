@@ -12,14 +12,12 @@ public class EmployeesCardChanger extends JPanel implements PanelChanger {
 	NewEmployeePanel newEmployeePanel;
 	AllEmployeesPanel allEmployeesPanel;
 	WelcomePanel welcomepanel;
-	Employee current_user;
 	
 	CardLayout cl = new CardLayout();
 	
-	public EmployeesCardChanger(Employee current_user) {
+	public EmployeesCardChanger() {
 		this.setLayout(cl);
-		this.current_user = current_user;
-		this.newEmployeePanel = new NewEmployeePanel(current_user);
+		this.newEmployeePanel = new NewEmployeePanel();
 		this.allEmployeesPanel = new AllEmployeesPanel();
 		this.welcomepanel = new WelcomePanel();
 		

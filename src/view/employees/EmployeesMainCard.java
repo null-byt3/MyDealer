@@ -12,18 +12,16 @@ public class EmployeesMainCard extends JPanel {
 	BorderLayout bl = new BorderLayout(2,2);
 	EmployeesCardChanger employeescardchanger;
 	EmployeesSidePanel employeessidepanel;
-	private Employee current_user;
 	
-	public EmployeesMainCard(Employee current_user) {
-		this.current_user = current_user;
+	public EmployeesMainCard() {
 		this.setLayout(bl);
 		
-		employeescardchanger = new EmployeesCardChanger(current_user);
+		employeescardchanger = new EmployeesCardChanger();
 		employeessidepanel = new EmployeesSidePanel(employeescardchanger);
 		
 		this.add(employeessidepanel,BorderLayout.WEST);
 		this.add(employeescardchanger, BorderLayout.CENTER);
-		this.setBackground(Color.BLUE);
+		this.setBackground(Color.ORANGE);
 	}
 
 }
