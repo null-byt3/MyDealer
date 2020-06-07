@@ -154,7 +154,7 @@ public class SidePanel extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				resetIcons();
 				mouseEntered(e);
-				// panelChanger.updateWorkPanel("ReportsPanel");
+				panelChanger.updateWorkPanel("ReportsPanel");
 				bReports.setContentAreaFilled(true);
 			}
 

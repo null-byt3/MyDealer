@@ -16,12 +16,12 @@ public static EmployeeDB getDB() {
 	
 	
 	// Create and add everything back
-	Employee sebas = new Agent(serializer.getNextId("employeeId"),"Sebastian","Altheim","sebas","12345","M",6500);
-	Employee eny = new Secretary(serializer.getNextId("employeeId"),"Eny","Kaplan","enykap","abcde","F",8000);
-	Employee pegi = new Secretary(serializer.getNextId("employeeId"),"Peggy", "Allson", "pegi", "pegipeg","F", 8002);
-	Employee etay = new Agent(serializer.getNextId("employeeId"),"Etay","Rabino","etay","e123","M", 12000);
-	Employee vitaly = new Agent(serializer.getNextId("employeeId"),"Vitali", "Bucevith", "vitaly","pass", "M", 12050);
-	Employee john = new Manager(serializer.getNextId("employeeId"),"John","Smith","jsmith","12345","M",9000);
+	Employee sebas = new Agent(serializer.getNextId("employeeId"),"Sebastian","Altheim", "Male","sebas","12345",6500);
+	Employee eny = new Secretary(serializer.getNextId("employeeId"),"Eny","Kaplan","Female","enykap","abcde",8000);
+	Employee pegi = new Secretary(serializer.getNextId("employeeId"),"Peggy", "Allson","Female", "pegi", "pegipeg", 8002);
+	Employee etay = new Agent(serializer.getNextId("employeeId"),"Etay","Rabino","Male","etay","e123", 12000);
+	Employee vitaly = new Agent(serializer.getNextId("employeeId"),"Vitali", "Bucevith", "Male","vitaly","pass", 12050);
+	Employee john = new Manager(serializer.getNextId("employeeId"),"John","Smith","Female","jsmith","12345",9000);
 	
 	employeedb.add(sebas);
 	employeedb.add(eny);

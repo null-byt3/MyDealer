@@ -59,7 +59,7 @@ public class Order implements Serializable {
 		this.isWindowLifters = windowLiftersPrice != 0 ? true : false;
 		
 	}
-
+	
 	public int getClientId() {
 		return clientId;
 	}

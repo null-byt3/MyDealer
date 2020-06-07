@@ -10,6 +10,7 @@ import view.clients.ClientsMainPage;
 import view.employees.EmployeesMainCard;
 import view.inventory.InventoryMainCard;
 import view.orders.OrdersMainCard;
+import view.reports.ReportsMainCard;
 
 public class MainCardChanger extends JPanel implements PanelChanger {
 	
@@ -18,6 +19,7 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 	WelcomePanel welcomepanel;
 	InventoryMainCard inventorypanel;
 	EmployeesMainCard employeespanel;
+	ReportsMainCard reportspanel;
 	
 	CardLayout cl = new CardLayout();
 
@@ -29,11 +31,13 @@ public class MainCardChanger extends JPanel implements PanelChanger {
 		welcomepanel = new WelcomePanel();
 		inventorypanel = new InventoryMainCard();
 		employeespanel = new EmployeesMainCard();
+		reportspanel = new ReportsMainCard();
 		
 		this.add(welcomepanel, "WelcomePanel");
 		this.add(clientspanel, "ClientsPanel");
 		this.add(orderspanel, "OrdersPanel");	
 		this.add(inventorypanel, "InventoryPanel");
+		this.add(reportspanel, "ReportsPanel");
 		this.add(employeespanel, "EmployeesPanel");
 		
 		cl.show(this, "WelcomePanel");

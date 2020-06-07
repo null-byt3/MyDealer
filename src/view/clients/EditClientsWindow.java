@@ -151,12 +151,12 @@ public class EditClientsWindow extends JDialog {
 		
 		if (phoneNum.charAt(1) == '5') {
 			phonePrefix.setSelectedItem(phoneNum.substring(0, 3));
-			phoneNum_field.setText(phoneNum.substring(3)); 
+			phoneNum_field.setText(phoneNum.substring(4)); 
 
 		}
 		else {
 			phonePrefix.setSelectedItem(phoneNum.substring(0, 2));
-			phoneNum_field.setText(phoneNum.substring(2)); 
+			phoneNum_field.setText(phoneNum.substring(3)); 
 
 		}
 		email_field.setText(clientController.getEmail(id)); 
@@ -185,7 +185,7 @@ public class EditClientsWindow extends JDialog {
 					String gender = (male.isSelected()) ? male.getText() : female.getText();
 					String city = city_field.getText();
 					String address = address_field.getText();
-					String phoneNum = phonePrefix.getSelectedItem() + phoneNum_field.getText();
+					String phoneNum = phonePrefix.getSelectedItem() + "-" + phoneNum_field.getText();
 					String email = email_field.getText();
 					clientController.updateClient(client_id, firstName, lastName, gender, city, address, phoneNum, email);
 					JOptionPane.showMessageDialog(null, "Client Updated");

@@ -69,26 +69,25 @@ public class CarPropertiesController {
 		int num = carprop.getColors().size();
 		return num;
 	}
-	
+
 	public String getDefaultColor(String model) {
 		setModel(model);
 		String default_color = carprop.getDefault_color();
 		return default_color;
 	}
-	
+
 	public int getColorPrice(String model) {
 		int cheapest = Integer.MAX_VALUE;
 		Map<String, Integer> trims = getTrimsMap(model);
 
-		
 		for (Map.Entry<String, Integer> entry : trims.entrySet()) {
 			if (entry.getValue() < cheapest) {
 				cheapest = entry.getValue();
 			}
 		}
-		
-		int color_price = (int) (Math.ceil(cheapest*0.02/500.0))*500;
-		
+
+		int color_price = (int) (Math.ceil(cheapest * 0.02 / 500.0)) * 500;
+
 		return color_price;
 	}
 
@@ -100,9 +99,11 @@ public class CarPropertiesController {
 
 	public ArrayList<String> getAllModelNames() {
 		ArrayList<String> model_names = new ArrayList<String>();
-
 		for (CarProperties carProp : carpropsDB) {
-			model_names.add(carProp.getModel());
+			String model = carProp.getModel();
+			if (!model_names.contains(model)) {
+				model_names.add(model);
+			}
 		}
 
 		return model_names;

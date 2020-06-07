@@ -119,7 +119,7 @@ public class AllClientsPanel extends JPanel {
 	
 	public JScrollPane CreateTable() {
 
-		String[] columnNames = { "ID", "First Name", "Last Name", "City", "Address", "Phone Number", "E-Mail" };
+		String[] columnNames = { "ID", "First Name", "Last Name", "City", "Address", "Phone Number", "Created By" };
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 
 		dtm = new DefaultTableModel() {

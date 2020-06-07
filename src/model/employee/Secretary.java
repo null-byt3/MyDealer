@@ -2,7 +2,7 @@ package model.employee;
 
 public class Secretary extends Employee {
 
-	public Secretary(int id, String firstName, String lastName, String userName, String password, String gender, int salary) {
+	public Secretary(int id, String firstName, String lastName,String gender, String userName, String password, int salary) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;

@@ -45,7 +45,7 @@ public class LoginController {
 	
 	public boolean attemptLogin(String username, char[] password) {		
 		employeedb = (EmployeeDB) employeeController.getEmployeeList();
-		
+				
 		for (Employee employee : employeedb) {
 			if (username.equals(employee.getUserName()) && String.valueOf(password).equals(employee.getPassword())) {
 				setLoggedUser(employee);

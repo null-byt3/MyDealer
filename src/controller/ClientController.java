@@ -12,10 +12,12 @@ public class ClientController {
 	private ClientDB clientDB;
 	private Serializer serializer;
 	private Client curr_client = null;
+	private EmployeeController employeecontroller;
 	
 	public ClientController() {
 		this.serializer = Serializer.getInstance();
 		clientDB = (ClientDB)serializer.load("ClientDB");
+		this.employeecontroller = new EmployeeController();
 	}
 	
 	public ArrayList<Client> getClientsList() {
@@ -75,7 +77,12 @@ public class ClientController {
 			clientMatrix[i][3] = client.getCity();
 			clientMatrix[i][4] = client.getAddress();
 			clientMatrix[i][5] = client.getPhoneNum();
-			clientMatrix[i][6] = client.getEmail();
+			
+			int agentId = client.getAgentId();
+			String agent_name = employeecontroller.getFirstName(agentId) + " " + employeecontroller.getLastName(agentId);
+			
+			
+			clientMatrix[i][6] = agent_name;
 		}
 		
 		return clientMatrix;

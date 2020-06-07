@@ -227,10 +227,10 @@ public class CarPropertiesPanel extends JPanel {
 	
 	public void RefreshPanel() {
 		panel.removeAll();
-		this.remove(panel);
+		mainPanel.remove(panel);
 		slots_hash = new HashMap<String, JPanel[]>();
 		panel = CreateVehicleGrid(carpropscontroller.getAllCarTypes());
-		this.add(panel);
+		mainPanel.add(panel);
 		PopulateGrid();
 	}
 	

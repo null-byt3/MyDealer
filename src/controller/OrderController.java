@@ -42,6 +42,21 @@ public class OrderController {
 		return selected_order;
 	}
 
+	public ArrayList<Integer> getAllOrderIds() {
+
+		ArrayList<Integer> allOrderIds = new ArrayList<Integer>();
+
+		for (Order order : orderdb) {
+			int id = order.getOrderId();
+			
+			if (!allOrderIds.contains(id)) {
+				allOrderIds.add(id);
+			}
+		}
+
+		return allOrderIds;
+	}
+
 	public String[][] getOrderMatrix() {
 		String[][] orderMatrix;
 		int size = orderdb.size();
@@ -49,10 +64,12 @@ public class OrderController {
 		for (int i = 0; i < size; i++) {
 			orderMatrix[i] = new String[6];
 			Order order = orderdb.get(i);
-			
-			String client_name = clientcontroller.getFirstName(order.getClientId()) + " " + clientcontroller.getLastName(order.getClientId());
-			String agent_name = employeecontroller.getFirstName(order.getAgentId()) + " " + employeecontroller.getLastName(order.getAgentId());
-			
+
+			String client_name = clientcontroller.getFirstName(order.getClientId()) + " "
+					+ clientcontroller.getLastName(order.getClientId());
+			String agent_name = employeecontroller.getFirstName(order.getAgentId()) + " "
+					+ employeecontroller.getLastName(order.getAgentId());
+
 			orderMatrix[i][0] = String.valueOf(order.getOrderId());
 			orderMatrix[i][1] = order.getDateTime();
 			orderMatrix[i][2] = String.valueOf(agent_name);
@@ -98,7 +115,7 @@ public class OrderController {
 		serializer.save("OrderDB", orderdb);
 		System.out.println("OrderDB successfully updated");
 	}
-	
+
 	public String priceFormatter(int num) {
 
 		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "₪";

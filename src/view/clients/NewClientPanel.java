@@ -230,7 +230,7 @@ public class NewClientPanel extends JPanel {
 					String gender = (male.isSelected()) ? male.getText() : female.getText();
 					String city = city_field.getText();
 					String address = address_field.getText();
-					String phoneNum = phonePrefix.getSelectedItem() + phoneNum_field.getText();
+					String phoneNum = phonePrefix.getSelectedItem() + "-" + phoneNum_field.getText();
 					String email = email_field.getText();
 					clientController.createClient(agentId, firstName, lastName, gender, city, address, phoneNum, email);
 					JOptionPane.showMessageDialog(null, "Client Created");

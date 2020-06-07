@@ -70,6 +70,8 @@ public class EmployeeController {
 		Employee new_employee;
 		int id = serializer.getNextId("employeeId");
 		
+		System.out.println("ROLE: " + role);
+		
 		if(role.equals("Secretary")) {
 			new_employee = new Secretary(id, firstName,lastName,gender,userName,password,salary);
 		}
@@ -80,6 +82,7 @@ public class EmployeeController {
 			new_employee = new Manager(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else {
+			System.out.println("Error. Invalid Role");
 			return;
 		}
 		

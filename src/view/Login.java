@@ -61,8 +61,6 @@ public class Login extends JFrame {
 				}
 
 				JOptionPane.showMessageDialog(null, "Wrong Password / Username");
-				// txuser.setText("");
-				// pass.setText("");
 				user_field.requestFocus();
 			}
 		});
