@@ -42,16 +42,22 @@ public class OrderController {
 		return selected_order;
 	}
 
-	public ArrayList<Integer> getAllOrderIds() {
+	public ArrayList<Integer> getAllOrderIds(int agentId) {
 
 		ArrayList<Integer> allOrderIds = new ArrayList<Integer>();
 
-		for (Order order : orderdb) {
-			int id = order.getOrderId();
-			
-			if (!allOrderIds.contains(id)) {
-				allOrderIds.add(id);
-			}
+		if (agentId != 0) {
+			for (Order order : orderdb) {
+				if (order.getAgentId() == agentId) {
+				allOrderIds.add(order.getOrderId());
+				}
+			}	
+		}
+		
+		else {
+			for (Order order : orderdb) {
+				allOrderIds.add(order.getOrderId());
+			}	
 		}
 
 		return allOrderIds;

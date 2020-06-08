@@ -73,20 +73,20 @@ public class Initializer {
 
 		button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (employees.isSelected()) {
+					resetDB("EmployeeDB");
+				}
 				if (clients.isSelected()) {
 					resetDB("ClientDB");
 				}
-				if (employees.isSelected()) {
-					resetDB("EmployeeDB");
+				if (carprops.isSelected()) {
+					resetDB("CarPropertiesDB");
 				}
 				if (orders.isSelected()) {
 					resetDB("OrderDB");
 				}
 				if (inventory.isSelected()) {
 					resetDB("InventoryDB");
-				}
-				if (carprops.isSelected()) {
-					resetDB("CarPropertiesDB");
 				}
 
 			}

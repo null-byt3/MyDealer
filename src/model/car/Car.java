@@ -79,7 +79,7 @@ public class Car implements Serializable {
 
 	@Override
 	public String toString() {
-		return make + " " + model + ", " + trim + ", " + color;
+		return make + " " + model + " | " + trim + " | " + color;
 	}
 
 	public String getType() {

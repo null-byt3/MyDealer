@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -120,6 +121,19 @@ public class CarPropertiesController {
 		}
 
 		return make_names;
+	}
+	
+	public ArrayList<String> getAllTrims(String model) {
+		ArrayList<String> trim_names = null;
+		
+		for (CarProperties carProp : carpropsDB) {
+			if (carProp.getModel().equals(model)) {
+				Collection<String> trim_collection = carProp.getTrims().keySet();
+				trim_names= new ArrayList<String>(trim_collection);
+			}			
+		}
+		return trim_names;
+
 	}
 
 	public ArrayList<String> getModelsByType(String type) {

@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+
+import model.client.Client;
 import model.database.EmployeeDB;
 import model.database.Serializer;
 import model.employee.*;
@@ -21,6 +23,17 @@ public class EmployeeController {
 	
 	public ArrayList<Employee> getEmployeeList() {
 		return employeeDB;
+	}
+	
+	public ArrayList<Integer> getAllAgentIds() {
+		ArrayList<Integer> agent_ids = new ArrayList<Integer>();
+		
+		for (Employee employee : employeeDB) {
+			if (!employee.getClass().getSimpleName().equals("Secretary")) {
+				agent_ids.add(employee.getId());	
+			}
+		}
+		return agent_ids;
 	}
 	
 	public String getFirstName(int id) {
