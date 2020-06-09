@@ -20,7 +20,7 @@ public class OrderDBinitializer {
 		Serializer serializer = Serializer.getInstance();
 
 		OrderDB orderdb = new OrderDB();
-		int size = 40;
+		int size = 100;
 		Car car_array[] = new Car[size];
 		Order order_array[] = new Order[size];
 		

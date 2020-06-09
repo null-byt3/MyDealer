@@ -6,19 +6,24 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
+import controller.LoginController;
 import view.PanelChanger;
 
 public class InventorySidePanel extends JPanel {
 
-	JButton bAll = new JButton("All");
+	JButton bAll = new JButton("All Inventory");
 	JButton bCarProps = new JButton("Car Properties");
 	JButton bAddInventory = new JButton("Add Inventory");
 
+	LoginController logincontroller;
 	private final PanelChanger panelchanger;
 
 	public InventorySidePanel(PanelChanger panelchanger) {
+
+		logincontroller = new LoginController();
 
 		this.panelchanger = panelchanger;
 		bAll.setPreferredSize(new Dimension(150, 100));
@@ -60,7 +65,11 @@ public class InventorySidePanel extends JPanel {
 		this.setLayout(new GridLayout(15, 1, 5, 5));
 		this.setBackground(Color.BLACK);
 		this.add(bAll);
-		this.add(bAddInventory);
-		this.add(bCarProps);
+
+		if (logincontroller.getLoggedUserRole().equals("Manager")) {
+			this.add(bAddInventory);
+			this.add(bCarProps);
+		}
+
 	}
 }

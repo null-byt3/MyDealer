@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import controller.LoginController;
 import view.PanelChanger;
 
 public class ReportsSidePanel extends JPanel {
@@ -18,11 +19,12 @@ public class ReportsSidePanel extends JPanel {
 	
 	JButton bMyReports = new JButton("My Reports"); 
 	JButton bAllReports = new JButton("All Reports"); 
-	
+	LoginController logincontroller;
 
 
 	 public ReportsSidePanel(PanelChanger panelchanger) {
 		 
+		logincontroller = new LoginController();
 		this.panelchanger = panelchanger;
 		bMyReports.setPreferredSize(new Dimension(150,100));
 		bMyReports.setBackground(Color.GRAY);
@@ -34,8 +36,10 @@ public class ReportsSidePanel extends JPanel {
 		this.setLayout(new GridLayout(15,1,5,5));
 		this.setBackground(Color.BLACK);
 		this.add(bMyReports);
-		this.add(bAllReports);
 		
+		if (logincontroller.getLoggedUserRole().equals("Manager")) {
+			this.add(bAllReports);
+		}		
 		
 		bMyReports.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
