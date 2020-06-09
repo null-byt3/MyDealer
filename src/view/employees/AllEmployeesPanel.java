@@ -157,13 +157,6 @@ public class AllEmployeesPanel extends JPanel {
 					int row = target.getSelectedRow();
 					int id = Integer.parseInt(target.getValueAt(row, 0).toString());
 					System.out.println(id);
-					//editclientswindow = new EditClientsWindow((JFrame) SwingUtilities.getWindowAncestor(thisPanel), id);
-					//editclientswindow.addWindowListener(new WindowAdapter() {
-					//	public void windowClosed(WindowEvent e) {
-					//		
-					//		populateTable();
-					//	}
-					//});
 
 				}
 			}

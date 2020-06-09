@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
@@ -649,6 +650,8 @@ public class NewOrderPanel extends JPanel {
 				
 				if (Validator()) {
 					PlaceOrder();
+					JOptionPane.showMessageDialog(null, "Order placed successfully");
+
 				}
 			}
 		});
@@ -657,7 +660,8 @@ public class NewOrderPanel extends JPanel {
 		clearButton.setBounds(800, 0, 150, 60);
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-
+				
+				
 			}
 		});
 
@@ -757,8 +761,8 @@ public class NewOrderPanel extends JPanel {
 
 		curr_inventory.setVisible(true);
 
-		if (quantity == 1 || quantity == 2) {
-			curr_inventory_label.setForeground(Color.ORANGE);
+		if (quantity > 0) {
+			curr_inventory_label.setForeground(Color.GREEN);
 		}
 
 		if (quantity == 0) {
@@ -839,10 +843,18 @@ public class NewOrderPanel extends JPanel {
 	public boolean Validator() {
 		
 		if (client_box.getSelectedItem().equals("Select..")) {
+			JOptionPane.showMessageDialog(null, "Error: Please select a client");
 			return false;
 		}
 		
 		if (make_box.getSelectedItem().equals("Select..")) {
+			JOptionPane.showMessageDialog(null, "Error: Please select a car");
+			return false;
+		}
+		
+		int numInInventory = inventorycontroller.getQuantity(make, model, trim, color);
+		if (numInInventory == 0) {
+			JOptionPane.showMessageDialog(null, "Error: Car not in inventory");
 			return false;
 		}
 		

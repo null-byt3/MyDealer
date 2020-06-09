@@ -11,72 +11,56 @@ import javax.swing.*;
 import view.PanelChanger;
 
 public class InventorySidePanel extends JPanel {
-	
-	JButton bAll = new JButton("All"); 
-	JButton bAvailable = new JButton("Available for sale"); 
+
+	JButton bAll = new JButton("All");
 	JButton bCarProps = new JButton("Car Properties");
 	JButton bAddInventory = new JButton("Add Inventory");
-	
+
 	private final PanelChanger panelchanger;
 
-	 public InventorySidePanel(PanelChanger panelchanger) {
-		 
+	public InventorySidePanel(PanelChanger panelchanger) {
+
 		this.panelchanger = panelchanger;
-		bAll.setPreferredSize(new Dimension(150,100));
+		bAll.setPreferredSize(new Dimension(150, 100));
 		bAll.setBackground(Color.GRAY);
 		bAll.setForeground(Color.WHITE);
-		bAvailable.setPreferredSize(new Dimension(150,100));
-		bAvailable.setBackground(Color.GRAY);
-		bAvailable.setForeground(Color.WHITE);
-		bAddInventory.setPreferredSize(new Dimension(150,100));
+		bAddInventory.setPreferredSize(new Dimension(150, 100));
 		bAddInventory.setBackground(Color.GRAY);
 		bAddInventory.setForeground(Color.WHITE);
-		bCarProps.setPreferredSize(new Dimension(150,100));
+		bCarProps.setPreferredSize(new Dimension(150, 100));
 		bCarProps.setBackground(Color.GRAY);
 		bCarProps.setForeground(Color.WHITE);
-		
-		
+
 		bAll.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				panelchanger.updateWorkPanel("AllInventoryPanel");
-		
+
 			}
 
 		});
-		
-		bAvailable.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				panelchanger.updateWorkPanel("AvailableInventoryPanel");
-				
-			}
 
-		});
-		
 		bCarProps.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 				panelchanger.updateWorkPanel("CarPropertiesPanel");
-				
+
 			}
 
 		});
-		
+
 		bAddInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panelchanger.updateWorkPanel("AddInventoryPanel");
-				
+
 			}
 
 		});
-		 
-		 
-		this.setLayout(new GridLayout(15,1,5,5));
+
+		this.setLayout(new GridLayout(15, 1, 5, 5));
 		this.setBackground(Color.BLACK);
 		this.add(bAll);
-		this.add(bAvailable);
 		this.add(bAddInventory);
 		this.add(bCarProps);
-}
+	}
 }

@@ -45,8 +45,6 @@ public class ClientsCardChanger extends JPanel implements PanelChanger {
 			this.add(allClientsPanel,"AllClientsPanel");
 		}
 		
-		
-		
 		cl.show(this, panelName);
 		
 		System.out.println("ClientsCardChanger card changed to: "+ panelName);

@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 import model.employee.Employee;
 import view.PanelChanger;
 import view.WelcomePanel;
+import view.clients.AllClientsPanel;
+import view.clients.NewClientPanel;
 
 public class EmployeesCardChanger extends JPanel implements PanelChanger {
 	
@@ -27,12 +29,21 @@ public class EmployeesCardChanger extends JPanel implements PanelChanger {
 		cl.show(this, "WelcomePanel");
 	}
 	
-	
-	
-	
-	
 	@Override
 	public void updateWorkPanel(String panelName) {
+		
+		if (panelName.equals("NewEmployeePanel")) {
+			this.remove(newEmployeePanel);
+			newEmployeePanel = new NewEmployeePanel();
+			this.add(newEmployeePanel,"NewEmployeePanel");
+		}
+		
+		if (panelName.equals("AllEmployeesPanel")) {
+			this.remove(allEmployeesPanel);
+			allEmployeesPanel = new AllEmployeesPanel();
+			this.add(allEmployeesPanel,"AllEmployeesPanel");
+		}
+		
 		cl.show(this, panelName);
 		System.out.println("ClientsCardChanger card changed to: "+ panelName);
 		

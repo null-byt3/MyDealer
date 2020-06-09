@@ -9,7 +9,6 @@ import view.WelcomePanel;
 public class InventoryCardChanger extends JPanel implements PanelChanger {
 	
 	AllInventoryPanel allinventorypanel;
-	AvailableInventoryPanel availableinventorypanel;
 	AddInventoryPanel addinventorypanel;
 	WelcomePanel welcomepanel;
 	CarPropertiesPanel carpropertiespanel;
@@ -19,7 +18,6 @@ public class InventoryCardChanger extends JPanel implements PanelChanger {
 	public InventoryCardChanger() {
 		
 		allinventorypanel = new AllInventoryPanel();
-		availableinventorypanel = new AvailableInventoryPanel();
 		addinventorypanel = new AddInventoryPanel();
 		welcomepanel = new WelcomePanel();
 		carpropertiespanel = new CarPropertiesPanel();
@@ -27,7 +25,6 @@ public class InventoryCardChanger extends JPanel implements PanelChanger {
 		this.setLayout(cl);
 		this.add(welcomepanel, "WelcomePanel");
 		this.add(allinventorypanel, "AllInventoryPanel");
-		this.add(availableinventorypanel, "AvailableInventoryPanel");
 		this.add(addinventorypanel,"AddInventoryPanel");
 		this.add(carpropertiespanel,"CarPropertiesPanel");
 		cl.show(this, "WelcomePanel");
@@ -44,12 +41,6 @@ public class InventoryCardChanger extends JPanel implements PanelChanger {
 			this.remove(allinventorypanel);
 			allinventorypanel = new AllInventoryPanel();
 			this.add(allinventorypanel,"AllInventoryPanel");
-		}
-		
-		if (panelName.equals("AvailableInventoryPanel")) {
-			this.remove(availableinventorypanel);
-			availableinventorypanel = new AvailableInventoryPanel();
-			this.add(availableinventorypanel,"AvailableInventoryPanel");
 		}
 		
 		if (panelName.equals("CarPropertiesPanel")) {
