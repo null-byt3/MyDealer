@@ -49,7 +49,7 @@ class CarPropertiesTest extends CarProperties {
 		@Test
 		void testSetTrims() {
 			Map<String, Integer> iTest1_trims = new HashMap<String,Integer>();
-			iTest1_trims.put("Intence", -15);
+			iTest1_trims.put("Intense", -15);
 			carProp.setTrims(iTest1_trims);
 			Map<String,Integer> expected = CarPropertiesTest.iTest_trims;
 			Map<String,Integer> actual = carProp.getTrims();

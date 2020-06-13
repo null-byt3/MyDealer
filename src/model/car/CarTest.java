@@ -9,7 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class CarTest extends Car {
-
+	
+	public static Car testCar;
+	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
