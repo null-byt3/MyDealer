@@ -8,8 +8,22 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class ClientTest {
+import model.client.Client;
 
+class ClientTest extends Client{
+	
+	public static Client clientTest;
+	private int id;
+	public static int agentId;
+	public static String firstName;
+	public static String lastName;
+	public static String gender;
+	public static String city;
+	public static String address;
+	public static String phoneNum;
+	public static String email;
+	
+	
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -20,6 +34,15 @@ class ClientTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		id = agentId = 1000;
+		firstName = "Jon";
+		lastName = "Smith";
+		gender = "Male";
+		city = "New-York";
+		address = "Fifth avenue";
+		phoneNum = "0503389754";
+		email = "jon.smith@gmail.com";
+		clientTest = new Client(id, agentId, firstName, lastName, gender, city, address, phoneNum, email);
 	}
 
 	@AfterEach
@@ -28,42 +51,57 @@ class ClientTest {
 
 	@Test
 	void testSetFirstName() {
-		fail("Not yet implemented");
+		String firstNameTest = "123";
+		clientTest.setFirstName(firstNameTest);
+		String expected = ClientTest.firstName;
+		String actual = clientTest.getFirstName();
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void testSetLastName() {
-		fail("Not yet implemented");
+		String lastNameTest = "123";
+		clientTest.setLastName(lastNameTest);
+		String expected = ClientTest.lastName;
+		String actual = clientTest.getLastName();
+		assertEquals(expected, actual);	
 	}
 
 	@Test
 	void testSetCity() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetAddress() {
-		fail("Not yet implemented");
+		String cityTest = "123";
+		clientTest.setCity(cityTest);
+		String expected = ClientTest.city;
+		String actual = clientTest.getCity();
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void testSetPhoneNum() {
-		fail("Not yet implemented");
+		String phoneNumTest = "050338975";
+		clientTest.setPhoneNum(phoneNumTest);
+		String expected = ClientTest.phoneNum;
+		String actual = clientTest.getPhoneNum();
+		assertEquals(expected, actual);
 	}
 
-	@Test
-	void testSetAgentId() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	void testSetEmail() {
-		fail("Not yet implemented");
+		String emailTest = "jon.smith";
+		clientTest.setEmail(emailTest);
+		String expected = ClientTest.email;
+		String actual = clientTest.getEmail();
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void testSetGender() {
-		fail("Not yet implemented");
+		String genderTest = "123";
+		clientTest.setGender(genderTest);
+		String expected = ClientTest.gender;
+		String actual = clientTest.getGender();
+		assertEquals(expected, actual);
 	}
 
 }

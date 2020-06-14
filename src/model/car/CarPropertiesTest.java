@@ -14,9 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.car.CarProperties;
-import model.database.CarPropertiesDB;
-import model.database.Serializer;
-import model.database_initializers.CarPropertiesInitializer;
+
 
 class CarPropertiesTest extends CarProperties {
 		
