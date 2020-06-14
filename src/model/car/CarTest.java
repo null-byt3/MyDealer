@@ -10,6 +10,13 @@ import org.junit.jupiter.api.Test;
 
 class CarTest extends Car {
 	
+	public static Car carTest;
+	public static String type;
+	public static String make; 
+	public static String model; 
+	public static String trim; 
+	public static String color;
+	
 	public static Car testCar;
 	
 	@BeforeAll
@@ -22,45 +29,70 @@ class CarTest extends Car {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		type = "Compact";
+		make = "Hyundai"; 
+		model = "i10"; 
+		trim = "Intense"; 
+		color = "White"; 
+		carTest = new Car(type,make, model, trim, color);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-	}
-
-	@Test
-	void testHashCode() {
-		fail("Not yet implemented");
+		carTest = null;
 	}
 
 	@Test
 	void testEqualsObject() {
-		fail("Not yet implemented");
+		Car carTest1 = new Car("Compact","Hyundai", "i10", "Intense","White");
+		Car carTest2 = new Car("Compact","Hyundai", "i20", "Intense","Black");
+		assertTrue(carTest.equals(carTest1));
+		assertFalse(carTest.equals(carTest2));
 	}
 
 	@Test
 	void testSetType() {
-		fail("Not yet implemented");
+		String testType = "Bla Bla";
+		carTest.setType(testType);
+		String expected = CarTest.type;
+		String actual = carTest.getType();
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void testSetMake() {
-		fail("Not yet implemented");
+		String testMake = "Bla Bla";
+		carTest.setMake(testMake);
+		String expected = CarTest.make;
+		String actual = carTest.getMake();
+		assertEquals(expected, actual);	
 	}
 
 	@Test
 	void testSetModel() {
-		fail("Not yet implemented");
+		String testModel = "Bla Bla";
+		carTest.setModel(testModel);
+		String expected = CarTest.model;
+		String actual = carTest.getModel();
+		assertEquals(expected, actual);		
 	}
 
 	@Test
 	void testSetTrim() {
-		fail("Not yet implemented");
+		String testTrim = "Bla Bla";
+		carTest.setTrim(testTrim);
+		String expected = CarTest.trim;
+		String actual = carTest.getTrim();
+		assertEquals(expected, actual);		
 	}
 
 	@Test
 	void testSetColor() {
-		fail("Not yet implemented");
+		String testColor = "Bla Bla";
+		carTest.setColor(testColor);
+		String expected = CarTest.color;
+		String actual = carTest.getColor();
+		assertEquals(expected, actual);		
 	}
 
 }
