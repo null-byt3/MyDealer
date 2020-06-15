@@ -10,6 +10,14 @@ import org.junit.jupiter.api.Test;
 
 class SecretaryTest {
 
+	Employee tester;
+	public static String firstName;
+	public static String lastName;
+	public static String gender;
+	public static String userName;
+	public static String password;
+	public static int salary;
+
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
@@ -20,45 +28,62 @@ class SecretaryTest {
 
 	@BeforeEach
 	void setUp() throws Exception {
+		firstName = "Jon";
+		lastName = "Smith";
+		gender = "Male";
+		userName = "jsmith";
+		password = "12345";
+		salary = 10500;
+		tester = new Secretary(2000, firstName, lastName, gender, userName, password, salary);
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
-	}
-
-	@Test
-	void testSetId() {
-		fail("Not yet implemented");
+		tester = null;
 	}
 
 	@Test
 	void testSetFirstName() {
-		fail("Not yet implemented");
+		String firstNameTest = "123";
+		tester.setFirstName(firstNameTest);
+		String expected = SecretaryTest.firstName;
+		String actual = tester.getFirstName();
+		assertEquals(expected, actual);	
 	}
 
 	@Test
 	void testSetLastName() {
-		fail("Not yet implemented");
+		String lastNameTest = "123";
+		tester.setLastName(lastNameTest);
+		String expected = SecretaryTest.lastName;
+		String actual = tester.getLastName();
+		assertEquals(expected, actual);
 	}
 
 	@Test
 	void testSetGender() {
-		fail("Not yet implemented");
-	}
+		String genderTest = "dog";
+		tester.setGender(genderTest);
+		String expected = SecretaryTest.gender;
+		String actual = tester.getGender();
+		assertEquals(expected, actual);	}
 
 	@Test
 	void testSetSalary() {
-		fail("Not yet implemented");
+		int salaryTest = -150;
+		tester.setSalary(salaryTest);
+		int expected = SecretaryTest.salary;
+		int actual = tester.getSalary();
+		assertEquals(expected, actual);	
 	}
 
 	@Test
 	void testSetUserName() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	void testSetPassword() {
-		fail("Not yet implemented");
+		Employee tester2 = new Secretary(2001, "Donald", "Trump", "Male", "dondon", "abc123", 100000000);
+		tester.setUserName("dondon");
+		String expected = SecretaryTest.userName;
+		String actual = tester2.getUserName();
+		assertEquals(expected, actual);	
 	}
 
 }
