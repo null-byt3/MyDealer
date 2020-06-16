@@ -22,7 +22,7 @@ import controller.EmployeeController;
 
 public class NewEmployeePanel extends JPanel {
 
-	JTextField firstName_field,lastName_field, username_field, password_field, salary_field;
+	JTextField firstName_field, lastName_field, username_field, password_field, salary_field;
 	JLabel firstName_label, lastName_label, userName_label, password_label, salary_label, gender_label;
 	JRadioButton male;
 	JRadioButton female;
@@ -30,7 +30,7 @@ public class NewEmployeePanel extends JPanel {
 	EmployeeController employeecontroller;
 	JComboBox<String> role_box;
 	String selected_gender;
-	
+
 	NewEmployeePanel() {
 
 		this.setLayout(new BorderLayout());
@@ -171,19 +171,18 @@ public class NewEmployeePanel extends JPanel {
 		saveButton.setBounds(0, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (!FieldVerifier()) {
-					JOptionPane.showMessageDialog(null, "Data Missing");
-				} else {
-					String role = (String)role_box.getSelectedItem();
+				if (FieldVerifier()) {
+					String role = (String) role_box.getSelectedItem();
 					String firstName = firstName_field.getText();
 					String lastName = lastName_field.getText();
 					String userName = username_field.getText();
 					String password = password_field.getText();
 
 					int salary = Integer.parseInt(salary_field.getText());
-					 
-					employeecontroller.createEmployee(role, firstName, lastName, selected_gender, userName, password, salary);
-					 JOptionPane.showMessageDialog(null, "Employee Created");
+
+					employeecontroller.createEmployee(role, firstName, lastName, selected_gender, userName, password,
+							salary);
+					JOptionPane.showMessageDialog(null, "Employee Created");
 				}
 			}
 		});
@@ -210,9 +209,7 @@ public class NewEmployeePanel extends JPanel {
 	}
 
 	public boolean FieldVerifier() {
-		
-		boolean isValid = true;
-		
+
 		firstName_label.setForeground(Color.BLACK);
 		lastName_label.setForeground(Color.BLACK);
 		gender_label.setForeground(Color.BLACK);
@@ -220,38 +217,63 @@ public class NewEmployeePanel extends JPanel {
 		password_label.setForeground(Color.BLACK);
 		salary_label.setForeground(Color.BLACK);
 
-
 		if (firstName_field.getText().isEmpty()) {
 			firstName_label.setForeground(Color.RED);
-			isValid = false;
+			JOptionPane.showMessageDialog(null, "Error: Empty first name");
+			return false;
 		}
+		
+		if (firstName_field.getText().matches(".*\\d+.*")) {
+			firstName_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: Invalid first name");
+			return false;
+		}
+		
 		if (lastName_field.getText().isEmpty()) {
 			lastName_label.setForeground(Color.RED);
-			isValid = false;
+			JOptionPane.showMessageDialog(null, "Error: Empty last name");
+			return false;
+		}
+		
+		if (lastName_field.getText().matches(".*\\d+.*")) {
+			lastName_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: Invalid last name");
+			return false;
 		}
 		if (username_field.getText().isEmpty()) {
 			userName_label.setForeground(Color.RED);
-			isValid = false;
+			JOptionPane.showMessageDialog(null, "Error: Empty username field");
+			return false;
 		}
-		if (password_field.getText().isEmpty()) {
-			password_label.setForeground(Color.RED);
-			isValid = false;
-		}
-		if (salary_field.getText().isEmpty()) {
-			salary_label.setForeground(Color.RED);
-			isValid = false;
-		}
-		if (!salary_field.getText().matches("[0-9]+")) {
-			salary_label.setForeground(Color.RED);
-			isValid = false;
-		}
-	
-		if (!male.isSelected() && !female.isSelected()) {
-			gender_label.setForeground(Color.RED);
+		if (!employeecontroller.userNameAvailable(username_field.getText())) {
+			JOptionPane.showMessageDialog(null, "Error: Username already in use");
+			userName_label.setForeground(Color.RED);
 			return false;
 		}
 
-		return isValid;
+		if (password_field.getText().isEmpty()) {
+			password_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: empty password");
+			return false;
+		}
+		if (salary_field.getText().isEmpty()) {
+			salary_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: Salary field empty");
+			return false;
+		}
+		if (!salary_field.getText().matches("[0-9]+")) {
+			salary_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: Salary must contain a positive numeric value");
+			return false;
+		}
+
+		if (!male.isSelected() && !female.isSelected()) {
+			gender_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: Gender not selected");
+			return false;
+		}
+
+		return true;
 	}
 
 }

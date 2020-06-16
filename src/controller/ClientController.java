@@ -1,10 +1,14 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.client.Client;
 import model.database.ClientDB;
-import model.database.IdProvider;
 import model.database.Serializer;
 
 public class ClientController {
@@ -77,6 +81,35 @@ public class ClientController {
 	public String getAddress(int id) {
 		cacheClient(id);
 		return curr_client.getAddress();
+	}
+
+	public List<String> getListOfCities() {
+		
+		List<String> listOfCities = new ArrayList<String>();
+		String fileName = "ListOfCities.txt";
+		
+		try  
+		{  
+		File file=new File(fileName);    //creates a new file instance  
+		FileReader fr=new FileReader(file);   //reads the file  
+		BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
+		StringBuffer sb=new StringBuffer();    //constructs a string buffer with no characters  
+		String line;  
+		while((line=br.readLine())!=null)  
+		{  
+			listOfCities.add(line);
+		}  
+		
+		fr.close();    //closes the stream and release the resources  
+		}
+		catch(IOException e)  
+		{  
+			
+		System.out.println("ClientController | getListOfCities | Can't find file: " + fileName);
+		e.printStackTrace();  
+		}  
+		
+		return listOfCities;
 	}
 
 	public String getPhoneNum(int id) {

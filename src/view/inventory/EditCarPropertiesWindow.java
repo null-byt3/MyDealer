@@ -184,15 +184,13 @@ public class EditCarPropertiesWindow extends JDialog {
 		saveButton.setBounds(0, 0, 130, 45);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (!fieldValidator()) {
-					JOptionPane.showMessageDialog(null, "Error: Invalid fields");
-				} else {
-						if (model != null) {
-							updateModel(model);
-						}
-						else {
-							createModel();
-						}
+				if (fieldValidator()) {
+					if (model != null) {
+						updateModel(model);
+					} else {
+						createModel();
+					}
+
 				}
 			}
 		});
@@ -203,7 +201,7 @@ public class EditCarPropertiesWindow extends JDialog {
 		deleteButton.setBounds(160, 0, 130, 45);
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				carpropscontroller.deleteModel(model);
 				JOptionPane.showMessageDialog(null, "Properties Deleted");
 				dispose();
@@ -216,7 +214,6 @@ public class EditCarPropertiesWindow extends JDialog {
 	}
 
 	public boolean fieldValidator() {
-		boolean valid = true;
 
 		make_label.setForeground(Color.BLACK);
 		model_label.setForeground(Color.BLACK);
@@ -226,94 +223,122 @@ public class EditCarPropertiesWindow extends JDialog {
 		// MAKE AND MODEL
 		if (make_field.getText().isEmpty()) {
 			make_label.setForeground(Color.RED);
-			valid = false;
+			JOptionPane.showMessageDialog(null, "Error: Make field empty");
+			return false;
 		}
 
 		if (model_field.getText().isEmpty()) {
 			model_label.setForeground(Color.RED);
-			valid = false;
+			JOptionPane.showMessageDialog(null, "Error: Model field empty");
+			return false;
 		}
 
 		// TRIMS AND PRICES
 		int flag = 0;
 		for (int i = 0; i < 5; i++) {
 
+			// Check that at least 1 trim-price pair is filled
 			if (!trim_fields[i].getText().isEmpty() && !price_fields[i].getText().isEmpty()) {
+
+				// check that price_field only contains positive numbers
+				if (!price_fields[i].getText().matches("[0-9]+")) {
+					JOptionPane.showMessageDialog(null, "Error: Price field must contain a positive numeric value");
+					return false;
+				}
+
 				flag++;
 			}
 
+			// Check that there are no trim names without prices or prices without trim
+			// names
 			if (!trim_fields[i].getText().isEmpty() && price_fields[i].getText().isEmpty()
 					|| trim_fields[i].getText().isEmpty() && !price_fields[i].getText().isEmpty()) {
-				valid = false;
 				trim_label.setForeground(Color.RED);
+				JOptionPane.showMessageDialog(null, "Error: Trim name or price missing");
+				return false;
 			}
 		}
 
 		if (flag == 0) {
-			valid = false;
 			trim_label.setForeground(Color.RED);
+			JOptionPane.showMessageDialog(null, "Error: Property must contain at least one trim-price pair");
+			return false;
 		}
 
 		// COLORS
 		flag = 0;
+
+		List<String> colorsList = new ArrayList<String>();
+
 		for (int i = 0; i < 10; i++) {
 			if (!color_fields[i].getText().isEmpty()) {
-				flag++;
+
+				if (colorsList.contains(color_fields[i].getText())) {
+					JOptionPane.showMessageDialog(null, "Error: Duplicate colors found");
+					return false;
+				}
+
+				else {
+					colorsList.add(color_fields[i].getText());
+					flag++;
+				}
+
 			}
 
 		}
+
 		if (flag == 0) {
-			valid = false;
+			JOptionPane.showMessageDialog(null, "Error: Property must contain at least one color");
 			colors_label.setForeground(Color.RED);
+			return false;
 		}
 
-		return valid;
+		return true;
 	}
-	
+
 	public void updateModel(String model) {
-		
-		Map<String,Integer> trims = new HashMap<String,Integer>();
+
+		Map<String, Integer> trims = new HashMap<String, Integer>();
 		List<String> colors = new ArrayList<String>();
-		for (int i = 0; i < 5 ; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (!trim_fields[i].getText().isEmpty()) {
 				trims.put(trim_fields[i].getText(), Integer.valueOf(price_fields[i].getText()));
 			}
 		}
-		
-		for (int i = 0; i < 10 ; i++) {
+
+		for (int i = 0; i < 10; i++) {
 			if (!color_fields[i].getText().isEmpty()) {
 				colors.add(color_fields[i].getText());
 			}
 		}
-		
+
 		carpropscontroller.updateModel(model, trims, colors);
 		JOptionPane.showMessageDialog(null, "Model Updated");
 		dispose();
 	}
-	
+
 	public void createModel() {
-		
-		
-		String type = (String)type_box.getSelectedItem();
+
+		String type = (String) type_box.getSelectedItem();
 		String make = make_field.getText();
 		String model = model_field.getText();
-		
-		Map<String,Integer> trims = new HashMap<String,Integer>();
+
+		Map<String, Integer> trims = new HashMap<String, Integer>();
 		List<String> colors = new ArrayList<String>();
-		for (int i = 0; i < 5 ; i++) {
+		for (int i = 0; i < 5; i++) {
 			if (!trim_fields[i].getText().isEmpty()) {
 				trims.put(trim_fields[i].getText(), Integer.valueOf(price_fields[i].getText()));
 			}
 		}
-		
-		for (int i = 0; i < 10 ; i++) {
+
+		for (int i = 0; i < 10; i++) {
 			if (!color_fields[i].getText().isEmpty()) {
 				colors.add(color_fields[i].getText());
 			}
 		}
-		
+
 		carpropscontroller.addModel(type, make, model, trims, colors);
-		
+
 		JOptionPane.showMessageDialog(null, "Model Created");
 		dispose();
 	}

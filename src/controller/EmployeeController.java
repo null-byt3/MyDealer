@@ -78,6 +78,16 @@ public class EmployeeController {
 		
 	}
 	
+	public boolean userNameAvailable(String username) {
+		
+		for (Employee employee : employeeDB) {
+			if (employee.getUserName().equals(username)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public void createEmployee(String role, String firstName, String lastName, String gender, String userName, String password, int salary) {
 		
 		Employee new_employee;

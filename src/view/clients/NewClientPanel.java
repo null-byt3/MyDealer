@@ -25,8 +25,8 @@ import controller.LoginController;
 public class NewClientPanel extends JPanel {
 
 	private JRadioButton male, female;
-	private JComboBox<String> phonePrefix;
-	private JTextField firstName_field, lastName_field, city_field, address_field, phoneNum_field, email_field;
+	private JComboBox<String> phonePrefix, city_combobox;
+	private JTextField firstName_field, lastName_field, address_field, phoneNum_field, email_field;
 	private JLabel agent_name, first_name, last_name, gender, city, address, phoneNum, email;
 	private ClientController clientController = new ClientController();
 	private LoginController loginController = new LoginController();
@@ -160,14 +160,16 @@ public class NewClientPanel extends JPanel {
 		clientDetails.add(female);
 		
 		
-		
 		// CITY
 		city = new JLabel("City:");
-		city_field = new JTextField();
 		city.setBounds(20, 80, 100, 50);
-		city_field.setBounds(20, 120, 150, 30);
-		clientDetails.add(city);		
-		clientDetails.add(city_field);
+		clientDetails.add(city);
+		String[] cities = (String[])clientController.getListOfCities().toArray(new String[clientController.getListOfCities().size()]);
+		city_combobox = new JComboBox<String>(cities);
+		city_combobox.setBounds(20, 120, 150, 30);
+		clientDetails.add(city_combobox);
+		
+		
 		
 		// Address
 		address = new JLabel("Address:");
@@ -228,7 +230,7 @@ public class NewClientPanel extends JPanel {
 					String firstName = firstName_field.getText();
 					String lastName = lastName_field.getText();
 					String gender = (male.isSelected()) ? male.getText() : female.getText();
-					String city = city_field.getText();
+					String city = (String) city_combobox.getSelectedItem();
 					String address = address_field.getText();
 					String phoneNum = phonePrefix.getSelectedItem() + "-" + phoneNum_field.getText();
 					String email = email_field.getText();
@@ -256,7 +258,7 @@ public class NewClientPanel extends JPanel {
 				lastName_field.setText(null);
 				male.setSelected(false);
 				female.setSelected(false);
-				city_field.setText(null);
+				city_combobox.setSelectedIndex(0);
 				address_field.setText(null);
 				phoneNum_field.setText(null);
 				email_field.setText(null);
@@ -278,6 +280,7 @@ public class NewClientPanel extends JPanel {
 		phoneNum.setForeground(Color.BLACK);
 		email.setForeground(Color.BLACK);
 		
+		
 		boolean valid = true;
 		
 		if (firstName_field.getText().isEmpty())  {
@@ -285,9 +288,21 @@ public class NewClientPanel extends JPanel {
 			valid = false;
 		}
 		
+		if (firstName_field.getText().matches(".*\\d+.*")) {
+			first_name.setForeground(Color.RED);
+			valid = false;
+
+		}
+		
 		if (lastName_field.getText().isEmpty()) {
 			last_name.setForeground(Color.RED);
 			valid = false;
+		}
+		
+		if (lastName_field.getText().matches(".*\\d+.*")) {
+			last_name.setForeground(Color.RED);
+			valid = false;
+
 		}
 		
 		if (!male.isSelected() && !female.isSelected()) {
@@ -295,10 +310,11 @@ public class NewClientPanel extends JPanel {
 			valid = false;
 		}
 		
-		if (city_field.getText().isEmpty()) {
+		if (city_combobox.getSelectedIndex() == 0) {
 			city.setForeground(Color.RED);
 			valid = false;
 		}
+		
 		
 		if (address_field.getText().isEmpty()) {
 			address.setForeground(Color.RED);

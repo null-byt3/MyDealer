@@ -109,13 +109,13 @@ public class MyReportsPanel extends JPanel {
 				cl.show(mainPanel, "MostSoldModel");
 			}
 		});
-		topClientsByCash_btn = new JButton("My Top Clients (₪)");
+		topClientsByCash_btn = new JButton("My Top Clients");
 		topClientsByCash_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(mainPanel, "MostValueClient");
 			}
 		});
-		topCashByOrder_btn = new JButton("My Top Orders (₪)");
+		topCashByOrder_btn = new JButton("My Top Orders");
 		topCashByOrder_btn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				cl.show(mainPanel, "MostValueOrder");
