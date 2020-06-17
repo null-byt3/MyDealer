@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import controller.ClientController;
 import controller.LoginController;
+import model.InputValidation.InputValidationException;
 
 public class EditClientsWindow extends JDialog {
 
@@ -189,9 +190,13 @@ public class EditClientsWindow extends JDialog {
 					String address = address_field.getText();
 					String phoneNum = phonePrefix.getSelectedItem() + "-" + phoneNum_field.getText();
 					String email = email_field.getText();
-					clientController.updateClient(client_id, firstName, lastName, gender, city, address, phoneNum, email);
-					JOptionPane.showMessageDialog(null, "Client Updated");
-					dispose();
+					try {
+						clientController.updateClient(client_id, firstName, lastName, gender, city, address, phoneNum, email);
+						JOptionPane.showMessageDialog(null, "Client Updated");
+						dispose();
+					} catch (InputValidationException e) {
+						JOptionPane.showMessageDialog(null, e.toString());
+					}
 				}
 			}
 		});

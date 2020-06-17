@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.InputValidation.InputValidationException;
 import model.client.Client;
 import model.database.ClientDB;
 import model.database.Serializer;
@@ -147,16 +148,12 @@ public class ClientController {
 	}
 
 	public void updateClient(int id, String firstName, String lastName, String gender, String city, String address,
-			String phoneNum, String email) {
+			String phoneNum, String email) throws InputValidationException {
 		for (Client client : clientDB) {
 			if (client.getId() == id) {
-				client.setFirstName(firstName);
-				client.setLastName(lastName);
-				client.setGender(gender);
-				client.setCity(city);
-				client.setAddress(address);
-				client.setPhoneNum(phoneNum);
-				client.setEmail(email);
+				
+				Client.updateClient(client, firstName, lastName, gender, city, address, phoneNum, email);
+				
 				System.out.println("Client ID " + client.getId() + " was updated successfully");
 				updateDB();
 				return;
