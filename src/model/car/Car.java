@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Car implements Serializable {
 	
+	private static final long serialVersionUID = -6615747580315140720L;
 	private String type;
 	private String make; // Honda, Mitsubishi
 	private String model; // Ibiza

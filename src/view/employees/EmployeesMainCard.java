@@ -5,10 +5,9 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-import model.employee.Employee;
-
 public class EmployeesMainCard extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	BorderLayout bl = new BorderLayout(2,2);
 	EmployeesCardChanger employeescardchanger;
 	EmployeesSidePanel employeessidepanel;

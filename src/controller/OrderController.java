@@ -3,8 +3,8 @@ package controller;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 
+import model.InputValidation.InputValidationException;
 import model.car.Car;
-import model.client.Client;
 import model.database.OrderDB;
 import model.database.Serializer;
 import model.order.Order;
@@ -100,12 +100,12 @@ public class OrderController {
 
 	public void createOrder(int clientId, int agentId, String make, String model, String trim, String color,
 			int basePrice, int totalPrice, int discount, int finalPrice, int warrantyPrice, int mobileEyePrice,
-			int reverseSensorsPrice, int windowLiftersPrice) {
+			int reverseSensorsPrice, int windowLiftersPrice) throws InputValidationException {
 
 		int orderId = serializer.getNextId("orderId");
 		String type = carpropscontroller.getType(model);
 		Car new_car = new Car(type, make, model, trim, color);
-		Order new_order = new Order(orderId, clientId, agentId, new_car, basePrice, totalPrice, discount, finalPrice,
+		Order new_order = Order.createOrder(orderId, clientId, agentId, new_car, basePrice, totalPrice, discount, finalPrice,
 				warrantyPrice, mobileEyePrice, reverseSensorsPrice, windowLiftersPrice);
 		inventoryController.remove(make, model, trim, color, 1);
 		createOrder(new_order);
@@ -124,7 +124,7 @@ public class OrderController {
 
 	public String priceFormatter(int num) {
 
-		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "₪";
+		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "$";
 		return formatted_string;
 	}
 }

@@ -1,11 +1,9 @@
 package model.database_initializers;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -16,7 +14,6 @@ import javax.swing.JPanel;
 import model.database.CarPropertiesDB;
 import model.database.ClientDB;
 import model.database.EmployeeDB;
-import model.database.IdProvider;
 import model.database.InventoryDB;
 import model.database.OrderDB;
 import model.database.Serializer;

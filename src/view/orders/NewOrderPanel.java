@@ -22,7 +22,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -34,10 +33,11 @@ import controller.EmployeeController;
 import controller.InventoryController;
 import controller.LoginController;
 import controller.OrderController;
-import model.car.Car;
+import model.InputValidation.InputValidationException;
 
 public class NewOrderPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	// CONTROLLERS
 	OrderController ordercontroller = new OrderController();
 	EmployeeController employeecontroller = new EmployeeController();
@@ -443,7 +443,7 @@ public class NewOrderPanel extends JPanel {
 
 		cash_rdiobtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				discount_sign.setText("₪");
+				discount_sign.setText("$");
 				discountType = "Cash";
 			}
 		});
@@ -467,37 +467,11 @@ public class NewOrderPanel extends JPanel {
 		applyDiscount.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				int current_value = Integer.parseInt(discount_field.getText());
-
-				if (discountType.equals("Percent")) {
-					if (current_value > 100) {
-						discount_field.setText("100");
-					}
-
-					if (current_value < 0) {
-						discount_field.setText("0");
-					}
-					discount = totalPrice * Integer.parseInt(discount_field.getText()) / 100;
-
-				}
-
-				if (discountType.equals("Cash")) {
-					if (current_value > totalPrice) {
-						discount_field.setText(String.valueOf(totalPrice));
-					}
-
-					if (current_value < 0) {
-						discount_field.setText("0");
-					}
-					discount = Integer.parseInt(discount_field.getText());
-				}
-
-				updatePrices();
-
+				applyDiscount();
 			}
 		});
 
-		discount_sign = new JLabel("₪");
+		discount_sign = new JLabel("$");
 		discount_sign.setBounds(80, 120, 20, 30);
 
 		discountPanel.add(percent_rdiobtn);
@@ -520,10 +494,6 @@ public class NewOrderPanel extends JPanel {
 		innerPricesPanel.setLayout(null);
 		innerPricesPanel.setBackground(Color.LIGHT_GRAY);
 
-		// JLabel basePrice_label, colorPrice_label, exWar_label, mobEye_label,
-		// revSen_label, winLift_label;
-		// JLabel basePrice_num, colorPrice, exWar, mobEye, revSen, winLift;
-
 		basePrice_label = new JLabel("Base Price:");
 		colorPrice_label = new JLabel("Extra Color:");
 		JLabel extras_label = new JLabel("Extras:");
@@ -532,12 +502,12 @@ public class NewOrderPanel extends JPanel {
 		revSen_label = new JLabel("Revrse Parking Sensors:");
 		winLift_label = new JLabel("Window Lifters:");
 
-		prices_basePrice = new JLabel("0₪", SwingConstants.RIGHT);
-		prices_colorPrice = new JLabel("0₪", SwingConstants.RIGHT);
-		prices_exWar = new JLabel("0₪", SwingConstants.RIGHT);
-		prices_mobEye = new JLabel("0₪", SwingConstants.RIGHT);
-		prices_revSen = new JLabel("0₪", SwingConstants.RIGHT);
-		prices_winLift = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_basePrice = new JLabel("0$", SwingConstants.RIGHT);
+		prices_colorPrice = new JLabel("0$", SwingConstants.RIGHT);
+		prices_exWar = new JLabel("0$", SwingConstants.RIGHT);
+		prices_mobEye = new JLabel("0$", SwingConstants.RIGHT);
+		prices_revSen = new JLabel("0$", SwingConstants.RIGHT);
+		prices_winLift = new JLabel("0$", SwingConstants.RIGHT);
 
 		basePrice_label.setFont(new Font("Helvetica", Font.BOLD, 30));
 		colorPrice_label.setFont(new Font("Helvetica", Font.BOLD, 15));
@@ -595,7 +565,7 @@ public class NewOrderPanel extends JPanel {
 		totalPrice_label.setFont(new Font("Helvetica", Font.BOLD, 30));
 		totalPrice_label.setBounds(10, height += 30, 250, 50);
 
-		prices_totalPrice = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_totalPrice = new JLabel("0$", SwingConstants.RIGHT);
 		prices_totalPrice.setFont(new Font("Helvetica", Font.BOLD, 30));
 		prices_totalPrice.setBounds(price_xDist, height, 250, 50);
 
@@ -622,7 +592,7 @@ public class NewOrderPanel extends JPanel {
 		finalPrice_label.setFont(new Font("Helvetica", Font.BOLD, 40));
 		finalPrice_label.setBounds(10, height += 60, 250, 50);
 
-		prices_finalPrice = new JLabel("0₪", SwingConstants.RIGHT);
+		prices_finalPrice = new JLabel("0$", SwingConstants.RIGHT);
 		prices_finalPrice.setFont(new Font("Helvetica", Font.BOLD, 40));
 		prices_finalPrice.setBounds(price_xDist, height, 250, 50);
 
@@ -647,7 +617,7 @@ public class NewOrderPanel extends JPanel {
 		saveButton.setBounds(0, 0, 170, 60);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				if (Validator()) {
 					PlaceOrder();
 					JOptionPane.showMessageDialog(null, "Order placed successfully");
@@ -660,18 +630,16 @@ public class NewOrderPanel extends JPanel {
 		clearButton.setBounds(800, 0, 150, 60);
 		clearButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				
+
 			}
 		});
 
-		int spacing  = 200;
-		
+		int spacing = 200;
+
 		JPanel spacing_panel = new JPanel();
 		spacing_panel.setBackground(Color.DARK_GRAY);
 		spacing_panel.setPreferredSize(new Dimension(spacing, 70));
-		
-		
+
 		buttonsPanel.add(saveButton);
 		buttonsPanel.add(spacing_panel);
 		buttonsPanel.add(clearButton);
@@ -743,7 +711,7 @@ public class NewOrderPanel extends JPanel {
 					color_box.addItem(color);
 
 				} else {
-					color_box.addItem(color + " (+" + colorPrice + "₪)");
+					color_box.addItem(color + " (+" + colorPrice + "$)");
 				}
 			}
 
@@ -789,7 +757,7 @@ public class NewOrderPanel extends JPanel {
 
 			totalPrice += exWarPrice;
 		} else {
-			prices_exWar.setText("0₪");
+			prices_exWar.setText("0$");
 		}
 
 		if (isMobileEyeIncluded.isSelected()) {
@@ -797,21 +765,21 @@ public class NewOrderPanel extends JPanel {
 
 			totalPrice += mobEyePrice;
 		} else {
-			prices_mobEye.setText("0₪");
+			prices_mobEye.setText("0$");
 		}
 
 		if (isReverseSensors.isSelected()) {
 			prices_revSen.setText(priceFormatter(revSenPrice));
 			totalPrice += revSenPrice;
 		} else {
-			prices_revSen.setText("0₪");
+			prices_revSen.setText("0$");
 		}
 
 		if (isWindowLifters.isSelected()) {
 			prices_winLift.setText(priceFormatter(winLiftPrice));
 			totalPrice += winLiftPrice;
 		} else {
-			prices_winLift.setText("0₪");
+			prices_winLift.setText("0$");
 		}
 
 		prices_discount.setText(priceFormatter(discount));
@@ -823,7 +791,7 @@ public class NewOrderPanel extends JPanel {
 
 	public String priceFormatter(int num) {
 
-		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "₪";
+		String formatted_string = NumberFormat.getIntegerInstance().format(num) + "$";
 		return formatted_string;
 	}
 
@@ -835,30 +803,66 @@ public class NewOrderPanel extends JPanel {
 		int reverseSensorsPrice = isReverseSensors.isSelected() ? revSenPrice : 0;
 		int windowLiftersPrice = isWindowLifters.isSelected() ? winLiftPrice : 0;
 
-		ordercontroller.createOrder(client_id, agentId, make, model, trim, color, basePrice, totalPrice, discount, finalPrice,
-				warrantyPrice, mobileEyePrice, reverseSensorsPrice, windowLiftersPrice);
+		try {
+			ordercontroller.createOrder(client_id, agentId, make, model, trim, color, basePrice, totalPrice, discount,
+					finalPrice, warrantyPrice, mobileEyePrice, reverseSensorsPrice, windowLiftersPrice);
+		} catch (InputValidationException e) {
+			JOptionPane.showMessageDialog(null, e.toString());
+			e.printStackTrace();
+		}
 
 	}
-	
+
 	public boolean Validator() {
-		
+
 		if (client_box.getSelectedItem().equals("Select..")) {
 			JOptionPane.showMessageDialog(null, "Error: Please select a client");
 			return false;
 		}
-		
+
 		if (make_box.getSelectedItem().equals("Select..")) {
 			JOptionPane.showMessageDialog(null, "Error: Please select a car");
 			return false;
 		}
-		
+
 		int numInInventory = inventorycontroller.getQuantity(make, model, trim, color);
 		if (numInInventory == 0) {
 			JOptionPane.showMessageDialog(null, "Error: Car not in inventory");
 			return false;
 		}
-		
+
 		return true;
+	}
+
+	public void applyDiscount() {
+
+		int current_value = Integer.parseInt(discount_field.getText());
+
+		if (discountType.equals("Percent")) {
+			if (current_value > 100) {
+				discount_field.setText("100");
+			}
+
+			if (current_value < 0) {
+				discount_field.setText("0");
+			}
+			discount = totalPrice * Integer.parseInt(discount_field.getText()) / 100;
+
+		}
+
+		if (discountType.equals("Cash")) {
+			if (current_value > totalPrice) {
+				discount_field.setText(String.valueOf(totalPrice));
+			}
+
+			if (current_value < 0) {
+				discount_field.setText("0");
+			}
+			discount = Integer.parseInt(discount_field.getText());
+		}
+
+		updatePrices();
+
 	}
 
 }

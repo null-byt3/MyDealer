@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -23,15 +22,15 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import controller.ClientController;
 import controller.InventoryController;
 
 public class AllInventoryPanel extends JPanel {
 
 
+	private static final long serialVersionUID = 1L;
 	private JScrollPane tableScroll;
 	private InventoryController inventorycontroller = new InventoryController();
-	private JPanel panel, searchPanel, mainPanel, titlePanel;
+	private JPanel searchPanel, mainPanel, titlePanel;
 	private JTable inventoryTable;
 	private JTextField searchField;
 	private JLabel searchLabel;
@@ -46,8 +45,6 @@ public class AllInventoryPanel extends JPanel {
 
 		titlePanel = CreateTitlePanel();
 		mainPanel = new JPanel(null);
-		this.panel = this;
-		
 		searchPanel = searchPanel();
 		tableScroll = CreateTable();
 		mainPanel.add(tableScroll);
@@ -126,6 +123,8 @@ public class AllInventoryPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 
 		dtm = new DefaultTableModel() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {

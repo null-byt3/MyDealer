@@ -85,31 +85,26 @@ public class ClientController {
 	}
 
 	public List<String> getListOfCities() {
-		
+
 		List<String> listOfCities = new ArrayList<String>();
 		String fileName = "ListOfCities.txt";
-		
-		try  
-		{  
-		File file=new File(fileName);    //creates a new file instance  
-		FileReader fr=new FileReader(file);   //reads the file  
-		BufferedReader br=new BufferedReader(fr);  //creates a buffering character input stream  
-		StringBuffer sb=new StringBuffer();    //constructs a string buffer with no characters  
-		String line;  
-		while((line=br.readLine())!=null)  
-		{  
-			listOfCities.add(line);
-		}  
-		
-		fr.close();    //closes the stream and release the resources  
+
+		try {
+			File file = new File(fileName); // creates a new file instance
+			FileReader fr = new FileReader(file); // reads the file
+			BufferedReader br = new BufferedReader(fr); // creates a buffering character input stream
+			String line;
+			while ((line = br.readLine()) != null) {
+				listOfCities.add(line);
+			}
+
+			fr.close(); // closes the stream and release the resources
+		} catch (IOException e) {
+
+			System.out.println("ClientController | getListOfCities | Can't find file: " + fileName);
+			e.printStackTrace();
 		}
-		catch(IOException e)  
-		{  
-			
-		System.out.println("ClientController | getListOfCities | Can't find file: " + fileName);
-		e.printStackTrace();  
-		}  
-		
+
 		return listOfCities;
 	}
 
@@ -151,9 +146,9 @@ public class ClientController {
 			String phoneNum, String email) throws InputValidationException {
 		for (Client client : clientDB) {
 			if (client.getId() == id) {
-				
+
 				Client.updateClient(client, firstName, lastName, gender, city, address, phoneNum, email);
-				
+
 				System.out.println("Client ID " + client.getId() + " was updated successfully");
 				updateDB();
 				return;
@@ -163,13 +158,13 @@ public class ClientController {
 	}
 
 	public void createClient(int agentId, String firstName, String lastName, String gender, String city, String address,
-			String phoneNum, String email) {
+			String phoneNum, String email) throws InputValidationException  {
 		int id = serializer.getNextId("clientId");
-		Client new_client = new Client(id, agentId, firstName, lastName, gender, city, address, phoneNum, email);
-		createClient(new_client);
+		Client new_client = Client.createClient(id, agentId, firstName, lastName, gender, city, address, phoneNum, email);
+		addClientToDB(new_client);
 	}
 
-	private void createClient(Client new_client) {
+	private void addClientToDB(Client new_client) {
 		clientDB.add(new_client);
 		updateDB();
 		System.out.println(new_client.getFullName() + " successfully added to DB");

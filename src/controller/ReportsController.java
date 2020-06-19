@@ -1,10 +1,7 @@
 package controller;
 
 import java.util.AbstractMap.SimpleEntry;
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 
 import model.database.ClientDB;
@@ -17,8 +14,10 @@ public class ReportsController {
 
 	// DBs
 
+	@SuppressWarnings("unused")
 	private ClientDB clientDB;
 	private OrderDB orderDB;
+	@SuppressWarnings("unused")
 	private EmployeeDB employeeDB;
 	private Serializer serializer;
 
@@ -26,7 +25,6 @@ public class ReportsController {
 	int agentId;
 
 	// Controllers
-	private InventoryController inventoryController;
 	private CarPropertiesController carpropscontroller;
 	private EmployeeController employeecontroller;
 	private ClientController clientcontroller;
@@ -36,7 +34,6 @@ public class ReportsController {
 	public ReportsController() {
 
 		carpropscontroller = new CarPropertiesController();
-		inventoryController = new InventoryController();
 		employeecontroller = new EmployeeController();
 		clientcontroller = new ClientController();
 		logincontroller = new LoginController();
@@ -137,10 +134,6 @@ public class ReportsController {
 
 			int id = allOrderIds.get(i);
 
-			Entry<Integer, Integer> ordersAndCash = OrdersAndValueClient(id);
-			int amountSold = ordersAndCash.getKey();
-			int sumOfValue = ordersAndCash.getValue();
-
 			Order order = ordercontroller.getOrder(id);
 
 			dataMatrix[i] = new Object[4];
@@ -172,7 +165,6 @@ public class ReportsController {
 			int amountSold = ordersAndCash.getKey();
 			int sumOfValue = ordersAndCash.getValue();
 
-			Order order = ordercontroller.getOrder(id);
 			// Agent ID, Agent Name, Num of orders, total value;
 
 			dataMatrix[i] = new Object[4];

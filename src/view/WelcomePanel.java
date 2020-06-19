@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 
 public class WelcomePanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
 	JLabel something = new JLabel("Welcome to MyDealer!");
 		
 		public WelcomePanel(){

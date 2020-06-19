@@ -2,15 +2,13 @@ package model.order;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 
+import model.InputValidation.InputValidationException;
 import model.car.Car;
 
 public class Order implements Serializable {
-	
+
+	private static final long serialVersionUID = -1029436909808753401L;
 	protected int orderId;
 	private int clientId;
 	private int agentId;
@@ -30,17 +28,18 @@ public class Order implements Serializable {
 	private int reverseSensorsPrice;
 	private boolean isWindowLifters;
 	private int windowLiftersPrice;
-	
+
 	public Order() {
-		this.orderId=0;
-		this.clientId=0;
-		this.agentId=0;
+		this.orderId = 0;
+		this.clientId = 0;
+		this.agentId = 0;
 		this.car = null;
 		this.dateTime = null;
 	}
-	
-	public Order(int orderId, int clientId, int agentId, Car car, int basePrice, int totalPrice, int discount, int finalPrice, int warrantyPrice, int mobileEyePrice, int reverseSensorsPrice, int windowLiftersPrice) {
-		this.orderId=orderId;
+
+	private Order(int orderId, int clientId, int agentId, Car car, int basePrice, int totalPrice, int discount,
+			int finalPrice, int warrantyPrice, int mobileEyePrice, int reverseSensorsPrice, int windowLiftersPrice) {
+		this.orderId = orderId;
 		this.clientId = clientId;
 		this.agentId = agentId;
 		this.car = car;
@@ -57,9 +56,17 @@ public class Order implements Serializable {
 		this.isReverseSensors = reverseSensorsPrice != 0 ? true : false;
 		this.windowLiftersPrice = windowLiftersPrice;
 		this.isWindowLifters = windowLiftersPrice != 0 ? true : false;
-		
+
 	}
-	
+
+	public static Order createOrder(int orderId, int clientId, int agentId, Car car, int basePrice, int totalPrice, int discount,
+			int finalPrice, int warrantyPrice, int mobileEyePrice, int reverseSensorsPrice, int windowLiftersPrice) throws InputValidationException {
+		
+		OrderValidator.validateInput();
+		Order order = new Order(orderId, clientId, agentId, car, basePrice, totalPrice, discount, finalPrice, warrantyPrice, mobileEyePrice, reverseSensorsPrice, windowLiftersPrice);
+		return order;
+	}
+
 	public int getClientId() {
 		return clientId;
 	}
@@ -83,21 +90,21 @@ public class Order implements Serializable {
 	public void setCar(Car car) {
 		this.car = car;
 	}
-	
+
 	public String getDateTime() {
-			
-	int day = this.dateTime.getDayOfMonth();
-	int month = this.dateTime.getMonthValue();
-	int year = this.dateTime.getYear();
-	
-	int hour = this.dateTime.getHour();
-	int minute = this.dateTime.getMinute();
-		
-	String fullDateTime = day + "/" + month + "/" + year + " | " + hour + ":" + minute;
-		
+
+		int day = this.dateTime.getDayOfMonth();
+		int month = this.dateTime.getMonthValue();
+		int year = this.dateTime.getYear();
+
+		int hour = this.dateTime.getHour();
+		int minute = this.dateTime.getMinute();
+
+		String fullDateTime = day + "/" + month + "/" + year + " | " + hour + ":" + minute;
+
 		return fullDateTime;
 	}
-	
+
 	public int getOrderId() {
 		return orderId;
 	}
@@ -174,29 +181,12 @@ public class Order implements Serializable {
 		return reverseSensorsPrice;
 	}
 
-	public void setReverseSensorsPrice(int reverseSensorsPrice) {
-		this.reverseSensorsPrice = reverseSensorsPrice;
-	}
-
 	public boolean isWindowLifters() {
 		return isWindowLifters;
-	}
-
-	public void setWindowLifters(boolean isWindowLifters) {
-		this.isWindowLifters = isWindowLifters;
 	}
 
 	public int getWindowLiftersPrice() {
 		return windowLiftersPrice;
 	}
-
-	public void setWindowLiftersPrice(int windowLiftersPrice) {
-		this.windowLiftersPrice = windowLiftersPrice;
-	}
-
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
-	}
-
 
 }

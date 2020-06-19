@@ -1,17 +1,11 @@
 package model.database_initializers;
 
-import java.io.File;
-
-import model.car.Car;
-import model.database.EmployeeDB;
 import model.database.InventoryDB;
-import model.database.Serializer;
 
 public class InventoryDBinitializer {
 
 public static InventoryDB getDB() {
 	
-	Serializer serializer = Serializer.getInstance();
 	
 	InventoryDB inventorydb = new InventoryDB();
 	

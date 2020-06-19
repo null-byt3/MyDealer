@@ -1,8 +1,6 @@
 package model.loggedUser;
 
 import model.employee.Employee;
-import model.employee.Manager;
-import view.MainWindow;
 
 public class LoggedUser {
 

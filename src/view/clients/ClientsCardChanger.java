@@ -3,12 +3,12 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-import model.employee.Employee;
 import view.PanelChanger;
 import view.WelcomePanel;
 
 public class ClientsCardChanger extends JPanel implements PanelChanger {
 	
+	private static final long serialVersionUID = 1L;
 	NewClientPanel newClientPanel;
 	AllClientsPanel allClientsPanel;
 	WelcomePanel welcomepanel;

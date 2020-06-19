@@ -5,7 +5,6 @@ import java.awt.CardLayout;
 
 import javax.swing.JPanel;
 
-import model.employee.Employee;
 import view.clients.ClientsMainPage;
 import view.employees.EmployeesMainCard;
 import view.inventory.InventoryMainCard;
@@ -14,6 +13,7 @@ import view.reports.ReportsMainCard;
 
 public class MainCardChanger extends JPanel implements PanelChanger {
 	
+	private static final long serialVersionUID = 1L;
 	ClientsMainPage clientspanel;
 	OrdersMainCard orderspanel; 
 	WelcomePanel welcomepanel;

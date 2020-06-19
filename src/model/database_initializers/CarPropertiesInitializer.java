@@ -5,15 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.InputValidation.InputValidationException;
 import model.car.CarProperties;
 import model.database.CarPropertiesDB;
-import model.database.Serializer;
 
 public class CarPropertiesInitializer {
 
 	public static CarPropertiesDB getDB() {
 
-		Serializer serializer = Serializer.getInstance();
 		CarPropertiesDB carprops = new CarPropertiesDB();
 				
 		// Hyundai i10
@@ -34,8 +33,13 @@ public class CarPropertiesInitializer {
 		i10_colors.add("Aqua Turquoise");
 		i10_colors.add("Dragon Red");
 				
-		CarProperties carprop1 = new CarProperties("Compact","Hyundai","i10", i10_trims,i10_colors);
-		carprops.add(carprop1);
+		CarProperties carprop1;
+		try {
+			carprop1 = CarProperties.createCarProperties("Compact","Hyundai","i10", i10_trims,i10_colors);
+			carprops.add(carprop1);
+		} catch (InputValidationException e) {
+			e.printStackTrace();
+		}
 
 		// Hyundai i20
 		Map<String, Integer> i20_trims = new HashMap<String,Integer>();
@@ -55,8 +59,14 @@ public class CarPropertiesInitializer {
 		i20_colors.add("Aqua Sparkling");
 		i20_colors.add("Tomato Red");
 
-		CarProperties carprop2 = new CarProperties("Compact","Hyundai","i20", i20_trims,i20_colors);
-		carprops.add(carprop2);
+		CarProperties carprop2;
+		try {
+			carprop2 = CarProperties.createCarProperties("Compact","Hyundai","i20", i20_trims,i20_colors);
+			carprops.add(carprop2);
+		} catch (InputValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Hyundai i30
 		Map<String, Integer> i30_trims = new HashMap<String,Integer>();
@@ -73,8 +83,12 @@ public class CarPropertiesInitializer {
 		i30_colors.add("Micron Grey");
 		i30_colors.add("Platinum Silver");
 
-		CarProperties carprop3 = new CarProperties("Family","Hyundai","i30", i30_trims,i30_colors);
-		carprops.add(carprop3);
+		try {
+			CarProperties carprop3 = CarProperties.createCarProperties("Family","Hyundai","i30", i30_trims,i30_colors);
+			carprops.add(carprop3);
+		} catch (InputValidationException e) {
+			e.printStackTrace();
+		}
 		
 		// Hyundai Accent
 		Map<String, Integer> accent_trims = new HashMap<String,Integer>();
@@ -90,8 +104,13 @@ public class CarPropertiesInitializer {
 		accent_colors.add("Mouse Grey");
 		accent_colors.add("Marina Blue");
 
-		CarProperties carprop4 = new CarProperties("Family","Hyundai","Accent", accent_trims,accent_colors);
-		carprops.add(carprop4);
+		try {
+			CarProperties carprop4 = CarProperties.createCarProperties("Family","Hyundai","Accent", accent_trims,accent_colors);
+			carprops.add(carprop4);
+		} catch (InputValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Hyundai Elantra
 		Map<String, Integer> elantra_trims = new HashMap<String,Integer>();
@@ -107,8 +126,13 @@ public class CarPropertiesInitializer {
 		elantra_colors.add("Stargazing Blue");
 		elantra_colors.add("Platinum Silver");
 
-		CarProperties carprop5 = new CarProperties("Big Sedan","Hyundai","Elantra", elantra_trims,elantra_colors);
-		carprops.add(carprop5);
+		try {
+			CarProperties carprop5 = CarProperties.createCarProperties("Big Sedan","Hyundai","Elantra", elantra_trims,elantra_colors);
+			carprops.add(carprop5);
+		} catch (InputValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		// Hyundai Ioniq
@@ -129,8 +153,14 @@ public class CarPropertiesInitializer {
 		ioniq_colors.add("Intense Blue");
 		ioniq_colors.add("Liquid Sand");
 
-		CarProperties carprop6 = new CarProperties("Big Sedan","Hyundai","Ioniq", ioniq_trims, ioniq_colors);
-		carprops.add(carprop6);
+		CarProperties carprop6;
+		try {
+			carprop6 = CarProperties.createCarProperties("Big Sedan","Hyundai","Ioniq", ioniq_trims, ioniq_colors);
+			carprops.add(carprop6);
+		} catch (InputValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Hyundai Kona
 		Map<String, Integer> kona_trims = new HashMap<String,Integer>();
@@ -154,8 +184,13 @@ public class CarPropertiesInitializer {
 		kona_colors.add("Blue Lagon");
 
 
-		CarProperties carprop7 = new CarProperties("SUV","Hyundai","Kona", kona_trims, kona_colors);
-		carprops.add(carprop7);
+		try {
+			CarProperties carprop7 = CarProperties.createCarProperties("SUV","Hyundai","Kona", kona_trims, kona_colors);
+			carprops.add(carprop7);
+		} catch (InputValidationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		
@@ -178,8 +213,12 @@ public class CarPropertiesInitializer {
 		tucson_colors.add("Micron Grey");
 		tucson_colors.add("White Sand");
 
-		CarProperties carprop8 = new CarProperties("SUV","Hyundai","Tucson", tucson_trims, tucson_colors);
-		carprops.add(carprop8);
+		try {
+			CarProperties carprop8 = CarProperties.createCarProperties("SUV","Hyundai","Tucson", tucson_trims, tucson_colors);
+			carprops.add(carprop8);
+		} catch (InputValidationException e) {
+			e.printStackTrace();
+		}
 		
 		
 		// Hyundai Santa Fe
@@ -200,9 +239,13 @@ public class CarPropertiesInitializer {
 		santaFe_colors.add("Magnetic Force");
 		santaFe_colors.add("Wild Grey");
 
-		CarProperties carprop9 = new CarProperties("SUV","Hyundai","Santa Fe", santaFe_trims, santaFe_colors);
+		try {
+			CarProperties carprop9 = CarProperties.createCarProperties("SUV","Hyundai","Santa Fe", santaFe_trims, santaFe_colors);
+			carprops.add(carprop9);
+		} catch (InputValidationException e) {
+			e.printStackTrace();
+		}
 		
-		carprops.add(carprop9);
 		
 		return carprops;
 	}

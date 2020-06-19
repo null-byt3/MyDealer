@@ -6,12 +6,16 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 
 import view.PanelChanger;
 
 public class ClientsSidePanel extends JPanel {
 	
+
+	private static final long serialVersionUID = 1L;
+	@SuppressWarnings("unused")
 	private final PanelChanger panelchanger;
 
 	

@@ -26,6 +26,7 @@ import controller.EmployeeController;
 
 public class AllEmployeesPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JScrollPane tableScroll;
 	private EmployeeController employeeController = new EmployeeController();
 	private JPanel MainEmployeesPanel, searchPanel, titlePanel;
@@ -120,6 +121,8 @@ public class AllEmployeesPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 
 		dtm = new DefaultTableModel() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {

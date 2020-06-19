@@ -16,14 +16,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.plaf.ButtonUI;
-import javax.swing.plaf.basic.BasicButtonUI;
 
 import controller.LoginController;
-import model.employee.Employee;
 
 public class SidePanel extends JPanel {
 
+	
+	private static final long serialVersionUID = 1L;
 	private final PanelChanger panelChanger;
 	private LoginController loginController;
 	JButton bClients, bOrders, bInventory, bReports, bEmployees, bHome;

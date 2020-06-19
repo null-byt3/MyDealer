@@ -20,9 +20,11 @@ import javax.swing.JTextField;
 
 import controller.CarPropertiesController;
 import controller.LoginController;
+import model.InputValidation.InputValidationException;
 
 public class EditCarPropertiesWindow extends JDialog {
 
+	private static final long serialVersionUID = 1L;
 	private JPanel main_panel, buttonsPanel;
 	private JButton saveButton, deleteButton;
 	private JLabel make_label, model_label, trim_label, type_label, price_label, colors_label;
@@ -337,9 +339,15 @@ public class EditCarPropertiesWindow extends JDialog {
 			}
 		}
 
-		carpropscontroller.addModel(type, make, model, trims, colors);
+		try {
+			carpropscontroller.addModel(type, make, model, trims, colors);
+			JOptionPane.showMessageDialog(null, "Model Created");
+			dispose();
+		} catch (InputValidationException e) {
+			JOptionPane.showMessageDialog(null, e.toString());
 
-		JOptionPane.showMessageDialog(null, "Model Created");
-		dispose();
+			e.printStackTrace();
+		}
+
 	}
 }

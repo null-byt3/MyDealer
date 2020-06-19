@@ -19,9 +19,11 @@ import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import controller.EmployeeController;
+import model.InputValidation.InputValidationException;
 
 public class NewEmployeePanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	JTextField firstName_field, lastName_field, username_field, password_field, salary_field;
 	JLabel firstName_label, lastName_label, userName_label, password_label, salary_label, gender_label;
 	JRadioButton male;
@@ -93,7 +95,7 @@ public class NewEmployeePanel extends JPanel {
 
 		// GENDER
 		gender_label = new JLabel("Gender:");
-		male = new JRadioButton("Male");
+		male = new JRadioButton("Male", true);
 		female = new JRadioButton("Female");
 		gender_label.setBounds(420, 10, 100, 50);
 		male.setBounds(420, 50, 60, 30);
@@ -171,19 +173,28 @@ public class NewEmployeePanel extends JPanel {
 		saveButton.setBounds(0, 0, 120, 45);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (FieldVerifier()) {
-					String role = (String) role_box.getSelectedItem();
-					String firstName = firstName_field.getText();
-					String lastName = lastName_field.getText();
-					String userName = username_field.getText();
-					String password = password_field.getText();
-
-					int salary = Integer.parseInt(salary_field.getText());
-
+				String role = (String) role_box.getSelectedItem();
+				String firstName = firstName_field.getText();
+				String lastName = lastName_field.getText();
+				String userName = username_field.getText();
+				String password = password_field.getText();
+				int salary;
+				
+				try {
+					salary = Integer.parseInt(salary_field.getText());
+				} catch (NumberFormatException ex) {
+					salary = 0;
+				}
+				
+				try {
 					employeecontroller.createEmployee(role, firstName, lastName, selected_gender, userName, password,
 							salary);
 					JOptionPane.showMessageDialog(null, "Employee Created");
+				} catch (InputValidationException ex) {
+					JOptionPane.showMessageDialog(null, ex.toString());
+
 				}
+
 			}
 		});
 
@@ -208,73 +219,4 @@ public class NewEmployeePanel extends JPanel {
 		return buttonsPanel;
 	}
 
-	public boolean FieldVerifier() {
-
-		firstName_label.setForeground(Color.BLACK);
-		lastName_label.setForeground(Color.BLACK);
-		gender_label.setForeground(Color.BLACK);
-		userName_label.setForeground(Color.BLACK);
-		password_label.setForeground(Color.BLACK);
-		salary_label.setForeground(Color.BLACK);
-
-		if (firstName_field.getText().isEmpty()) {
-			firstName_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Empty first name");
-			return false;
-		}
-		
-		if (firstName_field.getText().matches(".*\\d+.*")) {
-			firstName_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Invalid first name");
-			return false;
-		}
-		
-		if (lastName_field.getText().isEmpty()) {
-			lastName_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Empty last name");
-			return false;
-		}
-		
-		if (lastName_field.getText().matches(".*\\d+.*")) {
-			lastName_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Invalid last name");
-			return false;
-		}
-		if (username_field.getText().isEmpty()) {
-			userName_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Empty username field");
-			return false;
-		}
-		if (!employeecontroller.userNameAvailable(username_field.getText())) {
-			JOptionPane.showMessageDialog(null, "Error: Username already in use");
-			userName_label.setForeground(Color.RED);
-			return false;
-		}
-
-		if (password_field.getText().isEmpty()) {
-			password_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: empty password");
-			return false;
-		}
-		if (salary_field.getText().isEmpty()) {
-			salary_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Salary field empty");
-			return false;
-		}
-		if (!salary_field.getText().matches("[0-9]+")) {
-			salary_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Salary must contain a positive numeric value");
-			return false;
-		}
-
-		if (!male.isSelected() && !female.isSelected()) {
-			gender_label.setForeground(Color.RED);
-			JOptionPane.showMessageDialog(null, "Error: Gender not selected");
-			return false;
-		}
-
-		return true;
-	}
-
-	
 }

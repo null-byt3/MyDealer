@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+import model.InputValidation.InputValidationException;
 import model.car.CarProperties;
 import model.database.CarPropertiesDB;
 import model.database.Serializer;
@@ -185,8 +186,8 @@ public class CarPropertiesController {
 		}
 	}
 
-	public void addModel(String type, String make, String model, Map<String, Integer> trims, List<String> colors) {
-		CarProperties new_carprop = new CarProperties(type, make, model, trims, colors);
+	public void addModel(String type, String make, String model, Map<String, Integer> trims, List<String> colors) throws InputValidationException {
+		CarProperties new_carprop = CarProperties.createCarProperties(type, make, model, trims, colors);
 		addModel(new_carprop);
 	}
 
@@ -199,10 +200,6 @@ public class CarPropertiesController {
 		setModel(model);
 		carpropsDB.remove(carprop);
 		updateDB();
-	}
-
-	private ArrayList<CarProperties> getCarPropsList() {
-		return carpropsDB;
 	}
 
 	private void updateDB() {

@@ -1,7 +1,6 @@
 package controller;
 
 import model.database.EmployeeDB;
-import model.database.Serializer;
 import model.employee.Employee;
 import model.loggedUser.LoggedUser;
 

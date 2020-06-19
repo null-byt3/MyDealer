@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public abstract class Employee implements Serializable {
 
+
+	private static final long serialVersionUID = -401273629826352559L;
 	protected int id;
 	protected String firstName;
 	protected String lastName;
@@ -15,19 +17,19 @@ public abstract class Employee implements Serializable {
 	//public abstract String getRole();
 
 	public abstract int getId();
-	public abstract void setId(int id);
+	protected abstract void setId(int id);
 	public abstract String getFirstName();
-	public abstract void setFirstName(String firstName);
+	protected abstract void setFirstName(String firstName);
 	public abstract String getLastName();
-	public abstract void setLastName(String lastName);
+	protected abstract void setLastName(String lastName);
 	public abstract String getUserName();
 	public abstract String getGender();
-	public abstract void setGender(String gender);
+	protected abstract void setGender(String gender);
 	public abstract int getSalary();
-	public abstract void setSalary(int salary);
-	public abstract void setUserName(String userName);
+	protected abstract void setSalary(int salary);
+	protected abstract void setUserName(String userName);
 	public abstract String getPassword();
-	public abstract void setPassword(String password);
+	protected abstract void setPassword(String password);
 	public abstract String toString();
 	public abstract String getFullName();
 

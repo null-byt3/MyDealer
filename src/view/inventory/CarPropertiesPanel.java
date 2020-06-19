@@ -2,7 +2,6 @@ package view.inventory;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -10,6 +9,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,8 @@ import controller.CarPropertiesController;
 
 public class CarPropertiesPanel extends JPanel {
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel panel, mainPanel, titlePanel;
 	private EditCarPropertiesWindow editcarprops;
 	private JButton newButton;
@@ -82,7 +84,7 @@ public class CarPropertiesPanel extends JPanel {
 			carTypePanel[i].setName(types.get(i));
 			JLabel label = new JLabel(types.get(i) + ":");
 			Font title_font = new Font("Helvetica", Font.BOLD, 30);
-			Map attributes = title_font.getAttributes();
+			Map<TextAttribute,?> attributes = title_font.getAttributes();
 			label.setFont(title_font.deriveFont(attributes));
 			label.setSize(200, 100);
 
@@ -141,10 +143,10 @@ public class CarPropertiesPanel extends JPanel {
 				}
 
 				Font big_font = new Font("Helvetica", Font.BOLD, 25);
-				Map big_attributes = big_font.getAttributes();
+				Map<TextAttribute,?> big_attributes = big_font.getAttributes();
 
 				Font small_font = new Font("Helvetica", Font.BOLD, 15);
-				Map small_attributes = small_font.getAttributes();
+				Map<TextAttribute,?> small_attributes = small_font.getAttributes();
 
 				JLabel make = new JLabel();
 				make.setText(carpropscontroller.getMake(model_name));

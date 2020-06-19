@@ -8,6 +8,7 @@ import java.util.Random;
 import controller.CarPropertiesController;
 import controller.ClientController;
 import controller.EmployeeController;
+import model.InputValidation.InputValidationException;
 import model.car.Car;
 import model.database.OrderDB;
 import model.database.Serializer;
@@ -31,7 +32,12 @@ public class OrderDBinitializer {
 		
 		
 		for (int i = 0; i < size ; i++) {
-			order_array[i] = generateOrder(serializer.getNextId("orderId"),car_array[i]);
+			
+			try {
+				order_array[i] = generateOrder(serializer.getNextId("orderId"),car_array[i]);
+			} catch (InputValidationException e) {
+				e.printStackTrace();
+			}
 			orderdb.add(order_array[i]);
 		}
 
@@ -49,11 +55,9 @@ public class OrderDBinitializer {
 		
 
 		List<String> allTrims = carpropscontroller.getAllTrims(model);	
-		rand = new Random();
 		String trim = allTrims.get(rand.nextInt(allTrims.size()));
 		
 		List<String> allColors = carpropscontroller.getColors(model);
-		rand = new Random();
 		String color = allColors.get(rand.nextInt(allColors.size()));
 		
 		String type = carpropscontroller.getType(model);
@@ -64,7 +68,7 @@ public class OrderDBinitializer {
 		return car;
 	}
 	
-	public static Order generateOrder(int orderId, Car car) {
+	public static Order generateOrder(int orderId, Car car) throws InputValidationException {
 		
 		ClientController clientcontroller = new ClientController();
 		CarPropertiesController carpropscontroller = new CarPropertiesController();
@@ -80,13 +84,9 @@ public class OrderDBinitializer {
 		List<Integer> reverseSensors_values = new ArrayList<Integer>(Arrays.asList(0, 3000));
 		List<Integer> windowLifters_values = new ArrayList<Integer>(Arrays.asList(0, 2500));
 		
-		rand = new Random();
 		int warranty = warranty_values.get(rand.nextInt(warranty_values.size()));
-		rand = new Random();
 		int mobileEye = warranty_values.get(rand.nextInt(mobileEye_values.size()));
-		rand = new Random();
 		int reverseSensors = warranty_values.get(rand.nextInt(reverseSensors_values.size()));
-		rand = new Random();
 		int windowLifters = warranty_values.get(rand.nextInt(windowLifters_values.size()));
 		
 		int totalPrice = basePrice + warranty + mobileEye + reverseSensors + windowLifters;
@@ -97,7 +97,8 @@ public class OrderDBinitializer {
 		int agentId = allAgentIds.get(rand.nextInt(allAgentIds.size()));
 		
 		
-		Order order = new Order(orderId, client_id,agentId, car, basePrice, totalPrice, discount, finalPrice, warranty, mobileEye, reverseSensors, windowLifters );
+		Order order = Order.createOrder(orderId, client_id,agentId, car, basePrice, totalPrice, discount, finalPrice, warranty, mobileEye, reverseSensors, windowLifters );
+		
 		return order;
 	}
 	

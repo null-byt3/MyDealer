@@ -1,13 +1,14 @@
 package model.car;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.InputValidation.InputValidationException;
+
 public class CarProperties implements Serializable {
 
+	private static final long serialVersionUID = 850326163445225005L;
 	String type;
 	String make;
 	String model;
@@ -16,7 +17,7 @@ public class CarProperties implements Serializable {
 	String default_color;
 	
 	
-	public CarProperties(String type, String make, String model, Map<String,Integer> trims, List<String> colors) {
+	private CarProperties(String type, String make, String model, Map<String,Integer> trims, List<String> colors) {
 		this.type = type;
 		this.make = make;
 		this.model = model;
@@ -24,6 +25,14 @@ public class CarProperties implements Serializable {
 		this.colors = colors;
 		this.default_color = colors.get(0);
 		
+	}
+	
+	public static CarProperties createCarProperties(String type, String make, String model, Map<String,Integer> trims, List<String> colors) throws InputValidationException {
+		
+		CarPropertiesValidator.validateInput(make, model, trims, colors);
+		CarProperties carprops = new CarProperties(type, make, model, trims, colors);
+		
+		return carprops;
 	}
 	
 	CarProperties() {

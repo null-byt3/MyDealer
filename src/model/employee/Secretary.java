@@ -1,8 +1,13 @@
 package model.employee;
 
+import model.InputValidation.InputValidationException;
+
 public class Secretary extends Employee {
 
-	public Secretary(int id, String firstName, String lastName,String gender, String userName, String password, int salary) {
+
+	private static final long serialVersionUID = -7300434790048613863L;
+
+	private Secretary(int id, String firstName, String lastName,String gender, String userName, String password, int salary) {
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -11,12 +16,20 @@ public class Secretary extends Employee {
 		this.salary = salary;
 		this.gender = gender;
 	}
+	
+	public static Secretary createSecretary(int id, String firstName, String lastName, String gender, String userName,
+			String password, int salary) throws InputValidationException {
+		EmployeeValidator.validateInput(firstName, lastName, userName, password, salary);
+		Secretary secretary = new Secretary(id, firstName, lastName, gender, userName, password, salary);
+		return secretary;
+	}
+
 
 	public int getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	protected void setId(int id) {
 		this.id = id;
 	}
 
@@ -24,7 +37,7 @@ public class Secretary extends Employee {
 		return firstName;
 	}
 
-	public void setFirstName(String firstName) {
+	protected void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
 
@@ -32,7 +45,7 @@ public class Secretary extends Employee {
 		return lastName;
 	}
 
-	public void setLastName(String lastName) {
+	protected void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
 
@@ -44,7 +57,7 @@ public class Secretary extends Employee {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	protected void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -52,11 +65,11 @@ public class Secretary extends Employee {
 		return salary;
 	}
 
-	public void setSalary(int salary) {
+	protected void setSalary(int salary) {
 		this.salary = salary;
 	}
 
-	public void setUserName(String userName) {
+	protected void setUserName(String userName) {
 		this.userName = userName;
 	}
 
@@ -64,7 +77,7 @@ public class Secretary extends Employee {
 		return password;
 	}
 
-	public void setPassword(String password) {
+	protected void setPassword(String password) {
 		this.password = password;
 	}
 

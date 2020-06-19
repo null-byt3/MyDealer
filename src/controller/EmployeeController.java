@@ -2,9 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
-
-import model.client.Client;
+import model.InputValidation.InputValidationException;
 import model.database.EmployeeDB;
 import model.database.Serializer;
 import model.employee.*;
@@ -88,7 +86,7 @@ public class EmployeeController {
 		return true;
 	}
 	
-	public void createEmployee(String role, String firstName, String lastName, String gender, String userName, String password, int salary) {
+	public void createEmployee(String role, String firstName, String lastName, String gender, String userName, String password, int salary) throws InputValidationException {
 		
 		Employee new_employee;
 		int id = serializer.getNextId("employeeId");
@@ -96,13 +94,13 @@ public class EmployeeController {
 		System.out.println("ROLE: " + role);
 		
 		if(role.equals("Secretary")) {
-			new_employee = new Secretary(id, firstName,lastName,gender,userName,password,salary);
+			new_employee = Secretary.createSecretary(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else if(role.equals("Agent")) {
-			new_employee = new Agent(id, firstName,lastName,gender,userName,password,salary);
+			new_employee = Agent.createAgent(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else if(role.equals("Manager")) {
-			new_employee = new Manager(id, firstName,lastName,gender,userName,password,salary);
+			new_employee = Manager.createManager(id, firstName,lastName,gender,userName,password,salary);
 		}
 		else {
 			System.out.println("Error. Invalid Role");

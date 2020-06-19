@@ -12,6 +12,9 @@ import view.PanelChanger;
 
 public class EmployeesSidePanel extends JPanel {
 	
+	private static final long serialVersionUID = 1L;
+	
+	@SuppressWarnings("unused")
 	private final PanelChanger panelchanger;
 
 	

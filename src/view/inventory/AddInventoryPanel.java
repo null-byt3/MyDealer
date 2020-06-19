@@ -23,6 +23,8 @@ import controller.InventoryController;
 
 public class AddInventoryPanel extends JPanel {
 
+
+	private static final long serialVersionUID = 1L;
 	private JPanel panel, buttons_panel, mainPanel, titlePanel;
 	private JComboBox<String>[] make_boxes, model_boxes, trim_boxes, color_boxes;
 	private JComboBox<Integer>[] quantity_boxes;

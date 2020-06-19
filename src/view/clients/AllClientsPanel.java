@@ -8,7 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -31,6 +30,7 @@ import controller.ClientController;
 
 public class AllClientsPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JScrollPane tableScroll;
 	private ClientController clientController = new ClientController();
 	private JPanel MainClientsPanel, searchPanel, titlePanel, thisPanel;
@@ -123,6 +123,7 @@ public class AllClientsPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 
 		dtm = new DefaultTableModel() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {

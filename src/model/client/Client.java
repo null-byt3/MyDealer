@@ -1,12 +1,13 @@
 package model.client;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import model.InputValidation.InputValidationException;
 
 public class Client implements Serializable {
+
+	
+	private static final long serialVersionUID = 7554019319893569008L;
 	private int id;
 	protected int agentId;
 	protected String firstName;
@@ -17,7 +18,7 @@ public class Client implements Serializable {
 	protected String phoneNum;
 	protected String email;
 
-	public Client(int id, int agentId, String firstName, String lastName, String gender, String city, String address,
+	private Client(int id, int agentId, String firstName, String lastName, String gender, String city, String address,
 			String phoneNum, String email) {
 		this.id = id;
 		this.agentId = agentId;
@@ -31,16 +32,6 @@ public class Client implements Serializable {
 
 	}
 
-	public Client() {
-		this.id = 0;
-		this.firstName = "Null";
-		this.lastName = "Null";
-		this.gender = "Null";
-		this.city = "Null";
-		this.address = "Null";
-		this.phoneNum = "Null";
-		this.email = "Null";
-	}
 
 	public static Client createClient(int id, int agentId, String firstName, String lastName, String gender,
 			String city, String address, String phoneNum, String email) throws InputValidationException {
@@ -58,7 +49,7 @@ public class Client implements Serializable {
 		ClientValidator.validateInput(firstName, lastName, address, phoneNum, email);
 			 
 		client.setFirstName(firstName);
-		client.setLastName(lastName);
+		client.setLastName(lastName); 
 		client.setGender(gender);
 		client.setCity(city);
 		client.setAddress(address);
@@ -118,10 +109,6 @@ public class Client implements Serializable {
 
 	public int getAgentId() {
 		return agentId;
-	}
-
-	private void setAgentId(int agentId) {
-		this.agentId = agentId;
 	}
 
 	public String getEmail() {
