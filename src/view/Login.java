@@ -11,6 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.LoginController;
+import controller.PasswordHash;
 import model.database.EmployeeDB;
 
 public class Login extends JFrame {
@@ -52,7 +53,9 @@ public class Login extends JFrame {
 				String username = user_field.getText();
 				char[] password = pass_field.getPassword();
 
-				boolean loginSuccessful = loginController.attemptLogin(username, password);
+				String passHash = PasswordHash.createHash(new String( password));
+				
+				boolean loginSuccessful = loginController.attemptLogin(username, passHash);
 
 				if (loginSuccessful) {
 					mainwindow = new MainWindow();

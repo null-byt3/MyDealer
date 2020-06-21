@@ -11,26 +11,77 @@ public abstract class Employee implements Serializable {
 	protected String lastName;
 	protected String userName;
 	protected String gender;
-	protected String password;
+	protected String passwordHash;
 	protected int salary;
 	
 	//public abstract String getRole();
 
-	public abstract int getId();
-	protected abstract void setId(int id);
-	public abstract String getFirstName();
-	protected abstract void setFirstName(String firstName);
-	public abstract String getLastName();
-	protected abstract void setLastName(String lastName);
-	public abstract String getUserName();
-	public abstract String getGender();
-	protected abstract void setGender(String gender);
-	public abstract int getSalary();
-	protected abstract void setSalary(int salary);
-	protected abstract void setUserName(String userName);
-	public abstract String getPassword();
-	protected abstract void setPassword(String password);
-	public abstract String toString();
-	public abstract String getFullName();
+
+	public String getPassHash() {
+		return passwordHash;
+	}
+
+	protected void setPassword(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	protected void setId(int id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	protected void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	protected void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public int getSalary() {
+		return salary;
+	}
+
+	protected void setSalary(int salary) {
+		this.salary = salary;
+	}
+
+	protected void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
+	public String toString() {
+		return "Employee:: ID=" + this.id + " Name=" + this.firstName + " " + this.lastName + " UserName="
+				+ this.userName + " Password=" + this.passwordHash;
+	}
+
+	public String getFullName() {
+		return this.firstName + " " + this.lastName;
+
+	}
 
 }

@@ -42,11 +42,11 @@ public class LoginController {
 		return role;
 	}
 	
-	public boolean attemptLogin(String username, char[] password) {		
+	public boolean attemptLogin(String username, String passHash) {		
 		employeedb = (EmployeeDB) employeeController.getEmployeeList();
 				
 		for (Employee employee : employeedb) {
-			if (username.equals(employee.getUserName()) && String.valueOf(password).equals(employee.getPassword())) {
+			if (username.equals(employee.getUserName()) && passHash.equals(employee.getPassHash())) {
 				setLoggedUser(employee);
 				return true;
 			}
