@@ -302,17 +302,22 @@ public class EditCarPropertiesWindow extends JDialog {
 
 		Map<String, Integer> trims = new HashMap<String, Integer>();
 		List<String> colors = new ArrayList<String>();
+		
+		// Add validation for duplicate values
+		
 		for (int i = 0; i < 5; i++) {
 			if (!trim_fields[i].getText().isEmpty()) {
 				trims.put(trim_fields[i].getText(), Integer.valueOf(price_fields[i].getText()));
 			}
 		}
-
+		
 		for (int i = 0; i < 10; i++) {
 			if (!color_fields[i].getText().isEmpty()) {
 				colors.add(color_fields[i].getText());
 			}
 		}
+		
+		
 
 		carpropscontroller.updateModel(model, trims, colors);
 		JOptionPane.showMessageDialog(null, "Model Updated");

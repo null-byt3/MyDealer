@@ -19,6 +19,9 @@ public class MainWindow extends JFrame {
 	
 	MainWindow(){
 		super("MyDealer");	
+		
+		
+		
 		workpanel = new MainCardChanger();
 		sidepanel = new SidePanel(workpanel);
 		mainContainer.setLayout(bl);

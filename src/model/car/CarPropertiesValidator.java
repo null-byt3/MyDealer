@@ -48,14 +48,13 @@ public class CarPropertiesValidator {
 	
 	private static void validateTrims(Map<String, Integer> trims) throws InputValidationException {
 
-//		if (model.trim().isEmpty()) {
-//			throw new InputValidationException("Model cannot be empty");
-//		}
-//		
-//		if (model.length() > 15) {
-//			throw new InputValidationException("Make cannot be longer than 15 characters");
-//		}
-		 
+		
+		for (Map.Entry<String, Integer> entry : trims.entrySet()) {
+			
+		
+		}
+		
+		
 	}
 	
 	private static void validateColors(List<String> colors) throws InputValidationException {
