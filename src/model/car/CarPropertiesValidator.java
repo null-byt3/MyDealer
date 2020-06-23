@@ -16,6 +16,12 @@ public class CarPropertiesValidator {
 		} catch (InputValidationException ex) {
 			exceptions.add(ex);
 		}
+		
+		try {
+			validateModel(model);
+		} catch (InputValidationException ex) {
+			exceptions.add(ex);
+		}
 
 		if (exceptions.size() > 0) {
 			throw new InputValidationException(exceptions);
@@ -41,7 +47,7 @@ public class CarPropertiesValidator {
 		}
 		
 		if (model.length() > 15) {
-			throw new InputValidationException("Make cannot be longer than 15 characters");
+			throw new InputValidationException("Model cannot be longer than 15 characters");
 		}
 		 
 	}
