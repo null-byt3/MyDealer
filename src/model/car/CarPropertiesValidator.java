@@ -22,6 +22,18 @@ public class CarPropertiesValidator {
 		} catch (InputValidationException ex) {
 			exceptions.add(ex);
 		}
+		
+		try {
+			validateTrims(trims);
+		} catch (InputValidationException ex) {
+			exceptions.add(ex);
+		}
+		
+		try {
+			validateColors(colors);
+		} catch (InputValidationException ex) {
+			exceptions.add(ex);
+		}
 
 		if (exceptions.size() > 0) {
 			throw new InputValidationException(exceptions);
@@ -57,6 +69,22 @@ public class CarPropertiesValidator {
 		
 		for (Map.Entry<String, Integer> entry : trims.entrySet()) {
 			
+			if (entry.getKey().trim().isEmpty()) {
+				throw new InputValidationException("Trim name cannot be empty");
+			}
+			
+			if (entry.getKey().length() > 20) {
+				throw new InputValidationException("Trim name be longer thna 20 characters");
+			}
+			
+			if (entry.getKey().matches(".*\\d+.*")) {
+				throw new InputValidationException("Trim name must contain only letters");
+			}
+			
+			
+			if (entry.getValue() <= 0) {
+				throw new InputValidationException("Trim price must be bigger than 0");
+			}
 		
 		}
 		
@@ -65,13 +93,17 @@ public class CarPropertiesValidator {
 	
 	private static void validateColors(List<String> colors) throws InputValidationException {
 
-//		if (colors.trim().isEmpty()) {
-//			throw new InputValidationException("Color cannot be empty");
-//		}
-//		
-//		if (model.length() > 15) {
-//			throw new InputValidationException("Make cannot be longer than 15 characters");
-//		}
+		for (String color : colors) {
+						
+			if (color.trim().isEmpty()) {
+				throw new InputValidationException("Color cannot be empty");
+			}
+			
+			if (color.length() > 15) {
+				throw new InputValidationException("Color cannot be longer than 15 characters");
+			}
+			
+		}
 		 
 	}
 	

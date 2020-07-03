@@ -317,11 +317,14 @@ public class EditCarPropertiesWindow extends JDialog {
 			}
 		}
 		
-		
-
-		carpropscontroller.updateModel(model, trims, colors);
-		JOptionPane.showMessageDialog(null, "Model Updated");
-		dispose();
+		try {
+			carpropscontroller.updateModel(model, trims, colors);
+			JOptionPane.showMessageDialog(null, "Model Updated");
+			dispose();
+		} catch (InputValidationException e) {
+			JOptionPane.showMessageDialog(null, e.toString());
+	
+		}
 	}
 
 	public void createModel() {
@@ -351,7 +354,6 @@ public class EditCarPropertiesWindow extends JDialog {
 		} catch (InputValidationException e) {
 			JOptionPane.showMessageDialog(null, e.toString());
 
-			e.printStackTrace();
 		}
 
 	}

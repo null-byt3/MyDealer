@@ -35,6 +35,16 @@ public class CarProperties implements Serializable {
 		return carprops;
 	}
 	
+	public static void updateCarProperties(CarProperties carprops, String make, String model, Map<String,Integer> trims, List<String> colors ) throws InputValidationException {
+		CarPropertiesValidator.validateInput(make, model, trims, colors);
+		
+		carprops.setMake(make);
+		carprops.setModel(model);
+		carprops.setTrims(trims);
+		carprops.setColors(colors);
+		
+	}
+	
 	CarProperties() {
 		this.make = null;
 		this.model = null;
@@ -50,9 +60,17 @@ public class CarProperties implements Serializable {
 	public String getMake() {
 		return make;
 	}
+	
+	private void setMake(String make) {
+		this.make = make;
+	}
 
 	public String getModel() {
 		return model;
+	}
+	
+	private void setModel(String model) {
+		this.model = model;
 	}
 
 	public Map<String, Integer> getTrims() {

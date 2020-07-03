@@ -176,11 +176,12 @@ public class CarPropertiesController {
 		return car_types;
 	}
 
-	public void updateModel(String model, Map<String, Integer> trims, List<String> colors) {
+	public void updateModel(String model, Map<String, Integer> trims, List<String> colors) throws InputValidationException {
 		for (CarProperties carprop : carpropsDB) {
 			if (carprop.getModel().equals(model)) {
-				carprop.setTrims(trims);
-				carprop.setColors(colors);
+				String make = carprop.getMake();				
+				
+				CarProperties.updateCarProperties(carprop, make, model, trims, colors);
 				updateDB();
 			}
 		}
