@@ -5,11 +5,9 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-import view.clients.ClientsCardChanger;
-import view.clients.ClientsSidePanel;
-
 public class ReportsMainCard extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	BorderLayout bl = new BorderLayout(2,2);
 	ReportsCardChanger reportscardchanger;
 	ReportsSidePanel reportssidepanel;

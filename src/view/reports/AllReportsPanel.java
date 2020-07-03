@@ -12,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.text.Format;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -33,6 +32,7 @@ import controller.ReportsController;
 
 public class AllReportsPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	// GUI
 	private JPanel titlePanel, mainContainer;
 	private JPanel sidePanel, mainPanel;
@@ -52,7 +52,7 @@ public class AllReportsPanel extends JPanel {
 
 		mainContainer = new JPanel(new BorderLayout());
 		sidePanel = CreateSidePanel();
-		
+
 		CreateMainPanel();
 
 		mainContainer.add(sidePanel, BorderLayout.WEST);
@@ -75,18 +75,18 @@ public class AllReportsPanel extends JPanel {
 
 		return panel;
 	}
-	
+
 	public void CreateMainPanel() {
 		mainPanel = new JPanel();
 		cl = new CardLayout();
 		mainPanel.setLayout(cl);
 		mainPanel.setBackground(Color.YELLOW);
-		
+
 		JPanel mostSoldModel = CreateMostSoldTable();
 		JPanel mostValueClient = CreateMostValueClientTable();
 		JPanel mostValueOrder = CreateMostValueOrderTable();
 		JPanel mostValueAgent = CreateMostValueAgentTable();
-		
+
 		mainPanel.add(mostSoldModel, "MostSoldModel");
 		mainPanel.add(mostValueClient, "MostValueClient");
 		mainPanel.add(mostValueOrder, "MostValueOrder");
@@ -129,8 +129,7 @@ public class AllReportsPanel extends JPanel {
 				cl.show(mainPanel, "MostValueAgent");
 			}
 		});
-		
-		
+
 		sidePanel.add(new JPanel()); // empty space
 
 		topModelSold_btn.setPreferredSize(new Dimension(100, 100));
@@ -165,26 +164,32 @@ public class AllReportsPanel extends JPanel {
 		TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 		JTable table;
 		DefaultTableModel dtm = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
-			public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return Integer.class;
-                    default:
-                        return Integer.class;
-                }
-            }
+
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return Integer.class;
+				default:
+					return Integer.class;
+				}
+			}
 		};
 		dtm.setColumnIdentifiers(columnNames);
 		dtm.setRowCount(0);
-		
+
 		for (int i = 0; i < data.length; i++) {
 			dtm.addRow(data[i]);
 		}
@@ -200,8 +205,7 @@ public class AllReportsPanel extends JPanel {
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		leftRenderer = new DefaultTableCellRenderer();
 		leftRenderer.setHorizontalAlignment(JLabel.LEFT);
-		
-		
+
 		table.setBorder(blackline);
 		table.setFont(new Font("Arial", Font.BOLD, 12));
 		table.setRowHeight(30);
@@ -221,8 +225,7 @@ public class AllReportsPanel extends JPanel {
 		panel.add(scrollPanel);
 		return panel;
 	}
-	
-	
+
 	public JPanel CreateMostValueClientTable() {
 
 		JScrollPane scrollPanel;
@@ -231,31 +234,37 @@ public class AllReportsPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		int sortBy = 3;
 		Object[][] data = reportscontroller.getTopClientByCashMatrix(false);
-		
+
 		TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 		JTable table;
 		DefaultTableModel dtm = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
-            public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-                    default:
-                        return Integer.class;
-                }
-            }
+
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return String.class;
+				default:
+					return Integer.class;
+				}
+			}
 
 		};
 		dtm.setColumnIdentifiers(columnNames);
 		dtm.setRowCount(0);
-		
+
 		for (int i = 0; i < data.length; i++) {
 			dtm.addRow(data[i]);
 		}
@@ -272,7 +281,7 @@ public class AllReportsPanel extends JPanel {
 		table.setBorder(blackline);
 		table.setFont(new Font("Arial", Font.BOLD, 12));
 		table.setRowHeight(30);
-		
+
 		// A way to change the default width of a column
 		table.getColumnModel().getColumn(3).setCellRenderer(new PriceFormatter());
 		// table.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
@@ -288,7 +297,7 @@ public class AllReportsPanel extends JPanel {
 		panel.add(scrollPanel);
 		return panel;
 	}
-	
+
 	public JPanel CreateMostValueOrderTable() {
 
 		JScrollPane scrollPanel;
@@ -297,30 +306,36 @@ public class AllReportsPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		int sortBy = 3;
 		Object[][] data = reportscontroller.getTopOrderByCashMatrix(false);
-		
+
 		TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 		JTable table;
 		DefaultTableModel dtm = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
-			public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-                    default:
-                        return Integer.class;
-                }
-            }
+
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return String.class;
+				default:
+					return Integer.class;
+				}
+			}
 		};
 		dtm.setColumnIdentifiers(columnNames);
 		dtm.setRowCount(0);
-		
+
 		for (int i = 0; i < data.length; i++) {
 			dtm.addRow(data[i]);
 		}
@@ -363,30 +378,36 @@ public class AllReportsPanel extends JPanel {
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 		int sortBy = 3;
 		Object[][] data = reportscontroller.getTopAgentMatrix();
-		
+
 		TableRowSorter<TableModel> rowSorter = new TableRowSorter<TableModel>();
 		JTable table;
 		DefaultTableModel dtm = new DefaultTableModel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			}
-			public Class getColumnClass(int column) {
-                switch (column) {
-                    case 0:
-                        return String.class;
-                    case 1:
-                        return String.class;
-                    case 2:
-                        return String.class;
-                    default:
-                        return Integer.class;
-                }
-            }
+
+			public Class<?> getColumnClass(int column) {
+				switch (column) {
+				case 0:
+					return String.class;
+				case 1:
+					return String.class;
+				case 2:
+					return String.class;
+				default:
+					return Integer.class;
+				}
+			}
 		};
 		dtm.setColumnIdentifiers(columnNames);
 		dtm.setRowCount(0);
-		
+
 		for (int i = 0; i < data.length; i++) {
 			dtm.addRow(data[i]);
 		}
@@ -420,20 +441,22 @@ public class AllReportsPanel extends JPanel {
 		panel.add(scrollPanel);
 		return panel;
 	}
-	
-	class PriceFormatter extends DefaultTableCellRenderer {
-		
-		private Format formatter = NumberFormat.getIntegerInstance();
-		
-		public void setValue(Object value)
-		{
 
-			try
-			{
+	class PriceFormatter extends DefaultTableCellRenderer {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		private Format formatter = NumberFormat.getIntegerInstance();
+
+		public void setValue(Object value) {
+
+			try {
 				if (value != null)
 					value = formatter.format(value) + "₪";
+			} catch (IllegalArgumentException e) {
 			}
-			catch(IllegalArgumentException e) {}
 
 			super.setValue(value);
 		}

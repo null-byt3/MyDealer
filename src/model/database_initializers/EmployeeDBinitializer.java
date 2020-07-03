@@ -1,6 +1,5 @@
 package model.database_initializers;
 
-import controller.EmployeeController;
 import model.InputValidation.InputValidationException;
 import model.database.EmployeeDB;
 import model.database.Serializer;
@@ -15,7 +14,6 @@ public static EmployeeDB getDB() {
 	
 	Serializer serializer = Serializer.getInstance();
 	EmployeeDB employeedb = new EmployeeDB();
-	EmployeeController employeecontroller;
 	
 	try {
 	Employee sebas = Agent.createAgent(serializer.getNextId("employeeId"),"Sebastian","Altheim", "Male","sebas","12345",6500);

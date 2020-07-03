@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,6 @@ import controller.InventoryController;
 
 public class AddInventoryPanel extends JPanel {
 
-
 	private static final long serialVersionUID = 1L;
 	private JPanel panel, buttons_panel, mainPanel, titlePanel;
 	private JComboBox<String>[] make_boxes, model_boxes, trim_boxes, color_boxes;
@@ -38,7 +36,7 @@ public class AddInventoryPanel extends JPanel {
 		this.setLayout(new BorderLayout());
 		titlePanel = CreateTitlePanel();
 		mainPanel = new JPanel(null);
-		
+
 		carpropscontroller = new CarPropertiesController();
 		inventorycontroller = new InventoryController();
 
@@ -52,8 +50,7 @@ public class AddInventoryPanel extends JPanel {
 
 		this.add(titlePanel, BorderLayout.NORTH);
 		this.add(mainPanel, BorderLayout.CENTER);
-		
-		
+
 		PopulateMakerBoxes();
 
 	}
@@ -71,6 +68,7 @@ public class AddInventoryPanel extends JPanel {
 		return panel;
 	}
 
+	@SuppressWarnings("unchecked")
 	public JPanel BoxesPanel(int size) {
 
 		make_label = new JLabel("Make:");
@@ -102,10 +100,13 @@ public class AddInventoryPanel extends JPanel {
 		int field_size = 150;
 		int init_placement = 20;
 
+		@SuppressWarnings("unused")
 		BasicComboBoxUI test = new BasicComboBoxUI() {
 			@Override
 			protected JButton createArrowButton() {
 				return new JButton() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public int getWidth() {
 						return 0;
@@ -260,7 +261,6 @@ public class AddInventoryPanel extends JPanel {
 				addToInventory();
 				JOptionPane.showMessageDialog(null, "Added to inventory");
 
-				
 				for (int i = 0; i < size; i++) {
 					make_boxes[i].setSelectedIndex(0);
 				}

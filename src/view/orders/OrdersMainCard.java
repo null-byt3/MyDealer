@@ -7,16 +7,17 @@ import javax.swing.JPanel;
 
 public class OrdersMainCard extends JPanel {
 
-	BorderLayout bl = new BorderLayout(2,2);
+	private static final long serialVersionUID = 1L;
+	BorderLayout bl = new BorderLayout(2, 2);
 	OrdersCardChanger orderscardchanger = new OrdersCardChanger();
 	OrdersSidePanel orderssidepanel = new OrdersSidePanel(orderscardchanger);
-	
-	public OrdersMainCard(){
+
+	public OrdersMainCard() {
 		this.setLayout(bl);
-		this.add(orderssidepanel,BorderLayout.WEST);
+		this.add(orderssidepanel, BorderLayout.WEST);
 		this.add(orderscardchanger, BorderLayout.CENTER);
 		this.setBackground(Color.ORANGE);
 		this.setName("OrdersPanel");
-	
+
 	}
 }

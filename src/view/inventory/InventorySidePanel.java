@@ -14,11 +14,13 @@ import view.PanelChanger;
 
 public class InventorySidePanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	JButton bAll = new JButton("All Inventory");
 	JButton bCarProps = new JButton("Car Properties");
 	JButton bAddInventory = new JButton("Add Inventory");
 
 	LoginController logincontroller;
+	@SuppressWarnings("unused")
 	private final PanelChanger panelchanger;
 
 	public InventorySidePanel(PanelChanger panelchanger) {

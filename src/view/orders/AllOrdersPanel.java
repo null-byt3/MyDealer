@@ -6,19 +6,14 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.Map;
 
 import javax.swing.BorderFactory;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
-import javax.swing.SwingUtilities;
 import javax.swing.border.Border;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -31,10 +26,11 @@ import controller.OrderController;
 
 public class AllOrdersPanel extends JPanel {
 
+	private static final long serialVersionUID = 1L;
 	private JScrollPane tableScroll;
 	private OrderController orderController = new OrderController();
+	@SuppressWarnings("unused")
 	private JPanel MainClientsPanel, searchPanel, titlePanel, thisPanel;
-	//private EditOrdersWindow editorderswindow;
 	private JTable clientsTable;
 	private JTextField searchField;
 	private JLabel searchLabel;
@@ -56,7 +52,6 @@ public class AllOrdersPanel extends JPanel {
 		this.add(titlePanel, BorderLayout.NORTH);
 	}
 
-	
 	public JPanel CreateTitlePanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -69,60 +64,60 @@ public class AllOrdersPanel extends JPanel {
 
 		return panel;
 	}
-	
+
 	public JPanel searchPanel() {
-		
+
 		searchPanel = new JPanel();
 		searchPanel.setLayout(new BorderLayout());
 		searchPanel.setBounds(50, 50, 400, 30);
 		searchField = new JTextField();
 		searchLabel = new JLabel("Search: ");
 		searchLabel.setBackground(Color.WHITE);
-		
-		 searchField.getDocument().addDocumentListener(new DocumentListener(){
 
-	            @Override
-	            public void insertUpdate(DocumentEvent e) {
-	                String text = searchField.getText();
-	                if (text.trim().length() == 0) {
-	                    rowSorter.setRowFilter(null);
-	                } else {
-	                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-	                }
-	            }
+		searchField.getDocument().addDocumentListener(new DocumentListener() {
 
-	            @Override
-	            public void removeUpdate(DocumentEvent e) {
-	                String text = searchField.getText();
-	                if (text.trim().length() == 0) {
-	                    rowSorter.setRowFilter(null);
-	                } else {
-	                    rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
-	                }
-	            }
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				String text = searchField.getText();
+				if (text.trim().length() == 0) {
+					rowSorter.setRowFilter(null);
+				} else {
+					rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				}
+			}
 
-	            @Override
-	            public void changedUpdate(DocumentEvent e) {
-	                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-	            }
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				String text = searchField.getText();
+				if (text.trim().length() == 0) {
+					rowSorter.setRowFilter(null);
+				} else {
+					rowSorter.setRowFilter(RowFilter.regexFilter("(?i)" + text));
+				}
+			}
 
-	        });
-		
-		
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				throw new UnsupportedOperationException("Not supported yet."); // To change body of generated methods,
+																				// choose Tools | Templates.
+			}
+
+		});
+
 		searchPanel.add(searchLabel, BorderLayout.WEST);
-		searchPanel.add(searchField, BorderLayout.CENTER); 
-		
+		searchPanel.add(searchField, BorderLayout.CENTER);
+
 		return searchPanel;
 	}
-	
-	
-	
+
 	public JScrollPane CreateTable() {
 
-		String[] columnNames = { "Order ID","Date", "Agent Name", "Client Name", "Car", "Final Price" };
+		String[] columnNames = { "Order ID", "Date", "Agent Name", "Client Name", "Car", "Final Price" };
 		Border blackline = BorderFactory.createLineBorder(Color.black);
 
 		dtm = new DefaultTableModel() {
+
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public boolean isCellEditable(int row, int column) {
@@ -130,21 +125,20 @@ public class AllOrdersPanel extends JPanel {
 			}
 		};
 		dtm.setColumnIdentifiers(columnNames);
-		
+
 		populateTable();
-		
+
 		clientsTable = new JTable(dtm);
 		rowSorter.setModel(dtm);
 		clientsTable.setRowSorter(rowSorter);
 		clientsTable.getTableHeader().setReorderingAllowed(false);
-		
-				
+
 		centerRenderer = new DefaultTableCellRenderer();
 		centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 		clientsTable.setBorder(blackline);
 		clientsTable.setFont(new Font("Arial", Font.BOLD, 12));
 		clientsTable.setRowHeight(30);
-		
+
 		// A way to change the default width of a column
 		clientsTable.getColumnModel().getColumn(0).setMaxWidth(50);
 		clientsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
@@ -160,13 +154,14 @@ public class AllOrdersPanel extends JPanel {
 					int row = target.getSelectedRow();
 					int id = Integer.parseInt(target.getValueAt(row, 0).toString());
 					System.out.println(id);
-					//editclientswindow = new EditClientsWindow((JFrame) SwingUtilities.getWindowAncestor(thisPanel), id);
-					//editclientswindow.addWindowListener(new WindowAdapter() {
-					//	public void windowClosed(WindowEvent e) {
-					//		
-					//		populateTable();
-					//	}
-					//});
+					// editclientswindow = new EditClientsWindow((JFrame)
+					// SwingUtilities.getWindowAncestor(thisPanel), id);
+					// editclientswindow.addWindowListener(new WindowAdapter() {
+					// public void windowClosed(WindowEvent e) {
+					//
+					// populateTable();
+					// }
+					// });
 
 				}
 			}
@@ -174,7 +169,7 @@ public class AllOrdersPanel extends JPanel {
 
 		return tblScrl;
 	}
-	
+
 	private void populateTable() {
 		dtm.setRowCount(0);
 		data = orderController.getOrderMatrix();

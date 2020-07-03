@@ -6,13 +6,14 @@ import javax.swing.JPanel;
 
 public class InventoryMainCard extends JPanel {
 
-	BorderLayout bl = new BorderLayout(2,2);
+	private static final long serialVersionUID = 1L;
+	BorderLayout bl = new BorderLayout(2, 2);
 	InventoryCardChanger inventorycardchanger = new InventoryCardChanger();
 	InventorySidePanel inventorysidepanel = new InventorySidePanel(inventorycardchanger);
-	
+
 	public InventoryMainCard() {
 		this.setLayout(bl);
-		this.add(inventorysidepanel,BorderLayout.WEST);
+		this.add(inventorysidepanel, BorderLayout.WEST);
 		this.add(inventorycardchanger, BorderLayout.CENTER);
 		this.setBackground(Color.ORANGE);
 	}
