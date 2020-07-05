@@ -84,6 +84,7 @@ public class EmployeeController {
 		return true;
 	}
 
+	// FACTORY DESIGN PATTERN
 	public void createEmployee(String role, String firstName, String lastName, String gender, String userName,
 			String password, int salary) throws InputValidationException {
 

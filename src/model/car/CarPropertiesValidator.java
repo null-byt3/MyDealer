@@ -77,11 +77,6 @@ public class CarPropertiesValidator {
 				throw new InputValidationException("Trim name be longer thna 20 characters");
 			}
 			
-			if (entry.getKey().matches(".*\\d+.*")) {
-				throw new InputValidationException("Trim name must contain only letters");
-			}
-			
-			
 			if (entry.getValue() <= 0) {
 				throw new InputValidationException("Trim price must be bigger than 0");
 			}
@@ -93,10 +88,22 @@ public class CarPropertiesValidator {
 	
 	private static void validateColors(List<String> colors) throws InputValidationException {
 
+		ArrayList<String> color_array = new ArrayList<String>();
+		
+		
+		if (colors.isEmpty()) {
+			throw new InputValidationException("Model must contain at least one color");
+		}
+		
+		
 		for (String color : colors) {
-						
-			if (color.trim().isEmpty()) {
-				throw new InputValidationException("Color cannot be empty");
+			
+			
+			if (color_array.contains(color)) {
+				throw new InputValidationException("Cannot have duplicate colors");
+			}
+			else {
+				color_array.add(color);
 			}
 			
 			if (color.length() > 15) {

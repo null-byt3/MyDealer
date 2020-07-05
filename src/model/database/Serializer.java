@@ -15,6 +15,7 @@ public class Serializer {
 	private CarPropertiesDB carpropertiesdb = null;
 	private static Serializer serializer = null;
 	
+	// SINGLETON 
 	private Serializer() {
 
 	}

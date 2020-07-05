@@ -186,15 +186,15 @@ public class EditCarPropertiesWindow extends JDialog {
 		saveButton.setBounds(0, 0, 130, 45);
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (fieldValidator()) {
-					if (model != null) {
-						updateModel(model);
-					} else {
-						createModel();
-					}
-
+				// if (fieldValidator()) {
+				if (model != null) {
+					updateModel(model);
+				} else {
+					createModel();
 				}
+
 			}
+			// }
 		});
 
 		deleteButton = new JButton("Delete Property");
@@ -267,34 +267,6 @@ public class EditCarPropertiesWindow extends JDialog {
 			return false;
 		}
 
-		// COLORS
-		flag = 0;
-
-		List<String> colorsList = new ArrayList<String>();
-
-		for (int i = 0; i < 10; i++) {
-			if (!color_fields[i].getText().isEmpty()) {
-
-				if (colorsList.contains(color_fields[i].getText())) {
-					JOptionPane.showMessageDialog(null, "Error: Duplicate colors found");
-					return false;
-				}
-
-				else {
-					colorsList.add(color_fields[i].getText());
-					flag++;
-				}
-
-			}
-
-		}
-
-		if (flag == 0) {
-			JOptionPane.showMessageDialog(null, "Error: Property must contain at least one color");
-			colors_label.setForeground(Color.RED);
-			return false;
-		}
-
 		return true;
 	}
 
@@ -302,28 +274,28 @@ public class EditCarPropertiesWindow extends JDialog {
 
 		Map<String, Integer> trims = new HashMap<String, Integer>();
 		List<String> colors = new ArrayList<String>();
-		
+
 		// Add validation for duplicate values
-		
+
 		for (int i = 0; i < 5; i++) {
 			if (!trim_fields[i].getText().isEmpty()) {
 				trims.put(trim_fields[i].getText(), Integer.valueOf(price_fields[i].getText()));
 			}
 		}
-		
+
 		for (int i = 0; i < 10; i++) {
 			if (!color_fields[i].getText().isEmpty()) {
 				colors.add(color_fields[i].getText());
 			}
 		}
-		
+
 		try {
 			carpropscontroller.updateModel(model, trims, colors);
 			JOptionPane.showMessageDialog(null, "Model Updated");
 			dispose();
 		} catch (InputValidationException e) {
 			JOptionPane.showMessageDialog(null, e.toString());
-	
+
 		}
 	}
 
