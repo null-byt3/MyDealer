@@ -614,7 +614,8 @@ public class NewOrderPanel extends JPanel {
 		JButton saveButton = new JButton("Save Order");
 		saveButton.setBackground(Color.ORANGE);
 		saveButton.setForeground(Color.BLACK);
-		saveButton.setBounds(0, 0, 170, 60);
+		saveButton.setBounds(0, 0, 250, 80);
+		saveButton.setPreferredSize(new Dimension(260,70));
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
@@ -626,23 +627,12 @@ public class NewOrderPanel extends JPanel {
 			}
 		});
 
-		JButton clearButton = new JButton("Clear");
-		clearButton.setBounds(800, 0, 150, 60);
-		clearButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-		});
-
-		int spacing = 200;
-
 		JPanel spacing_panel = new JPanel();
-		spacing_panel.setBackground(Color.DARK_GRAY);
-		spacing_panel.setPreferredSize(new Dimension(spacing, 70));
+		spacing_panel.setBackground(Color.RED);
+		spacing_panel.setPreferredSize(new Dimension(0, 100));
 
 		buttonsPanel.add(saveButton);
 		buttonsPanel.add(spacing_panel);
-		buttonsPanel.add(clearButton);
 		return buttonsPanel;
 	}
 
@@ -666,6 +656,7 @@ public class NewOrderPanel extends JPanel {
 
 		if (!make_box.getSelectedItem().equals("Select..")) {
 			model_box.setEnabled(true);
+			model_box.removeAllItems();
 			for (String model : model_names) {
 				model_box.addItem(model);
 			}
