@@ -11,7 +11,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import controller.LoginController;
-import controller.PasswordHash;
 import model.database.EmployeeDB;
 
 public class Login extends JFrame {
@@ -51,11 +50,8 @@ public class Login extends JFrame {
 		blogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				String username = user_field.getText();
-				char[] password = pass_field.getPassword();
-
-				String passHash = PasswordHash.createHash(new String( password));
-				
-				boolean loginSuccessful = loginController.attemptLogin(username, passHash);
+				char[] password = pass_field.getPassword();				
+				boolean loginSuccessful = loginController.attemptLogin(username, new String(password));
 
 				if (loginSuccessful) {
 					mainwindow = new MainWindow();

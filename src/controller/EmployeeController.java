@@ -91,14 +91,12 @@ public class EmployeeController {
 		Employee new_employee;
 		int id = serializer.getNextId("employeeId");
 
-		String passwordHash = PasswordHash.createHash(password);
-
 		if (role.equals("Secretary")) {
-			new_employee = Secretary.createSecretary(id, firstName, lastName, gender, userName, passwordHash, salary);
+			new_employee = Secretary.createSecretary(id, firstName, lastName, gender, userName, password, salary);
 		} else if (role.equals("Agent")) {
-			new_employee = Agent.createAgent(id, firstName, lastName, gender, userName, passwordHash, salary);
+			new_employee = Agent.createAgent(id, firstName, lastName, gender, userName, password, salary);
 		} else if (role.equals("Manager")) {
-			new_employee = Manager.createManager(id, firstName, lastName, gender, userName, passwordHash, salary);
+			new_employee = Manager.createManager(id, firstName, lastName, gender, userName, password, salary);
 		} else {
 			System.out.println("Error. Invalid Role");
 			return;
