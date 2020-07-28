@@ -100,7 +100,7 @@ public class Order implements Serializable {
 		int hour = this.dateTime.getHour();
 		int minute = this.dateTime.getMinute();
 
-		String fullDateTime = day + "/" + month + "/" + year + " | " + hour + ":" + minute;
+		String fullDateTime = day + "/" + month + "/" + year + " | " + String.format("%02d", hour) + ":" + String.format("%02d", minute);
 
 		return fullDateTime;
 	}

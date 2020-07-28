@@ -8,11 +8,13 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controller.LoginController;
 import view.PanelChanger;
 
 public class OrdersSidePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	private LoginController loginController;
 	JButton bNewOrder = new JButton("New Order");
 	JButton bAllOrders = new JButton("All Orders");
 
@@ -21,6 +23,7 @@ public class OrdersSidePanel extends JPanel {
 
 	public OrdersSidePanel(PanelChanger panelchanger) {
 
+		this.loginController = new LoginController();
 		this.panelchanger = panelchanger;
 		bNewOrder.setPreferredSize(new Dimension(150, 50));
 		bNewOrder.setBackground(Color.GRAY);
@@ -31,7 +34,12 @@ public class OrdersSidePanel extends JPanel {
 
 		this.setLayout(new GridLayout(15, 1, 5, 5));
 		this.setBackground(Color.BLACK);
-		this.add(bNewOrder);
+		
+		if (!loginController.getLoggedUserRole().equals("Secretary")) {
+			this.add(bNewOrder);
+		}
+		
+		//this.add(bNewOrder);
 		this.add(bAllOrders);
 
 		bNewOrder.addActionListener(new ActionListener() {

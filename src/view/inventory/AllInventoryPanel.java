@@ -59,7 +59,7 @@ public class AllInventoryPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		panel.setBackground(Color.DARK_GRAY);
-		JLabel title = new JLabel("  Create New Client");
+		JLabel title = new JLabel("  All Inventory");
 		Font title_font = new Font("Helvetica", Font.BOLD, 60);
 		title.setForeground(Color.orange);
 		title.setFont(title_font);

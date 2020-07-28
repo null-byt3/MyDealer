@@ -199,6 +199,7 @@ public class AddInventoryPanel extends JPanel {
 
 		if (!make_boxes[index].getSelectedItem().equals("Select..")) {
 			model_boxes[index].setEnabled(true);
+			model_boxes[index].removeAllItems();
 			for (String model : model_names) {
 				model_boxes[index].addItem(model);
 			}

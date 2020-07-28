@@ -197,9 +197,10 @@ public class SidePanel extends JPanel {
 		// ADD BUTTONS TO PANEL //
 		TopButtonsCluster.add(bHome);
 		TopButtonsCluster.add(bClients);
+		TopButtonsCluster.add(bOrders);
 
 		if (!loginController.getLoggedUserRole().equals("Secretary")) {
-			TopButtonsCluster.add(bOrders);
+			//TopButtonsCluster.add(bOrders);
 			TopButtonsCluster.add(bInventory);
 			TopButtonsCluster.add(bReports);
 
